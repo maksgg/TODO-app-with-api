@@ -1,45 +1,31 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { useThemeStore } from "../composables/useTheme";
+import { useThemeStore } from "@/features/theme/store/useThemeStore";
+import VSwitch from "@/shared/ui/common/VSwitch.vue";
 
 const themeStore = useThemeStore();
 
-const isDark = computed(() => themeStore.isDark);
-
-const toggleTheme = () => {
-  themeStore.setTheme(isDark.value ? "light" : "dark");
-};
+const isDarkTheme = computed({
+  get() {
+    return themeStore.currentTheme === "dark";
+  } ,
+  set (newValue: boolean) {
+    themeStore.setTheme(newValue ? "dark" : "light");
+  },
+});
 </script>
 
 <template>
-  <button
-    class="theme-toggle"
-    :aria-label="isDark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему'"
-    @click="toggleTheme"
-  >
-    <span v-if="isDark">🌙</span>
-    <span v-else>☀️</span>
-  </button>
+  <VSwitch v-model="isDarkTheme">
+    <template #theme-icon>
+      <VueFeather
+        :type="themeStore.isDark ? 'moon' : 'sun'"
+        :class="themeStore.isDark ? 'text-blue-500 w-5 h-5' : 'w-5 h-5'"
+      />
+    </template>
+    <template #default>
+      {{ themeStore.isDark ? themeStore.label = "Dark theme" : themeStore.label = "Light theme" }}
+    </template>
+  </VSwitch>
 </template>
-
-<style scoped>
-.theme-toggle {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background: transparent;
-  border: 1px solid #e5e7eb;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 1.25rem;
-}
-
-.theme-toggle:hover {
-  background: #f3f4f6;
-}
-
-.theme-toggle:active {
-  transform: scale(0.95);
-}
-</style>
-
