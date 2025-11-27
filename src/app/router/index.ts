@@ -3,10 +3,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "Home",
-    component: () => import("@/pages/Home/index.vue"),
+    name: "Auth",
+    component: () => import("@/pages/Auth/index.vue"),
     meta: {
-      title: "Home - Vue 3 Starter",
+      title: "Theme feature",
     },
   },
   {
