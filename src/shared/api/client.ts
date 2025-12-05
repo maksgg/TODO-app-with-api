@@ -1,51 +1,80 @@
-import axios from "axios";
+/**
+ * API Client
+ *
+ * Configured axios instance with interceptors
+ * - Automatic authorization token addition
+ * - Handle 401 errors and token refresh
+ * - Race condition protection for token refresh
+ * - Type safety
+ */
 
-// TODO: Export constants for token management
-// Hint: You'll need TOKEN_TYPE, ACCESS_TOKEN, AUTH_HEADER
-export const TOKEN_TYPE = "Bearer";
-export const ACCESS_TOKEN = "accessToken";
-export const AUTH_HEADER = "Authorization";
+import axios, { type AxiosInstance } from "axios";
 
-// TODO: Setup base URL from environment variable
-const baseUrl = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}` : "/api";
+import { setupInterceptors } from "./interceptors";
+import type { ApiRequestConfig, TypedAxiosResponse } from "./types";
 
-// TODO: Create axios instance with base configuration
-const request = axios.create({
-  baseURL: baseUrl,
-  // TODO: Add other default configurations if needed
-});
+/**
+ * Create axios instance
+ */
+function createApiClient(): AxiosInstance {
+  const instance = axios.create({
+    baseURL: import.meta.env.VITE_API_URL
+      ? `${import.meta.env.VITE_API_URL}`
+      : "/api",
+    timeout: 30000,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-// TODO: Add request interceptor to automatically include auth token
-request.interceptors.request.use(
-  (config) => {
-    // TODO: Get access token from localStorage
+  return instance;
+}
 
-    // TODO: Add token to headers if it exists
+/**
+ * Main API client
+ */
+const apiClient = createApiClient();
 
-    return config;
-  },
-  (error) => {
-    // TODO: Handle request errors
-    return Promise.reject(error);
-  },
-);
+/**
+ * Setup interceptors with auth error handling
+ */
+let isInterceptorsSetup = false;
 
-// TODO: Add response interceptor for error handling
-request.interceptors.response.use(
-  (response) => {
-    // TODO: Handle successful responses
-    return response;
-  },
-  (error) => {
-    // TODO: Handle different types of errors
-    // const { response } = error;
+export function setupApiClient(options: {
+  onTokenRefreshFailed?: () => void;
+} = {}): void {
+  if (isInterceptorsSetup) {
+    return;
+  }
 
-    // TODO: Handle 401 Unauthorized errors
+  setupInterceptors(apiClient, {
+    onTokenRefreshFailed: options.onTokenRefreshFailed,
+  });
 
-    // TODO: Handle other common errors (403, 404, 500, etc.)
+  isInterceptorsSetup = true;
+}
 
-    return Promise.reject(error);
-  },
-);
+/**
+ * Typed methods for convenience
+ */
+export const typedApiClient = {
+  get: <T = unknown>(url: string, config?: ApiRequestConfig) =>
+    apiClient.get<T>(url, config) as Promise<TypedAxiosResponse<T>>,
 
-export default request;
+  post: <T = unknown, D = unknown>(url: string, data?: D, config?: ApiRequestConfig<D>) =>
+    apiClient.post<T>(url, data, config) as Promise<TypedAxiosResponse<T>>,
+
+  put: <T = unknown, D = unknown>(url: string, data?: D, config?: ApiRequestConfig<D>) =>
+    apiClient.put<T>(url, data, config) as Promise<TypedAxiosResponse<T>>,
+
+  patch: <T = unknown, D = unknown>(url: string, data?: D, config?: ApiRequestConfig<D>) =>
+    apiClient.patch<T>(url, data, config) as Promise<TypedAxiosResponse<T>>,
+
+  delete: <T = unknown>(url: string, config?: ApiRequestConfig) =>
+    apiClient.delete<T>(url, config) as Promise<TypedAxiosResponse<T>>,
+};
+
+export default apiClient;
+
+// Backward compatibility
+export const axiosIns = apiClient;
