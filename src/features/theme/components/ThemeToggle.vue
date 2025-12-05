@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 import { useThemeStore } from "@/features/theme/store/useThemeStore";
 import VSwitch from "@/shared/ui/common/VSwitch.vue";
 
 const themeStore = useThemeStore();
 
-const isDarkTheme = computed({
+const theme = computed<boolean>({
   get() {
     return themeStore.currentTheme === "dark";
   } ,
@@ -14,18 +14,20 @@ const isDarkTheme = computed({
     themeStore.setTheme(newValue ? "dark" : "light");
   },
 });
+onMounted(themeStore.initTheme);
 </script>
 
 <template>
-  <VSwitch v-model="isDarkTheme">
+  <VSwitch
+    id="theme"
+    v-model="theme"
+  >
     <template #theme-icon>
       <VueFeather
-        :type="themeStore.isDark ? 'moon' : 'sun'"
-        :class="themeStore.isDark ? 'text-blue-500 w-5 h-5' : 'w-5 h-5'"
+        :type="themeStore.theme ? 'moon' : 'sun'"
+        :class="themeStore.theme ? 'text-blue-500 w-5 h-5' : 'w-5 h-5'"
       />
     </template>
-    <template #default>
-      {{ themeStore.isDark ? themeStore.label = "Dark theme" : themeStore.label = "Light theme" }}
-    </template>
+    {{ themeStore.theme ? themeStore.label = "Dark theme" : themeStore.label = "Light theme" }}
   </VSwitch>
 </template>

@@ -7,14 +7,12 @@ export const useThemeStore = defineStore("theme", () => {
   const currentTheme = ref<Theme>("light");
   const label = ref<string>("");
 
-  const isDark = computed(():boolean => currentTheme.value === "dark");
+  const theme = computed<boolean>(() => currentTheme.value === "dark");
 
   const initTheme = (): void => {
     const savedTheme = localStorage.getItem("theme") as Theme | null;
 
-    if (savedTheme) {
-      return setTheme(savedTheme);
-    }
+    return setTheme(savedTheme || "light");
   };
 
   const setTheme = (theme: Theme): void => {
@@ -22,12 +20,6 @@ export const useThemeStore = defineStore("theme", () => {
 
     updateDocumentTheme(theme);
     localStorage.setItem("theme", theme);
-  };
-
-  const toggleTheme = (): void => {
-    const newTheme: Theme = currentTheme.value === "light" ? "dark" : "light";
-
-    setTheme(newTheme);
   };
 
   const updateDocumentTheme = (theme: Theme): void => {
@@ -39,12 +31,10 @@ export const useThemeStore = defineStore("theme", () => {
       el.setAttribute("data-theme", "light");
     }
   };
-  return { /// todo consider if all this needed in future
-    toggleTheme,
-    updateDocumentTheme,
+  return {
     initTheme,
     setTheme,
-    isDark,
+    theme,
     currentTheme,
     label,
   };
