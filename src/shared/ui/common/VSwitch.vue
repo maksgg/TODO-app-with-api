@@ -87,7 +87,7 @@ const trackSize: Record<ToggleSize, string> = {
       </span>
     </div>
     <div>
-      <slot>{{ checked ? "On" : "Off" }}</slot>
+      <slot />
     </div>
   </label>
 </template>
