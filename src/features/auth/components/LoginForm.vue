@@ -5,6 +5,7 @@ import { toast } from "vue-sonner";
 import  useAuthRequests  from "@/features/auth/api/useAuthRequests";
 import { useLoginFormValidation } from "@/features/auth/composables/useAuthValidation";
 import type { AuthFormType } from "@/features/auth/types/index";
+import { tokenManager } from "@/shared/api/tokenManager";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 
@@ -17,7 +18,7 @@ const { fetchLoginUser } = useAuthRequests();
 const { loading, error, execute } = fetchLoginUser({
   onSuccess: ({ data }) => {
     toast.success("Success");
-    localStorage.setItem("accessToken", data.accessToken);
+    tokenManager.setTokens({ accessToken: data.accessToken });
     router.push("/");
   },
 });
@@ -62,6 +63,9 @@ const changeForm = () => emit("toggle", "register");
       placeholder="Password"
       @input="error = null"
     />
+    <span class="text-red-500 text-xl h-[20px]">
+      {{ !!error ? error?.message : "" }}
+    </span>
     <VButton
       text="SIGN IN"
       type="submit"
@@ -69,9 +73,6 @@ const changeForm = () => emit("toggle", "register");
       :loader="loading"
       class="text-4xl"
     />
-    <span class="text-red-500 text-xl h-[1rem]">
-      {{ !!error ? error?.message : "" }}
-    </span>
     <div class="flex justify-between w-full mt-[25px]">
       <VButton
         text="Create new account"

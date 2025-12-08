@@ -18,12 +18,14 @@ const { loading, error, execute } = fetchRegisterUser({
   },
 });
 
-const handleSubmit = async () => {
-  const isValid = await v$.value.$validate();
+const request = async () => await execute({ data: state });
 
-  if(!isValid) return;
+const submitForm = async () => {
+  const validate = await v$.value.$validate();
 
-  await execute({ data: state });
+  if(!validate) return;
+
+  await request();
 };
 
 const emit = defineEmits<{ "toggle" : [AuthFormType] }>();
@@ -35,7 +37,7 @@ const changeForm = () => emit("toggle", "login");
   <form
     class="flex flex-col items-center gap-9 p-5 pt-10 pb-10
     rounded-xl min-w-[37.5rem] text-text-color"
-    @submit.prevent="handleSubmit"
+    @submit.prevent="submitForm"
   >
     <h1>Welcome</h1>
     <VInput

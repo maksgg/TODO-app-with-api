@@ -28,10 +28,7 @@ export {
 export {
   setupInterceptors,
   setupRequestInterceptor,
-  setupResponseInterceptor,
-  getRefreshStatus,
   AUTH_HEADER,
-  REFRESH_TOKEN_URL,
 } from "./interceptors";
 
 // Error Handler

@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 
 import useUserRequest from "@/features/user/api/useUserRequest";
 import type { UserProfileData } from "@/features/user/types/index";
+import { tokenManager } from "@/shared/api/tokenManager";
 
 export const useUserStore = defineStore("user", () => {
   const userData = ref<UserProfileData | null>(null);
@@ -16,23 +17,14 @@ export const useUserStore = defineStore("user", () => {
     if (!userData.value) {
       await execute();
 
-      if (data.value) {
-        const { name, email } = data.value;
-
-        setUser(name, email);
-      }
+      userData.value = data.value;
     }
-    return;
-  };
-
-  const setUser = (name: string, email: string): UserProfileData => {
-    return userData.value = { name, email };
   };
 
   const router =  useRouter();
 
   const logOutUser = (): void => {
-    localStorage.removeItem("accessToken");
+    tokenManager.clearTokens();
     userData.value = null;
     router.push("/login");
   };
@@ -41,7 +33,6 @@ export const useUserStore = defineStore("user", () => {
     userData,
     loading,
     logOutUser,
-    setUser,
     mountUser,
   };
 });

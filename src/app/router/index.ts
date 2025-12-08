@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     name: "Home",
     component: () => import("@/pages/Home/index.vue"),
     meta: {
-      requiredAuth: true, // in the end of development change to true?
+      requiredAuth: true,
       title: "Home",
       layout: "default",
     },
