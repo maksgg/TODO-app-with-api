@@ -69,8 +69,8 @@ const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPa
 
 const inputStylesVariant: Record<VariantStyles, string> = {
   main: "border pl-3 pr-3",
-  custom: "border-b pb-3 pl-12 pr-2 text-3xl",
-  customPassword: "border-b pb-3 pl-12 pr-8 text-3xl",
+  custom: "border-b pb-3 pl-10 pr-12 text-2xl",
+  customPassword: "border-b pb-3 pl-10 pr-12 text-2xl",
 };
 </script>
 

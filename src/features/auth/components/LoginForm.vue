@@ -41,7 +41,7 @@ const changeForm = () => emit("toggle", "register");
 <template>
   <form
     class="flex flex-col items-center gap-5 p-5 pt-10 pb-10
-    rounded-xl min-w-[37.5rem] text-text-color"
+    rounded-xl min-w-[30rem] text-text-color"
     @submit.prevent="submitForm"
   >
     <h1 class="text-login leading-none mb-[25px]">

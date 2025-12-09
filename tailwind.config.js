@@ -20,26 +20,26 @@ export default {
     plugins: [
       createThemes({
         light: {
-        'primary': '#F5F9FF',
+        'primary': '#ffffff',
         'secondary': '#64748b',
         'text-color': '#1f2937',
         'bg-color': '#ffffff',
         'auth-form-bg': '#f3f4f6',
-
         'line-color': '#272727',
         'gradient-from': '#001E32',
-        'gradient-to': '#0968AC'
+        'gradient-to': '#0968AC',
+        'grid-color': '#000000',
       },
       dark: {
-        'primary': '#60a5fa',
+        'primary': '#000000',
         'secondary': '#94a3b8',
         'text-color': '#f9fafb',
         'bg-color': '#111827',
         'auth-form-bg': '#1f2937',
-
         'line-color': '#ffffff',
-        'gradient-from': '#001E32',
-        'gradient-to': '#0968AC'
+        'gradient-from': '#A62023',
+        'gradient-to': '#510D00',
+        'grid-color': '#ffffff',
       },
       }),
   ],
