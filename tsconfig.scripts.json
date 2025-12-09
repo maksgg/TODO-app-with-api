@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "target": "es2022",
     "module": "CommonJS",
     "outDir": "./scripts",
     "noEmit": false,
