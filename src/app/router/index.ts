@@ -5,7 +5,7 @@ import { authGuard } from "./authGuards";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: () => import("@/pages/Home/index.vue"),
     meta: {
       requiredAuth: true,
@@ -19,6 +19,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/pages/Auth/index.vue"),
     meta: {
       requiredAuth: false,
+      guestOnly: true,
       title: "Authorization",
       layout: "auth",
     },
@@ -38,10 +39,8 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  document.title = (to.meta.title as string) || "TODO Vue 3";
+router.beforeEach(authGuard);
 
-  authGuard(to, from, next);
-});
+router.afterEach((to) => document.title = (to.meta.title as string) || "Task manager");
 
 export default router;

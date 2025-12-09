@@ -1,15 +1,19 @@
-import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+import type { RouteLocationNormalized } from "vue-router";
+
+import { tokenManager  } from "@/shared/api/tokenManager";
 
 export const authGuard = (
   to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext,
 ) => {
-  const token = localStorage.getItem("accessToken");
+  const token = tokenManager.getAccessToken();
   const isAuthorized = !!token;
 
   if (to.meta.requiredAuth && !isAuthorized) {
-    return next("/login");
+    return { name: "login" };
   }
-  return next();
+
+  if (to.meta.guestOnly && isAuthorized) {
+    return { name: "home" };
+  }
+  return;
 };

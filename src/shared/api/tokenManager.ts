@@ -12,13 +12,13 @@ import type { AuthTokens } from "./types.ts";
 
 export const TOKEN_TYPE = "Bearer";
 export const ACCESS_TOKEN_KEY = "accessToken";
-export const REFRESH_TOKEN_KEY = "refreshToken";
+// export const REFRESH_TOKEN_KEY = "refreshToken";
 export const TOKEN_EXPIRES_KEY = "tokenExpiresAt";
 
 interface TokenStorage {
   getAccessToken(): string | null
 
-  getRefreshToken(): string | null
+  // getRefreshToken(): string | null
   // eslint-disable-next-line
   setTokens(tokens: AuthTokens): void
 
@@ -37,13 +37,13 @@ class LocalStorageTokenStorage implements TokenStorage {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
-  getRefreshToken(): string | null {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-  }
+  // getRefreshToken(): string | null {
+  //   return localStorage.getItem(REFRESH_TOKEN_KEY);
+  // }
 
   setTokens(tokens: AuthTokens): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
+    // localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
 
     if (tokens.expiresIn) {
       const expiresAt = Date.now() + tokens.expiresIn * 1000;
@@ -53,7 +53,7 @@ class LocalStorageTokenStorage implements TokenStorage {
 
   clearTokens(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    // localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(TOKEN_EXPIRES_KEY);
   }
 
@@ -93,9 +93,9 @@ class TokenManager {
   /**
      * Get refresh token
      */
-  getRefreshToken(): string | null {
-    return this.storage.getRefreshToken();
-  }
+  // getRefreshToken(): string | null {
+  //   return this.storage.getRefreshToken();
+  // }
 
   /**
      * Save tokens
@@ -130,7 +130,7 @@ class TokenManager {
      * Check if tokens exist
      */
   hasTokens(): boolean {
-    return !!(this.getAccessToken() && this.getRefreshToken());
+    return !!(this.getAccessToken()/*  && this.getRefreshToken() */);
   }
 
   /**
@@ -144,23 +144,23 @@ class TokenManager {
   /**
      * Set token refresh promise (to prevent race conditions)
      */
-  setRefreshPromise(promise: Promise<string | null>): void {
-    this.refreshPromise = promise;
-  }
+  // setRefreshPromise(promise: Promise<string | null>): void {
+  //   this.refreshPromise = promise;
+  // }
 
   /**
      * Get token refresh promise
      */
-  getRefreshPromise(): Promise<string | null> | null {
-    return this.refreshPromise;
-  }
+  // getRefreshPromise(): Promise<string | null> | null {
+  //   return this.refreshPromise;
+  // }
 
   /**
      * Clear token refresh promise
      */
-  clearRefreshPromise(): void {
-    this.refreshPromise = null;
-  }
+  // clearRefreshPromise(): void {
+  //   this.refreshPromise = null;
+  // }
 
   /**
      * Set storage (useful for tests)

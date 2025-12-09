@@ -11,18 +11,7 @@ import { setupApiClient } from "@/shared/api";
 import "./main.scss";
 
 // Setup API client interceptors for token management
-setupApiClient({
-  onTokenRefreshFailed: () => {
-    const currentRoute = router.currentRoute.value;
-
-    if (currentRoute.name !== "login") {
-      router.push({
-        name: "login",
-        query: { redirect: currentRoute.fullPath },
-      });
-    }
-  },
-});
+setupApiClient();
 
 // Create Vue app instance
 const app = createApp(App);
