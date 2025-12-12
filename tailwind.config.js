@@ -9,7 +9,9 @@ export default {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
             },
             fontSize: {
-              login: '90px'
+              login: '6vh',
+              auth: '1.5vh',
+              'auth-btn': '2vh',
             },
             spacing: {
                 18: '4.5rem',
@@ -21,6 +23,7 @@ export default {
       createThemes({
         light: {
         'primary': '#ffffff',
+        'main': '#012e43',
         'secondary': '#64748b',
         'text-color': '#1f2937',
         'bg-color': '#ffffff',
@@ -32,6 +35,7 @@ export default {
       },
       dark: {
         'primary': '#000000',
+        'main': '#7f1917',
         'secondary': '#94a3b8',
         'text-color': '#f9fafb',
         'bg-color': '#111827',

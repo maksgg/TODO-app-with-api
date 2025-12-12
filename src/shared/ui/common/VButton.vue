@@ -33,7 +33,7 @@ const isRouterLink = computed((): boolean => !!props.to);
 const baseButtonStyles: string = `
   flex justify-center items-center 
   transition-all duration-150 ease-in 
-  border border-transparent
+  border border-transparent leading-none
   disabled:bg-gray-400 disabled:text-gray-700 disabled:border-gray-400 disabled:cursor-not-allowed
 `;
 
@@ -41,7 +41,7 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
   primary: `
     ${baseButtonStyles}
     text-white
-    gap-2 p-5 rounded-3xl bg-gradient-to-r from-gradient-from to-gradient-to
+    gap-2 p-4 rounded-3xl bg-gradient-to-r from-gradient-from to-gradient-to
     hover:bg-none hover:border-text-color hover:text-text-color
   `,
   secondary: `

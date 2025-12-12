@@ -12,7 +12,7 @@ export const authGuard = (
     return { name: "login" };
   }
 
-  if (to.meta.guestOnly && isAuthorized) {
+  if (!to.meta.requiredAuth && isAuthorized) {
     return { name: "home" };
   }
   return;

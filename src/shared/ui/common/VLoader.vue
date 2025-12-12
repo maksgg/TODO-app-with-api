@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<LoaderProps>(), {
 });
 
 const loaderSize: Record<LoaderProps["size"], string> = {
-  sm: "w-5 h-5",
+  sm: "w-4 h-4",
   md: "w-7 h-7",
   lg: "w-10 h-10",
 };

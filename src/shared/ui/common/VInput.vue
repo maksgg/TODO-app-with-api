@@ -69,13 +69,13 @@ const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPa
 
 const inputStylesVariant: Record<VariantStyles, string> = {
   main: "border pl-3 pr-3",
-  custom: "border-b pb-3 pl-10 pr-12 text-2xl",
-  customPassword: "border-b pb-3 pl-10 pr-12 text-2xl",
+  custom: "border-b pb-3 pl-10 pr-12 text-auth-btn",
+  customPassword: "border-b pb-3 pl-10 pr-12 text-auth-btn",
 };
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 h-[5rem] w-full">
+  <div class="flex flex-col gap-1 h-[3rem] w-full">
     <label
       v-if="props.label"
       :for="inputId"

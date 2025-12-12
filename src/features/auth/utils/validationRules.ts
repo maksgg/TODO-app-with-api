@@ -1,4 +1,4 @@
-import { required, email, minLength, helpers } from "@vuelidate/validators";
+import { required, email, minLength, helpers, sameAs } from "@vuelidate/validators";
 
 export const nameRules = {
   required: helpers.withMessage("Write your name", required),
@@ -14,3 +14,8 @@ export const passwordRules = {
   required: helpers.withMessage("Write password", required),
   minLength: helpers.withMessage("Password need to be 8 symbols", minLength(8)),
 };
+
+export const confirmPasswordRules = (passwordState) => ({
+  required: helpers.withMessage("Repeat password", required),
+  sameAs: helpers.withMessage("Passwords must match", sameAs(passwordState)),
+});

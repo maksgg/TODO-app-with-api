@@ -7,6 +7,7 @@ import { useLoginFormValidation } from "@/features/auth/composables/useAuthValid
 import type { AuthFormType } from "@/features/auth/types/index";
 import { tokenManager } from "@/shared/api/tokenManager";
 import VButton from "@/shared/ui/common/VButton.vue";
+import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 
 const router = useRouter();
@@ -40,8 +41,8 @@ const changeForm = () => emit("toggle", "register");
 
 <template>
   <form
-    class="flex flex-col items-center gap-5 p-5 pt-10 pb-10
-    rounded-xl min-w-[30rem] text-text-color"
+    class="flex flex-col items-center gap-5
+    rounded-xl w-[24rem] text-text-color"
     @submit.prevent="submitForm"
   >
     <h1 class="text-login leading-none mb-[25px]">
@@ -49,38 +50,44 @@ const changeForm = () => emit("toggle", "register");
     </h1>
     <VInput
       v-model="state.email"
-      :validation="v$.email"
+      :validation="error?.status ?
+        { $error: true, $errors: [{ $message: error.message }] } : v$.email"
       variant="custom"
       icon="mail"
       placeholder="Email Address"
     />
     <VInput
       v-model="state.password"
-      :validation="v$.password"
+      :validation="error?.status ?
+        { $error: true, $errors: [{ $message: error.message }] } : v$.password"
       type="password"
       icon="lock"
       variant="customPassword"
       placeholder="Password"
       @input="error = null"
     />
-    <span class="text-red-500 text-xl h-[20px]">
-      {{ !!error ? error?.message : "" }}
-    </span>
-    <VButton
-      text="SIGN IN"
-      type="submit"
-      size="full"
-      :loader="loading"
-      class="text-4xl"
-    />
-    <div class="flex justify-between w-full mt-[25px]">
+    <div class="flex flex-col w-full gap-5">
+      <VCheckbox
+        text="Remember me"
+        class="text-auth"
+      />
+      <VButton
+        text="SIGN IN"
+        type="submit"
+        size="full"
+        :loader="loading"
+        class="text-auth-btn"
+      />
+    </div>
+    <div class="flex justify-between w-full mt-[1rem]">
       <VButton
         text="Create new account"
         variant="link"
         size="fit"
+        class="text-auth"
         @click="changeForm"
       />
-      <span class="cursor-pointer">
+      <span class="cursor-pointer text-auth">
         Forgot password?
       </span>
     </div>

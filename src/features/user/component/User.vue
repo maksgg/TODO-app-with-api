@@ -6,9 +6,12 @@ const useStore = useUserStore();
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center w-[20rem] gap-5">
+  <div class="flex justify-center items-center self-start w-[80vw] gap-5 border border-red-500 ">
+    <span class="text-text-color">
+      Search Bar + User
+    </span>
     <div
-      class="flex justify-center items-center w-[12rem] h-[12rem] text-text-color
+      class="flex justify-center items-center w-[5rem] h-[5rem] text-text-color
           border rounded-[50%]"
     >
       Avatar
@@ -18,7 +21,6 @@ const useStore = useUserStore();
       class="flex flex-col justify-center items-center gap-3 text-text-color"
     >
       <span>{{ useStore.userData.name }}</span>
-      <span>{{ useStore.userData.email }}</span>
     </div>
     <VButton
       text="Logout"

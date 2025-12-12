@@ -19,7 +19,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/pages/Auth/index.vue"),
     meta: {
       requiredAuth: false,
-      guestOnly: true,
       title: "Authorization",
       layout: "auth",
     },

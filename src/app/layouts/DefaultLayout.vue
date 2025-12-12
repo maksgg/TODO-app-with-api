@@ -10,17 +10,14 @@ onMounted(useStore.mountUser);
 </script>
 
 <template>
-  <div class="flex justify-center items-center h-screen bg-primary gap-5">
-    <VLoader
-      v-if="useStore.loading"
-      size="lg"
-    />
-    <div
-      v-else
-      class="flex flex-col-reverse justify-center items-center gap-5 h-screen"
-    >
-      <RouterView />
-      <slot />
-    </div>
-  </div>
+  <VLoader
+    v-if="useStore.loading"
+    size="lg"
+  />
+  <main
+    v-else
+    class="relative flex justify-center items-center gap-10"
+  >
+    <RouterView />
+  </main>
 </template>
