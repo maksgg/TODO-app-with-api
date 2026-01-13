@@ -1,8 +1,13 @@
-/**
- * 🛠️ Utils
- *
- * Чисті функції: formatDate, validateEmail
- */
+export {
+  formatDate,
+} from "./dateFormatter";
 
-export {};
+export {
+  getInitials,
+  getAvatarColor,
+} from "./profileAvatar";
+
+export {
+  firstLetterUp,
+} from "./textFormatters";
 

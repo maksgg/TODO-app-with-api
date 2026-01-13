@@ -1,0 +1,51 @@
+{
+  "auth": {
+    "login": {
+      "success": "Успіх",
+      "login": "Логін",
+      "email_address": "Адреса електронної пошти",
+      "password": "Пароль",
+      "remember_me": "Запам'ятати мене",
+      "sign_in": "Увійдіть",
+      "create_new_account": "Створити новий акаунт",
+      "forgot_password?": "Забули пароль?",
+      "log_in": "авторизуватися",
+      "enter_your_email": "Введіть адресу електронної пошти",
+      "enter_your_password": "Введіть свій пароль",
+      "email": "Електронна пошта"
+    },
+    "register": {
+      "success_registration": "Успішна реєстрація",
+      "create_account": "Створити акаунт",
+      "your_name": "Ваше ім'я",
+      "email_address": "Адреса електронної пошти",
+      "password": "Пароль",
+      "confirm_password": "Підтвердьте пароль",
+      "remember_me": "Запам'ятати мене",
+      "sign_up": "Зареєструватися",
+      "already_have_an_account?": "Вже маєте акаунт?",
+      "create_your_account": "Створіть свій акаунт",
+      "enter_your_name": "Введіть своє ім'я",
+      "enter_your_email": "Введіть адресу електронної пошти",
+      "enter_your_password": "Введіть свій пароль",
+      "confirm_your_password": "Підтвердьте свій пароль",
+      "name": "Ім'я",
+      "email": "Електронна пошта",
+      "repeat_password": "Повторіть пароль"
+    },
+    "errorMsg": {
+      "write_your_name": "Напишіть своє ім'я",
+      "name_should_be_at_least_5_letters": "Назва має складатися не менше ніж з 5 букв",
+      "write_email": "Напишіть електронний лист",
+      "please_write_real_email": "Будь ласка, напишіть справжній електронний лист",
+      "write_password": "Напишіть пароль",
+      "password_need_to_be_8_symbols": "Пароль повинен складатися з 8 символів",
+      "repeat_password": "Повторіть пароль",
+      "passwords_must_match": "Паролі мають збігатися"
+    },
+    "tabs": {
+      "sign_in": "Увійдіть",
+      "sign_up": "Зареєструватися"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "auth": {
+    "login": {
+      "success": "Success",
+      "login": "Login",
+      "email_address": "Email address",
+      "password": "Password",
+      "remember_me": "Remember me",
+      "sign_in": "Sign in",
+      "create_new_account": "Create new account",
+      "forgot_password?": "Forgot password?",
+      "log_in": "Log in",
+      "enter_your_email": "Enter your email",
+      "enter_your_password": "Enter your password",
+      "email": "Email"
+    },
+    "register": {
+      "success_registration": "Success registration",
+      "create_account": "Create account",
+      "your_name": "Your name",
+      "email_address": "Email address",
+      "password": "Password",
+      "confirm_password": "Confirm password",
+      "remember_me": "Remember me",
+      "sign_up": "Sign up",
+      "already_have_an_account?": "Already have an account?",
+      "create_your_account": "Create your account",
+      "enter_your_name": "Enter your name",
+      "enter_your_email": "Enter your email",
+      "enter_your_password": "Enter your password",
+      "confirm_your_password": "Confirm your password",
+      "name": "Name",
+      "email": "Email",
+      "repeat_password": "Repeat password"
+    },
+    "errorMsg": {
+      "write_your_name": "Write your name",
+      "name_should_be_at_least_5_letters": "Name should be at least 5 letters",
+      "write_email": "Write email",
+      "please_write_real_email": "Please write real email",
+      "write_password": "Write password",
+      "password_need_to_be_8_symbols": "Password need to be 8 symbols",
+      "repeat_password": "Repeat password",
+      "passwords_must_match": "Passwords must match"
+    },
+    "tabs": {
+      "sign_in": "Sign in",
+      "sign_up": "Sign up"
+    }
+  }
+}

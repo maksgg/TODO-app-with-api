@@ -1,45 +1,53 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
-import { useThemeStore } from "../composables/useTheme";
+import { useThemeStore } from "@/features/theme/store/useThemeStore";
+import VSwitch from "@/shared/ui/common/VSwitch.vue";
+import SwitchSunIcon from "@/shared/ui/icons/SwitchSunIcon.vue";
+import ThemeMoonIcon from "@/shared/ui/icons/ThemeMoonIcon.vue";
 
 const themeStore = useThemeStore();
 
-const isDark = computed(() => themeStore.isDark);
-
-const toggleTheme = () => {
-  themeStore.setTheme(isDark.value ? "light" : "dark");
-};
+const theme = computed<boolean>({
+  get: () => themeStore.currentTheme === "dark",
+  set: (newValue: boolean) => themeStore.setTheme(newValue ? "dark" : "light"),
+});
+onMounted(themeStore.initTheme);
 </script>
 
 <template>
-  <button
-    class="theme-toggle"
-    :aria-label="isDark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему'"
-    @click="toggleTheme"
+  <VSwitch
+    id="theme"
+    v-model="theme"
+    variant="custom"
   >
-    <span v-if="isDark">🌙</span>
-    <span v-else>☀️</span>
-  </button>
+    <template #custom-switch="{ checked }">
+      <div
+        :class="[
+          `rounded-2xl border relative transition-all duration-300
+          bg-themeSwitchBg bg-cover bg-center w-[60px] h-[32px]`,
+          !checked ?
+            `border-none` :
+            'border-themeSwitchBorder'
+        ]"
+      >
+        <div
+          :class="[
+            'absolute top-1/2 -translate-y-1/2 transition-all duration-300',
+            checked ? 'left-2' : 'left-[calc(100%-35%)]'
+          ]"
+        >
+          <SwitchSunIcon v-if="!checked" />
+          <ThemeMoonIcon v-else />
+        </div>
+        <div
+          :class="[
+            `absolute top-1/2 -translate-y-1/2 rounded-full shadow-themeSwitchShadow w-[26px]
+            h-[26px] flex items-center justify-center transition-all duration-300 bg-themeSwitch`,
+            !checked ? 'left-[3px]' : 'left-[calc(100%-3px)] -translate-x-full'
+          ]"
+        />
+      </div>
+    </template>
+  </VSwitch>
 </template>
-
-<style scoped>
-.theme-toggle {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background: transparent;
-  border: 1px solid #e5e7eb;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 1.25rem;
-}
-
-.theme-toggle:hover {
-  background: #f3f4f6;
-}
-
-.theme-toggle:active {
-  transform: scale(0.95);
-}
-</style>
-
