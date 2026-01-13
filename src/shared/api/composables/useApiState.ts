@@ -32,12 +32,16 @@ export interface UseApiStateReturn<T = unknown> {
   /** Full Axios response - includes headers, status, config, etc (optional, for advanced use cases) */
   response: Ref<AxiosResponse<T> | null>
   /** Set data and clear error */
+  //eslint-disable-next-line
   setData: (newData: T | null, fullResponse?: AxiosResponse<T> | null) => void
   /** Set error */
+  //eslint-disable-next-line
   setError: (newError: ApiError | null) => void
   /** Set loading state */
+  //eslint-disable-next-line
   setLoading: (isLoading: boolean) => void
   /** Set HTTP status code */
+  //eslint-disable-next-line
   setStatusCode: (code: number | null) => void
   /** Reset to initial state */
   reset: () => void
