@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 
-import { useUserStore } from "@/features/user/store/useLoggedUserStore";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VLoader from "@/shared/ui/common/VLoader.vue";
+import Sidebar from "@/widgets/Sidebar/Sidebar.vue";
 
-const useStore = useUserStore();
+const useStore = useAuthStore();
 
-onMounted(useStore.mountUser);
+onMounted(useStore.setUser);
 </script>
 
 <template>
@@ -16,8 +17,9 @@ onMounted(useStore.mountUser);
   />
   <main
     v-else
-    class="relative flex justify-center items-center gap-10"
+    class="relative flex flex-1 gap-3 w-full"
   >
+    <Sidebar />
     <RouterView />
   </main>
 </template>

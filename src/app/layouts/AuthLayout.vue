@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import Header from "@/widgets/Header/Header.vue";
 </script>
 
 <template>
-  <div class="relative flex flex-col-reverse justify-center items-center w-full">
+  <Header />
+  <main class="relative flex flex-1 justify-center items-center w-full">
     <RouterView />
-  </div>
+  </main>
 </template>

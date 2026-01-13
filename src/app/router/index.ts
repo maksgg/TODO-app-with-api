@@ -5,17 +5,65 @@ import { authGuard } from "./authGuards";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "home",
-    component: () => import("@/pages/Home/index.vue"),
+    name: "Dashboard",
+    component: () => import("@/pages/Dashboard/index.vue"),
     meta: {
       requiredAuth: true,
-      title: "Home",
+      title: "Dashboard",
       layout: "default",
     },
   },
   {
-    path: "/login",
-    name: "login",
+    path: "/list",
+    name: "list",
+    component: () => import("@/pages/List/index.vue"),
+    meta: {
+      requiredAuth: true,
+      title: "Lists of tasks",
+    },
+  },
+  {
+    path: "/analytics",
+    name: "Analytics",
+    component: () => import("@/pages/Analytics/index.vue"),
+    meta: {
+      requiredAuth: true,
+      title: "Analytics",
+      layout: "default",
+    },
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("@/pages/Profile/index.vue"),
+    meta: {
+      requiredAuth: true,
+      title: "Own Profile",
+    },
+  },
+  {
+    path: "/users/:id",
+    name: "user",
+    component: () => import("@/pages/Users/UserInfo.vue"),
+    meta: {
+      requiredAuth: true,
+      title: "UserInfo",
+      role: "admin",
+    },
+  },
+  {
+    path: "/users",
+    name: "admin",
+    component: () => import("@/pages/Users/index.vue"),
+    meta: {
+      requiredAuth: true,
+      title: "AdminPanel",
+      role: "admin",
+    },
+  },
+  {
+    path: "/auth",
+    name: "auth",
     component: () => import("@/pages/Auth/index.vue"),
     meta: {
       requiredAuth: false,
