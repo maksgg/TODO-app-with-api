@@ -1,100 +1,71 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useRegisterFormValidation } from "@/features/auth/composables/useAuthValidation";
-import type { AuthFormType, RegisterRequest } from "@/features/auth/types/index";
+import type { AuthFormType } from "@/features/auth/types/index";
 import VButton from "@/shared/ui/common/VButton.vue";
-import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 
-const { state, v$, mainRequestState } = useRegisterFormValidation();
-
+const { state, v$ } = useRegisterFormValidation();
+const { t } = useI18n();
 const { fetchRegisterUser } = useAuthRequests();
 
-const { loading, error, execute } = fetchRegisterUser({
+const { loading, error, execute: request } = fetchRegisterUser({
+  authMode: "public",
   onSuccess: () => {
-    toast.success("Success registration");
-    emit("toggle", "login");
+    toast.success(t("auth.register.success_registration"));
+    emit("toLogin", "login");
   },
 });
 
-const request = async (state: RegisterRequest) => await execute({ data: state });
+const emit = defineEmits<{ "toLogin" : [AuthFormType] }>();
 
 const submitForm = async () => {
   const validate = await v$.value.$validate();
 
   if(!validate) return;
 
-  const mainState = mainRequestState();
-
-  await request(mainState);
+  await request({ data: state });
 };
-
-const emit = defineEmits<{ "toggle" : [AuthFormType] }>();
-
-const changeForm = () => emit("toggle", "login");
 </script>
 
 <template>
   <form
     class="flex flex-col items-center gap-5
-    rounded-xl w-[24rem] text-text-color"
+    rounded-xl w-full text-text-color"
     @submit.prevent="submitForm"
   >
-    <h1 class="text-login leading-none mb-[25px]">
-      Create Account
+    <h1 class="text-login text-center leading-none">
+      {{ $t("auth.register.create_your_account") }}
     </h1>
     <VInput
       v-model="state.name"
+      :label="t('auth.register.name')"
       :validation="v$.name"
-      variant="custom"
-      icon="user"
-      placeholder="Your name"
+      :placeholder="$t('auth.register.enter_your_name')"
     />
     <VInput
       v-model="state.email"
+      :label="t('auth.register.email')"
       :validation="error?.status ?
         { $error: true, $errors: [{ $message: error.message }] } : v$.email"
-      variant="custom"
-      icon="mail"
-      placeholder="Email Address"
+      :placeholder="$t('auth.register.enter_your_email')"
     />
     <VInput
       v-model="state.password"
+      :label="t('auth.register.password')"
       :validation="v$.password"
       type="password"
-      icon="lock"
-      variant="customPassword"
-      placeholder="Password"
+      :placeholder="$t('auth.register.enter_your_password')"
     />
-    <VInput
-      v-model="state.confirmPassword"
-      :validation="v$.confirmPassword"
-      type="password"
-      icon="lock"
-      variant="customPassword"
-      placeholder="Confirm Password"
+    <VButton
+      :text="$t('auth.register.sign_up')"
+      type="submit"
+      size="full"
+      :loader="loading"
+      class="text-auth-btn mt-3"
     />
-    <div class="flex flex-col gap-5 w-full">
-      <VCheckbox
-        text="Remember me"
-        class="text-auth"
-      />
-      <VButton
-        text="SIGN UP"
-        type="submit"
-        size="full"
-        :loader="loading"
-        text-auth-btn
-      />
-      <VButton
-        text="Already have an account?"
-        size="fit"
-        variant="link"
-        class="text-auth"
-        @click="changeForm"
-      />
-    </div>
   </form>
 </template>

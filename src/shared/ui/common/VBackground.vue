@@ -29,6 +29,6 @@
 
 <style scoped>
 .opacity {
-  opacity: 0.3;
+  opacity: 0.1;
 }
 </style>

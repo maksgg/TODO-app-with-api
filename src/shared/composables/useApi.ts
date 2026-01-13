@@ -6,12 +6,13 @@
  * Features:
  * - Automatic state management (loading, error, data)
  * - Request cancellation via AbortController
+ * - Global abort on filter changes (useGlobalAbort option)
  * - Retry logic
  * - Debouncing
  * - Callbacks (onSuccess, onError, onBefore, onFinish)
  * - Type safety
  * - Full response access (headers, status, config)
- * - Auto cleanup on unmount (can be disabled for stores)
+ * - Auto cleanup on unmount (automatically detected for components vs stores)
  *
  * @example Basic usage in components (most common)
  * ```ts
@@ -25,20 +26,26 @@
  * })
  * ```
  *
- * @example Usage in Pinia stores (disable auto cleanup)
+ * @example With global abort (cancels on filter change)
+ * ```ts
+ * const { data, loading, execute } = useApi<User[]>('/users', {
+ *   useGlobalAbort: true, // Request will be cancelled when global filters change
+ *   immediate: true
+ * })
+ * ```
+ *
+ * @example Usage in Pinia stores (automatic cleanup detection)
  * ```ts
  * export const useUserStore = defineStore('user', () => {
  *   const fetchUsers = async () => {
- *     const { execute } = useApi<User[]>('/users', {
- *       autoCleanup: false // Important! Prevents cleanup on component unmount
- *     })
+ *     // No autoCleanup needed! Automatically detects we're in a store (no component scope)
+ *     const { execute } = useApi<User[]>('/users')
  *     return execute()
  *   }
  *
  *   const createUser = async (data: CreateUserDto) => {
- *     const { execute } = useApiPost<User, CreateUserDto>('/users', {
- *       autoCleanup: false
- *     })
+ *     // Works perfectly in stores without any special configuration
+ *     const { execute } = useApiPost<User, CreateUserDto>('/users')
  *     return execute({ data })
  *   }
  * })
@@ -99,7 +106,7 @@
 
 import { useDebounceFn } from "@vueuse/core";
 import type { AxiosResponse } from "axios";
-import { ref, type Ref, onUnmounted } from "vue";
+import { ref, type Ref, onUnmounted, getCurrentScope } from "vue";
 
 import apiClient from "../api/client";
 import type {
@@ -111,6 +118,7 @@ import type {
 
 import { handleApiError } from "@/shared/api";
 import { useApiState } from "@/shared/api/composables";
+import { useAbortController } from "@/shared/composables/useAbortController";
 
 /**
  * Main composable for API requests
@@ -131,27 +139,67 @@ export function useApi<T = unknown, D = unknown>(
     skipErrorNotification = false,
     retry = false,
     retryDelay = 1000,
-    autoCleanup = true,
     authMode = "default",
+    useGlobalAbort = true,
+    initialLoading = false,
     ...axiosConfig
   } = options;
 
+  const startLoading = initialLoading ?? immediate;
+  // Detect if we're inside a component scope (has lifecycle)
+  // If true - cleanup automatically, if false (store/service) - skip cleanup
+  const hasActiveScope = getCurrentScope() !== undefined;
+
   // State
-  const state = useApiState<T>(initialData as T | null);
+  const state = useApiState<T>(initialData as T | null, {
+    initialLoading: startLoading,
+  });
   const abortController = ref<AbortController | null>(null);
+
+  // Global abort controller (for filter changes)
+  const globalAbort = useGlobalAbort ? useAbortController() : null;
 
   /**
      * Execute request
      */
   const executeRequest = async (config?: ApiRequestConfig<D>):
   Promise<T | null> => {
+    const requestUrl = typeof url === "string" ? url : url.value;
+
     // Cancel previous request if exists
     if (abortController.value) {
       abortController.value.abort();
     }
 
-    // Create new AbortController
+    // Create new AbortController for this request
     abortController.value = new AbortController();
+
+    // Track if this request was cancelled (to avoid resetting loading state)
+    let wasCancelled = false;
+
+    // If using global abort, listen to global signal and abort local controller
+    let globalAbortHandler: (() => void) | null = null;
+    let subscribedSignal: AbortSignal | null = null;
+    let subscribedAbortCount: number | null = null;
+    if (globalAbort) {
+      const globalSignal = globalAbort.getSignal();
+
+      // Only subscribe if signal is not already aborted
+      // (if it's aborted, this request was triggered AFTER the abort, so it should proceed)
+      if (!globalSignal.aborted) {
+        subscribedSignal = globalSignal;
+        subscribedAbortCount = globalAbort.abortCount.value;
+
+        globalAbortHandler = () => {
+          // Only abort if this is still the same abort cycle
+          // (prevents aborting new requests that started after filter change)
+          if (globalAbort.abortCount.value === subscribedAbortCount) {
+            abortController.value?.abort();
+          }
+        };
+        globalSignal.addEventListener("abort", globalAbortHandler);
+      }
+    }
 
     // Before callback
     onBefore?.();
@@ -161,11 +209,15 @@ export function useApi<T = unknown, D = unknown>(
     state.setError(null);
 
     try {
-      const requestUrl = typeof url === "string" ? url : url.value;
+      // Always use local signal - it will be aborted by:
+      // 1. Local abort() call (manual or onUnmounted)
+      // 2. Global filter change (via globalAbortHandler)
+      const signal = abortController.value.signal;
+
       const mergedConfig: ApiRequestConfig<D> = {
         ...axiosConfig,
         ...config,
-        signal: abortController.value.signal,
+        signal,
         authMode: config?.authMode || authMode,
       };
 
@@ -188,10 +240,11 @@ export function useApi<T = unknown, D = unknown>(
       return response.data;
     }
     catch (err: unknown) {
-      // Ignore cancelled requests
+      // Ignore cancelled requests - don't reset loading state
       if ((err as { name?: string })?.name === "AbortError" || (err as {
         name?: string
       })?.name === "CanceledError") {
+        wasCancelled = true;
         return null;
       }
 
@@ -215,8 +268,16 @@ export function useApi<T = unknown, D = unknown>(
       return null;
     }
     finally {
-      state.setLoading(false);
-      onFinish?.();
+      // Cleanup global abort handler from the signal we subscribed to
+      if (globalAbortHandler && subscribedSignal) {
+        subscribedSignal.removeEventListener("abort", globalAbortHandler);
+      }
+
+      // Don't reset loading if request was cancelled (new request is in progress)
+      if (!wasCancelled) {
+        state.setLoading(false);
+        onFinish?.();
+      }
     }
   };
 
@@ -229,8 +290,10 @@ export function useApi<T = unknown, D = unknown>(
 
   /**
      * Abort request
+     * Works with both local and global abort controllers
      */
   const abort = (message?: string) => {
+    // Abort local controller if exists
     if (abortController.value) {
       abortController.value.abort(message);
       abortController.value = null;
@@ -246,8 +309,9 @@ export function useApi<T = unknown, D = unknown>(
   };
 
   // Automatic cleanup on component unmount
-  // Can be disabled for stores/services via autoCleanup: false option
-  if (autoCleanup) {
+  // Only register if we're inside a component scope (has active Vue instance)
+  // Stores/services won't have active scope, so cleanup won't be registered
+  if (hasActiveScope) {
     onUnmounted(() => {
       abort();
     });
@@ -287,7 +351,7 @@ function shouldRetry(error: ApiError, retry: boolean | number): boolean {
  * Retry logic with exponential backoff
  */
 async function retryRequest<T, D>(
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   requestFn: (config?: ApiRequestConfig<D>) => Promise<T | null>,
   maxRetries: number,
   delay: number,
@@ -391,4 +455,3 @@ export function useApiDelete<T = unknown>(
 ): UseApiReturn<T> {
   return useApi<T>(url, { ...options, method: "DELETE" });
 }
-

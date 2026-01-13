@@ -5,7 +5,7 @@ type CheckboxStyle = "primary" | "custom" | "icon";
 
 type CheckboxProps = {
   id?: string;
-  text: string;
+  text?: string;
   modelValue?: boolean;
   disabled?: boolean;
   icon?: string;
@@ -38,8 +38,8 @@ const checked = computed({
 });
 
 const checkboxStyle: Record<CheckboxStyle, string> = {
-  primary: "border-none bg-blue-400",
-  custom: "border-none bg-green-400",
+  primary: "border-none bg-blue-500 text-white",
+  custom: "border-none bg-green-500",
   icon: "text-red-500",
 };
 </script>
@@ -63,7 +63,7 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
     >
     <span
       v-if="!props.icon"
-      :class="[`border bg-transparent stroke-current rounded-sm w-4 h-4
+      :class="[`border stroke-current rounded-sm w-4 h-4
        flex justify-center items-center z-10`,
                checked ? checkboxStyle[props.variant] : '' ]"
     >

@@ -4,7 +4,7 @@ import type { Ref } from "vue";
 
 import VLoader from "./VLoader.vue";
 
-type VariantStyles = "main" | "custom" | "customPassword";
+type VariantStyles = "main";
 
 type ValidationError = {
   $message: string | Ref<string>;
@@ -68,14 +68,15 @@ const inputType = computed((): string => {
 const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPassword.value;
 
 const inputStylesVariant: Record<VariantStyles, string> = {
-  main: "border pl-3 pr-3",
-  custom: "border-b pb-3 pl-10 pr-12 text-auth-btn",
-  customPassword: "border-b pb-3 pl-10 pr-12 text-auth-btn",
+  main: `
+    px-4 py-3 text-text-color bg-primary border border-gray-300 rounded-lg 
+    placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed
+  `,
 };
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 h-[3rem] w-full">
+  <div class="flex flex-col gap-1 w-full h-[5rem]">
     <label
       v-if="props.label"
       :for="inputId"
@@ -111,7 +112,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
       <button
         v-if="props.type === 'password'"
         type="button"
-        class="absolute right-4 bottom-3 flex justify-center items-center cursor-pointer"
+        class="absolute right-4 bottom-3 flex pl-2 cursor-pointer bg-primary"
         @click="togglePasswordIcon"
       >
         <VueFeather :type="isPasswordType ? 'eye-off' : 'eye'" />

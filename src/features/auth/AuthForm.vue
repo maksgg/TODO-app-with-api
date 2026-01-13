@@ -1,23 +1,55 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, type Component } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import LoginForm from "@/features/auth/components/LoginForm.vue";
 import RegisterForm from "@/features/auth/components/RegisterForm.vue";
 import type { AuthFormType } from "@/features/auth/types/index";
+import { Tabs } from "@/shared/types";
+import VTabs from "@/shared/ui/common/VTabs.vue";
 
-const authForm = ref<AuthFormType>("login");
+const route = useRoute();
+const router = useRouter();
+const authTabs: Tabs[] = [
+  { id: "login", label: "auth.tabs.sign_in" },
+  { id: "register", label: "auth.tabs.sign_up" },
+];
 
-const switchForm = (step: AuthFormType) => authForm.value = step;
+const activeTab = computed({
+  get: () => {
+    const mode = route.query.mode as AuthFormType;
+    return forms[mode] ? mode : "login";
+  },
+  set: (newVal) => switchForm(newVal),
+});
+const activeTabComponent = computed(() => forms[activeTab.value]);
 
-const forms = {
+const switchForm = (step: AuthFormType) => {
+  router.replace({
+    query: {
+      mode: step,
+    },
+  });
+};
+
+const forms: Record<AuthFormType, Component> = {
   login: LoginForm,
   register: RegisterForm,
 };
 </script>
 
 <template>
-  <component
-    :is="forms[authForm]"
-    @toggle="switchForm"
-  />
+  <div
+    class="flex flex-col justify-center items-center gap-8 p-12 bg-background rounded-2xl w-[28rem]"
+  >
+    <VTabs
+      v-model="activeTab"
+      :tabs="authTabs"
+      variant="auth"
+    />
+    <component
+      :is="activeTabComponent"
+      @to-login="switchForm"
+    />
+  </div>
 </template>

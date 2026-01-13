@@ -19,7 +19,7 @@ export {
   tokenManager,
   TOKEN_TYPE,
   ACCESS_TOKEN_KEY,
-  // REFRESH_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
   TOKEN_EXPIRES_KEY,
   type TokenStorage,
 } from "./tokenManager";
@@ -28,7 +28,10 @@ export {
 export {
   setupInterceptors,
   setupRequestInterceptor,
+  setupResponseInterceptor,
+  getRefreshStatus,
   AUTH_HEADER,
+  REFRESH_TOKEN_URL,
 } from "./interceptors";
 
 // Error Handler
@@ -56,4 +59,3 @@ export type {
   HttpMethod,
   RetryOptions,
 } from "./types";
-
