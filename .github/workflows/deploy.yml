@@ -1,11 +1,8 @@
 name: Deploy static content to Pages
 
 on:
-  # Запускаємо деплой, коли прилітає код у гілку main
   push:
     branches: ["main"]
-
-  # Дозволяє запускати деплой вручну з вкладки Actions
   workflow_dispatch:
 
 permissions:
@@ -18,7 +15,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Сама робота з деплою
   deploy:
     environment:
       name: github-pages
@@ -27,16 +23,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
+      # 1. Встановлюємо Node.js
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 2. Встановлюємо залежності
+      - name: Install dependencies
+        run: npm install
+
+      # 3. Збираємо проєкт (генеруємо папку dist)
+      - name: Build project
+        run: npm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
+      # 4. Завантажуємо ТІЛЬКИ папку dist (результат збірки)
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Завантажуємо всю папку '.'
-          path: '.'
-          
+          path: './dist' 
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
