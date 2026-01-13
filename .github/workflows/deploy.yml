@@ -32,7 +32,7 @@ jobs:
 
       # 2. Встановлюємо залежності
       - name: Install dependencies
-        run: npm install
+        run: npm install --force
 
       # 3. Збираємо проєкт (генеруємо папку dist)
       - name: Build project
