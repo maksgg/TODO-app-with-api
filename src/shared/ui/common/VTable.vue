@@ -71,8 +71,6 @@ const gridFrames = computed(() => {
   };
 });
 
-const searchField = defineModel<string>();
-
 const sortState = ref<{ sort: string, order: "asc" | "desc" }>({
   sort: "",
   order: "asc",
@@ -98,7 +96,7 @@ const sorted = (columnKey: string) => {
     sortState.value.order = "asc";
   }
 
-  emit("request", { ...sortState.value, ...pagination, q: searchField.value });
+  emit("request", { ...sortState.value, ...pagination });
 };
 
 const loadMore = () => {
@@ -108,7 +106,7 @@ const loadMore = () => {
   };
   if (!pagination.hasMore) return;
 
-  emit("request", { ...sortState.value, ...paginationPayload, q: searchField.value });
+  emit("request", { ...sortState.value, ...paginationPayload });
 };
 </script>
 
@@ -131,13 +129,6 @@ const loadMore = () => {
         :class="['grid border-line-color bg-primary py-6', gridFrames]"
         :style="gridFrames.style"
       >
-        <input
-          v-model="searchField"
-          class="block max-w-[30rem] py-2 px-5 text-sm text-text-color
-          border border-line-color rounded-2xl bg-gray-50
-          focus:ring-primary focus:border-blue-500 outline-none transition-all"
-          placeholder="Search by name or email..."
-        >
         <slot
           name="toolBar"
           :tool-bar="toolbarConfig"
@@ -187,7 +178,7 @@ const loadMore = () => {
         v-for="col in header"
         :key="col.key"
         :class="[
-          col.textAlign, 'pt-4 pb-2 pl-2 border-b text-sm leading-none',
+          col.textAlign, 'pt-4 pb-2 pl-2 border-b text-sm',
           col.key === 'actions' ? 'overflow-visible' : 'truncate'
         ]"
       >

@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
 
+import VIcon from "./VIcon.vue";
 import VLoader from "./VLoader.vue";
 
 type ButtonStyle = "primary" | "dangerous" | "ghost" | "sidebar";
@@ -11,6 +12,7 @@ type ButtonSize = "sm" | "md" | "lg" | "fit" | "full";
 type ButtonProps = {
   text?: string;
   showText?: boolean;
+  isOpen?: boolean | null;
   type?: "button" | "submit" | "reset"
   disabled?: boolean;
   loader?: boolean;
@@ -25,6 +27,7 @@ type ButtonProps = {
 const props = withDefaults(defineProps<ButtonProps>(), {
   text: "",
   showText: true,
+  isOpen: null,
   type: "button",
   disabled: false,
   loader: false,
@@ -44,6 +47,10 @@ const baseButtonStyles: string = `
   border border-transparent leading-none
   disabled:bg-gray-500 disabled:bg-none disabled:text-gray-300 disabled:cursor-not-allowed
 `;
+const iconTransform = computed(() => {
+  if (props.variant !== "sidebar") return "";
+  return !props.showText ? "translateX(-8px)" : "translateX(0)";
+});
 
 const btnStyleVariants: Record<ButtonStyle, string> = {
   primary: `
@@ -63,11 +70,18 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     enabled:hover:bg-transparent
   `,
   ghost: `
-    border-none text-text-color
+    border-none text-sidebarText
     transition-all duration-300
   `,
-  sidebar: `group relative flex items-center gap-5 px-1 py-2 w-full border-none 
-    overflow-visible transition-all whitespace-nowrap`,
+  sidebar: `group relative flex items-center gap-2 px-4 py-2 w-full border-none 
+    whitespace-nowrap text-sidebarText hover:rounded-lg leading-none
+    [&.router-link-active]:bg-sidebarActiveLink
+    [&.router-link-active]:text-primary
+    [&.router-link-active]:rounded-lg
+    [&.router-link-active]:shadow-sidebarActive
+    hover:shadow-sidebarHoverGradient
+    hover:text-white
+  `,
 };
 
 const btnSize: Record<ButtonSize, string> = {
@@ -94,14 +108,19 @@ const btnSize: Record<ButtonSize, string> = {
   >
     <div
       v-if="$slots['icon-left'] || props.icon || props.loader"
-      class="flex justify-center items-center"
+      :class="['flex justify-center items-center']"
+      :style="{
+        transform: iconTransform,
+        transition: 'transform 0.1s cubic-bezier(0.4, 0, 0.2, 1)'
+      }"
     >
       <slot name="icon-left">
         <VLoader v-if="props.loader" />
-        <VueFeather
+        <VIcon
           v-else
           :type="props.icon"
           :size="props.iconSize"
+          :class="{ 'text-btnBg' : isOpen}"
         />
       </slot>
     </div>

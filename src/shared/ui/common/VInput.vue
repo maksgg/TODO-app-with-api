@@ -4,7 +4,7 @@ import type { Ref } from "vue";
 
 import VLoader from "./VLoader.vue";
 
-type VariantStyles = "main";
+type VariantStyles = "main" | "table";
 
 type ValidationError = {
   $message: string | Ref<string>;
@@ -72,11 +72,16 @@ const inputStylesVariant: Record<VariantStyles, string> = {
     px-4 py-3 text-text-color bg-primary border border-gray-300 rounded-lg 
     placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed
   `,
+  table: `
+   max-w-[30rem] py-2 px-5 text-sm text-text-color
+          border border-line-color rounded-2xl bg-gray-50
+          focus:ring-primary focus:border-blue-500 outline-none transition-all
+  `,
 };
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 w-full h-[5rem]">
+  <div class="flex flex-col gap-1 w-full">
     <label
       v-if="props.label"
       :for="inputId"
