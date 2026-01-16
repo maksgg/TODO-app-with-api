@@ -57,6 +57,10 @@ type Roles = {
 type UserPermissions = {
   permissions: string[];
 };
+type PermissionsByRole = {
+  USER: string[];
+  ADMIN: string[];
+};
 
 type Permissions = {
   key: string;
@@ -85,6 +89,7 @@ export type {
   ToolBar,
   UserRole,
   UserPermissions,
+  PermissionsByRole,
   Permissions,
   Roles,
   Tabs,

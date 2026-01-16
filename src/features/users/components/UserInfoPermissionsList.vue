@@ -3,7 +3,7 @@ import { watch, ref, computed } from "vue";
 
 import UserInfoPermissionsSkeletonList from "./UserInfoPermissionsSkeletonList.vue";
 
-import { UserInfo, Roles, Permissions, UserPayload } from "@/shared/types";
+import { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VList from "@/shared/ui/common/VList.vue";
@@ -18,10 +18,12 @@ const {
   loader,
   user,
   permissionsData,
+  permissionsByRoles,
 } = defineProps<{
   loader: boolean;
   user: UserInfo | null;
   permissionsData: Permissions[] | null,
+  permissionsByRoles: PermissionsByRole | null
 }>();
 
 const emit = defineEmits<{ "updated": [payload: UserPayload] }>();
@@ -56,29 +58,32 @@ watch(
 );
 
 watch(
-  () => [changedRole.value?.value, selectedAll.value],
+  [() => changedRole.value?.value, selectedAll],
   ([newRole, newAll], [oldRole, oldAll]) => {
-    if (!permissionsData) return;
+    if (!permissionsByRoles || !permissionsData) return;
 
-    if (newRole === "admin" || newAll) {
-      permissionsData.forEach((el) => checkboxMap.value[el.value] = true);
+    const roleChanged = newRole !== oldRole;
+    const selectAllChanged = newAll !== oldAll;
 
-      if (newRole === "admin") selectedAll.value = true;
+    if (roleChanged) {
+      checkboxMap.value = {};
+
+      if (newRole === "admin") {
+        permissionsByRoles.ADMIN.forEach(p => checkboxMap.value[p] = true);
+        selectedAll.value = true;
+      }
+      if(newRole === "user") {
+        permissionsByRoles?.USER.forEach(p => checkboxMap.value[p] = true);
+      }
       return;
     }
 
-    if (newRole === oldRole && !newAll && oldAll) {
-      checkboxMap.value = {};
-      return;
+    if (selectAllChanged && newRole !== "admin") {
+      permissionsData.forEach(p => {
+        checkboxMap.value[p.value] = newAll;
+      });
     }
-
-    if (newRole !== oldRole) {
-      checkboxMap.value = {};
-      user?.permissions.forEach((el) => (checkboxMap.value[el] = true));
-      selectedAll.value = false;
-    }
-  },
-);
+  });
 </script>
 
 <template>

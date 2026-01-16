@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AdminPanelFeature from "@/features/users/AdminPanelFeature.vue";
+import UsersTable from "@/features/users/UsersTable.vue";
 </script>
 
 <template>
-  <AdminPanelFeature />
+  <UsersTable />
 </template>

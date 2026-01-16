@@ -8,6 +8,7 @@ import { TableParams, ToolBar } from "@/shared/types";
 import VAvatar from "@/shared/ui/common/VAvatar.vue";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
+import VInput from "@/shared/ui/common/VInput.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 import VTable from "@/shared/ui/common/VTable.vue";
@@ -122,12 +123,11 @@ onMounted(() => loadData());
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 h-screen px-12 pt-6 pb-2 ">
+  <div class="relative flex flex-col flex-1 h-screen px-12 pt-6 pb-2">
     <h1 class="text-4xl font-semibold">
       User Management
     </h1>
     <VTable
-      v-model="toolBar.searchField"
       :header="userHeader"
       :rows="usersData?.data"
       :loader="mainLoader"
@@ -136,11 +136,19 @@ onMounted(() => loadData());
       @request="requestSortTable"
     >
       <template #toolBar>
-        <VMultiselect
-          v-model:model="selectedRole"
-          :options="toolbarConfig"
-          track-by="value"
+        <VInput
+          v-model="toolBar.searchField"
+          variant="table"
+          placeholder="Search by name or email..."
         />
+        <div class="flex gap-2 items-center">
+          <span>Role</span>
+          <VMultiselect
+            v-model:model="selectedRole"
+            :options="toolbarConfig"
+            track-by="value"
+          />
+        </div>
       </template>
       <template #col-member="{ row }">
         <div class="flex items-center gap-2">
@@ -148,7 +156,7 @@ onMounted(() => loadData());
             :name="row.name"
             class="shrink-0"
           />
-          <div class="flex flex-col gap-1 justify-center min-w-0">
+          <div class="flex flex-col justify-center min-w-0">
             <span class="truncate text-sm">{{ row.name }}</span>
             <span class="truncate text-[12px]">{{ row.email }}</span>
           </div>

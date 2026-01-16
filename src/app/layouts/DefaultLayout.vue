@@ -11,13 +11,15 @@ onMounted(useStore.setUser);
 </script>
 
 <template>
-  <VLoader
+  <div
     v-if="useStore.loading"
-    size="lg"
-  />
+    class="flex flex-1 items-center justify-center min-h-screen"
+  >
+    <VLoader size="lg" />
+  </div>
   <main
     v-else
-    class="relative flex flex-1 gap-3 w-full"
+    class="relative flex flex-1 w-full"
   >
     <Sidebar />
     <RouterView />

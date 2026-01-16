@@ -20,9 +20,14 @@ const {
   fetchAllUsersPermissions,
   userRoleUpdate,
   userPermissionsUpdate,
+  fetchUsersPermissionsByRole,
 } = useUsersRequests();
 
 const { data: permissionsData, loading: fetchPermissionsLoader } = fetchAllUsersPermissions({
+  immediate: true,
+});
+
+const { data: permissionsByRoles } = fetchUsersPermissionsByRole({
   immediate: true,
 });
 
@@ -84,6 +89,7 @@ const updatedUserData = async (payload: UserPayload) => {
       :user="user"
       :loader="mainLoader"
       :permissions-data="permissionsData"
+      :permissions-by-roles="permissionsByRoles"
       class="col-span-3"
       @updated="updatedUserData"
     />

@@ -17,14 +17,27 @@ export default {
                 18: '4.5rem',
                 88: '22rem',
             },
+            borderColor: {
+              themeSwitchB: 'var(--color-themeSwitchBorder)',
+            },
             boxShadow: {
-                'soft': '0 0 12px -6px var(--color-shadow-color)', 
-                'taught': '0 0 14px -2px var(--color-shadow-color)',
-                'themeSwitchShadow': 'var(--color-themeSwitchShadow)',
+                soft: '0 0 12px -6px var(--color-shadow-color)', 
+                taught: '0 0 14px -2px var(--color-shadow-color)',
+                themeSwitchShadow: 'var(--color-themeSwitchShadow)',
+                sidebarHover: 'inset 0px 4px 8px -4px rgba(0, 8, 232, 0.2)',
+                sidebarActive: '0px 0 8px 0px rgba(0, 0, 0, 0.35)',
+                sidebarBgShadow: '0px 0px 15px 0px rgba(49, 33, 191, 0.4)',
+                themeMorph: 'inset 1px -1px 1px -1px rgba(255, 255, 255), inset -1px 1px 1px -1px #fff',
+            },
+            dropShadow: {
+                themeSvgShadow: [ // shadow for themeSwitch Svg
+                    '0 0 1.26px rgba(255, 255, 255, 1)',
+                    '0 0 2.52px rgba(255, 255, 255, 1)'
+                ],
             },
             backgroundImage: {
-              'theme-bg': 'var(--color-bg-image)',
-              'profileImg': 'var(--color-profileImg)',
+              sidebarHoverGradient: 'linear-gradient(to bottom, rgba(0, 8, 232, 0.2) 0%, transparent 100%)',
+              themeSwitchGradient: 'linear-gradient(to bottom, var(--color-gradientFrom), var(--color-gradientTo))',
             }
         },
     },
@@ -33,6 +46,17 @@ export default {
         light: {
         background: '#F9FAFB',
         btnBg: '#6C7CFF',
+        // sidebarBg: '#232A4A',
+        sidebarText: '#A6ADCF',
+        sidebarHoverLink: '#232A4A',
+        sidebarActiveLink: '#11162A',
+
+        gradientFrom: '#422CD0',
+        gradientTo: '#7592FF',
+        themeSwitchBorder: '#B7C7F8',
+        thumb: 'rgba(11, 0, 80, 0.2)',
+
+
         primary: '#ffffff',
         main: '#012e43',
         sidebar: '#F2F3F3',
@@ -46,15 +70,22 @@ export default {
         'grid-color': '#000000',
         'shadow-color': '#1B0021',
         'table-head': '#F1F5F9',
-        themeSwitch: '#FFFFFF',
-        themeSwitchShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.35)',
-        themeSwitchBg: '#6C7CFF',
-        themeSwitchBorder: 'none',
       },
       dark: {
         background: '#0B0F1A',
         btnBg: '#6C7CFF',
-        primary: '#2F2F61',
+        // sidebarBg: '#232A4A',
+        sidebarText: '#A6ADCF',
+        sidebarHoverLink: '#232A4A',
+        sidebarActive: '#11162A',
+
+        gradientFrom: '#161C33',
+        gradientTo: '#183BC4',
+        themeSwitchBorder: '#2C345A',
+        thumb: 'rgba(11, 0, 80, 0.2)',
+
+        
+        primary: '#2d2d91',
         main: '#7f1917',
         sidebar: '#A9B1B1',
         secondary: '#94a3b8',
@@ -67,10 +98,6 @@ export default {
         'grid-color': '#ffffff',
         'shadow-color': '#f3f4f6',
         'table-head': '#6868BA',
-        themeSwitch: '#F9FAFB',
-        themeSwitchShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.35)',
-        themeSwitchBg: '#161C33',
-        themeSwitchBorder: '#E0E9FB',
       },
       }),
   ],

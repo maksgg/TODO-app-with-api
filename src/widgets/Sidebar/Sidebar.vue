@@ -28,7 +28,7 @@ const sidebarLinks = [
   },
   {
     text: "Analytics",
-    icon: "bar-chart-2",
+    icon: "analytics",
     to: "/analytics",
     tooltip: "Analytics",
   },
@@ -55,15 +55,16 @@ const filteredLinks = computed(() => {
 <template>
   <aside
     :class="[
-      `flex flex-col justify-between items-start gap-5 rounded-r-lg
-      p-6 bg-sidebar overflow-visible text-sm transition-all`,
+      `flex flex-col justify-between items-start gap-5 rounded-r-lg sidebar-bg
+      p-6 text-sm transition-all sidebar-custom-bg border shadow-sidebarBgShadow`,
       expanded ? 'w-[16rem]': 'w-[5rem]'
     ]"
   >
     <div class="flex flex-col gap-5 w-full">
       <VButton
-        :icon="expanded ? 'chevron-left' : 'chevron-right'"
+        :icon="expanded ? 'chevronLeft' : 'chevronRight'"
         variant="ghost"
+        :is-open="expanded"
         class="self-end pr-1"
         @click="expandSidebar"
       />
@@ -83,7 +84,7 @@ const filteredLinks = computed(() => {
       <VButton
         text="Log out"
         :show-text="expanded"
-        icon="log-out"
+        icon="logOut"
         size="full"
         variant="sidebar"
         tooltip="Log out"
@@ -119,3 +120,22 @@ const filteredLinks = computed(() => {
     </VModal>
   </aside>
 </template>
+
+<style scoped>
+.sidebar-bg {
+  background:
+    /* --- ФОНИ (обрізаємо по padding-box) --- */
+    linear-gradient(180deg, rgba(16, 22, 36, 0.9) 0%, rgba(25, 33, 50, 0.9) 100%) padding-box,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(0, 0, 0, 0) 6.88%) padding-box,
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 85.25%, rgba(74, 118, 255, 0.0875) 100%) padding-box,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015) 51.81%, rgba(0, 0, 0, 0) 68.99%) padding-box,
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 86.96%, rgba(74, 118, 255, 0.0525) 100%) padding-box,
+
+    /* --- ГРАДІЄНТ РАМКИ (обрізаємо по border-box) --- */
+    /* Цей шар лежить найнижче і видимий лише там, де прозора рамка */
+    linear-gradient(
+      180deg, rgba(108, 163, 255, 0.3) 0%,
+      rgba(181, 139, 255, 0.3) 50%,
+      rgba(100, 255, 226, 0.3) 100%) border-box;
+}
+</style>

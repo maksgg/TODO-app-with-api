@@ -10,6 +10,9 @@ export default () => {
   const fetchAllUsersPermissions = (options?: UseApiOptions<Permissions[]>) => {
     return useApiGet(`/permissions`, options);
   };
+  const fetchUsersPermissionsByRole = (options?: UseApiOptions<any[]>) => {
+    return useApiGet(`/permissions/roles`, options);
+  };
 
   const fetchTargetUser = (
     id: string | string[],
@@ -44,6 +47,7 @@ export default () => {
     fetchTargetUser,
     deleteTargetUser,
     fetchAllUsersPermissions,
+    fetchUsersPermissionsByRole,
     userRoleUpdate,
     userPermissionsUpdate,
   };

@@ -111,94 +111,97 @@ const loadMore = () => {
 </script>
 
 <template>
-  <div
-    class="relative self-center flex flex-col w-full
-    bg-primary text-text-color overflow-auto no-scrollbar"
-  >
+  <div class="relative flex-1 w-full overflow-auto no-scrollbar">
     <div
       v-if="loader"
-      :class="[`absolute inset-0 z-50 flex items-center justify-center bg-white/60
+      :class="[`absolute inset-0 z-[100] flex items-center justify-center bg-white/60
       backdrop-blur-[2px] transition-all duration-300`
       ]"
     >
       <VLoader size="lg" />
     </div>
-    <div class="sticky top-0 z-50 bg-primary">
-      <div
-        v-if="searchable"
-        :class="['grid border-line-color bg-primary py-6', gridFrames]"
-        :style="gridFrames.style"
-      >
-        <slot
-          name="toolBar"
-          :tool-bar="toolbarConfig"
-          :sort="sorted"
-        />
+    <div
+      :class="[`relative self-center flex flex-col w-full
+                bg-primary text-text-color`,
+               !pagination.hasMore ? 'pb-[7rem]' : 'pb-[2rem]']"
+    >
+      <div class="sticky top-0 z-50 bg-primary">
+        <div
+          v-if="searchable"
+          :class="['grid border-line-color bg-primary py-6', gridFrames]"
+          :style="gridFrames.style"
+        >
+          <slot
+            name="toolBar"
+            :tool-bar="toolbarConfig"
+            :sort="sorted"
+          />
+        </div>
+        <div
+          :class="['grid border-line-color bg-primary shadow-md',
+                   gridFrames
+          ]"
+          :style="gridFrames.style"
+        >
+          <div
+            v-for="head in header"
+            :key="head.key"
+            :class="[
+              'p-2 font-medium overflow-hidden bg-table-head',
+              sortAble && shouldShowFilter(head) ? 'flex': head.textAlign
+            ]"
+          >
+            <slot
+              :name="`head-${head.key}`"
+              :column="head"
+            >
+              {{ head.label }}
+              <button
+                v-if="sortAble && shouldShowFilter(head)"
+                class="ml-auto"
+                @click="sorted(head.key)"
+              >
+                <VTableSortIcon
+                  :active="sortState.sort === head.key"
+                  :order="sortState.order"
+                />
+              </button>
+            </slot>
+          </div>
+        </div>
       </div>
       <div
-        :class="['grid border-line-color bg-primary shadow-md',
-                 gridFrames
-        ]"
+        v-for="(row, index) in rows"
+        :key="index"
+        :class="['grid border-line-color bg-primary hover:bg-gray-100 transition', gridFrames]"
         :style="gridFrames.style"
       >
         <div
-          v-for="head in header"
-          :key="head.key"
+          v-for="col in header"
+          :key="col.key"
           :class="[
-            'p-2 font-medium overflow-hidden bg-table-head',
-            sortAble && shouldShowFilter(head) ? 'flex': head.textAlign
+            col.textAlign, 'pt-4 pb-2 pl-2 border-b text-sm',
+            col.key === 'actions' ? 'overflow-visible' : 'truncate'
           ]"
         >
           <slot
-            :name="`head-${head.key}`"
-            :column="head"
+            :name="`col-${col.key}`"
+            :row="row"
+            :index="index"
           >
-            {{ head.label }}
-            <button
-              v-if="sortAble && shouldShowFilter(head)"
-              class="ml-auto"
-              @click="sorted(head.key)"
-            >
-              <VTableSortIcon
-                :active="sortState.sort === head.key"
-                :order="sortState.order"
-              />
-            </button>
+            {{ firstLetterUp(row[col.key]) }}
           </slot>
         </div>
       </div>
+      <VButton
+        v-if="pagination.hasMore"
+        text="Load more"
+        class="mt-5 self-center"
+        :loader="loader"
+        :disabled="loader"
+        @click="loadMore"
+      />
     </div>
-    <div
-      v-for="(row, index) in rows"
-      :key="index"
-      :class="['grid border-line-color bg-primary hover:bg-gray-100 transition', gridFrames]"
-      :style="gridFrames.style"
-    >
-      <div
-        v-for="col in header"
-        :key="col.key"
-        :class="[
-          col.textAlign, 'pt-4 pb-2 pl-2 border-b text-sm',
-          col.key === 'actions' ? 'overflow-visible' : 'truncate'
-        ]"
-      >
-        <slot
-          :name="`col-${col.key}`"
-          :row="row"
-          :index="index"
-        >
-          {{ firstLetterUp(row[col.key]) }}
-        </slot>
-      </div>
-    </div>
-    <VButton
-      v-if="pagination.hasMore"
-      text="Load more"
-      class="mt-5 self-center"
-      :loader="loader"
-      :disabled="loader"
-      @click="loadMore"
-    />
   </div>
 </template>
 
