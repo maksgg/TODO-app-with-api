@@ -378,6 +378,7 @@ function shouldRetry(error: ApiError, retry: boolean | number): boolean {
  * Retry logic with exponential backoff
  */
 async function retryRequest<T, D>(
+  //eslint-disable-next-line
   requestFn: (config?: ApiRequestConfig<D>) => Promise<T | null>,
   maxRetries: number,
   delay: number,

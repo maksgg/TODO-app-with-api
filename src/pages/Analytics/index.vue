@@ -1,10 +1,8 @@
 <script setup lang="ts">
-
+import AnalyticsFeature from "@/features/analytics/AnalyticsFeature.vue";
 </script>
 
 <template>
-  <div class="text-3xl fon-bold p-10">
-    Analytics are coming soon...
-  </div>
+  <AnalyticsFeature />
 </template>
 

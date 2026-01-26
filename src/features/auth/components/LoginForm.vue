@@ -36,11 +36,11 @@ const submitForm = async () => {
 <template>
   <form
     class="flex flex-col items-center gap-5
-    rounded-xl w-full text-text-color"
+    rounded-xl w-full text-authTitle text-txtPrimaryDark"
     @submit.prevent="submitForm"
   >
     <h1 class="text-login leading-none">
-      {{ $t('auth.login.login') }}
+      {{ $t('auth.login.Welcome_back') }}
     </h1>
     <VInput
       v-model="state.email"
@@ -64,7 +64,7 @@ const submitForm = async () => {
         type="submit"
         size="full"
         :loader="loading"
-        class="text-auth-btn"
+        class="mt-3"
       />
     </div>
   </form>

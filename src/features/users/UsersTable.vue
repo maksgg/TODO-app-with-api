@@ -4,14 +4,11 @@ import { useRouter } from "vue-router";
 
 import useUsersRequests from "./api/useUsersRequests";
 
-import { TableParams, ToolBar } from "@/shared/types";
-import VAvatar from "@/shared/ui/common/VAvatar.vue";
-import VButton from "@/shared/ui/common/VButton.vue";
+import { TableParams } from "@/shared/types";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
-import VInput from "@/shared/ui/common/VInput.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
-import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 import VTable from "@/shared/ui/common/VTable.vue";
+import VToolbar from "@/shared/ui/common/VToolbar.vue";
 import { formatDate } from "@/shared/utils/index";
 
 const isOpen = ref(false);
@@ -21,9 +18,9 @@ const pagination = ref({
   limit: 20,
   hasMore: false,
 });
-const toolBar = ref<ToolBar>({
+const toolBar = ref({
   searchField: "",
-  role: "all",
+  role: { name: "All roles", value: "all" },
 });
 
 const { fetchAllUsers, deleteTargetUser } = useUsersRequests();
@@ -39,6 +36,10 @@ const {
   },
   debounce: 500,
 });
+
+const targetUserName = computed(
+  () => usersData.value?.data.find((el) => el.id === userId.value)?.name,
+);
 
 const openModal = (id: string) => {
   isOpen.value = true;
@@ -68,8 +69,8 @@ const loadData = async (params?: TableParams) => {
     q: toolBar.value.searchField,
   };
 
-  if (toolBar.value.role !== "all") {
-    queryParams.role = toolBar.value.role;
+  if (toolBar.value.role.value !== "all") {
+    queryParams.role = toolBar.value.role.value as "user" | "admin";
   }
 
   await usersResponse({ params: queryParams });
@@ -82,17 +83,19 @@ const userHeader = [
   { key: "actions", label: "Actions", textAlign: "text-end", width: "30%" },
 ];
 const toolbarConfig = [
-  { name: "All", value: "all" },
-  { name: "User", value: "user" },
-  { name: "Admin", value: "admin" },
+  {
+    key: "role",
+    label: "Sort by",
+    options: [
+      { name: "All roles", value: "all" },
+      { name: "User", value: "user" },
+      { name: "Admin", value: "admin" },
+    ],
+  },
 ];
-const selectedRole = computed({
-  get: () => toolbarConfig.find(el => el.value === toolBar.value.role) || toolbarConfig[0],
-  set: (val) => toolBar.value.role = val.value as ToolBar["role"],
-});
 const tableActions = [
   { value: "user", label: "User Profile" },
-  { value: "remove", label: "Remove user" },
+  { value: "remove", label: "Remove user", dangerous: true },
 ];
 
 const actions = (id: string, value: string) => {
@@ -113,7 +116,7 @@ watch(
   (newValue) => {
     loadData({
       q: newValue.searchField,
-      role: newValue.role,
+      role: newValue.role.value as "user" | "admin",
     });
   },
   { deep: true },
@@ -123,7 +126,7 @@ onMounted(() => loadData());
 </script>
 
 <template>
-  <div class="relative flex flex-col flex-1 h-screen px-12 pt-6 pb-2">
+  <div class="relative flex flex-col h-screen px-12 py-6">
     <h1 class="text-4xl font-semibold">
       User Management
     </h1>
@@ -136,34 +139,21 @@ onMounted(() => loadData());
       @request="requestSortTable"
     >
       <template #toolBar>
-        <VInput
-          v-model="toolBar.searchField"
-          variant="table"
-          placeholder="Search by name or email..."
+        <VToolbar
+          v-model:search="toolBar.searchField"
+          v-model:filters="toolBar"
+          :filter-configs="toolbarConfig"
+          class="col-span-full"
         />
-        <div class="flex gap-2 items-center">
-          <span>Role</span>
-          <VMultiselect
-            v-model:model="selectedRole"
-            :options="toolbarConfig"
-            track-by="value"
-          />
-        </div>
       </template>
       <template #col-member="{ row }">
-        <div class="flex items-center gap-2">
-          <VAvatar
-            :name="row.name"
-            class="shrink-0"
-          />
-          <div class="flex flex-col justify-center min-w-0">
-            <span class="truncate text-sm">{{ row.name }}</span>
-            <span class="truncate text-[12px]">{{ row.email }}</span>
-          </div>
+        <div class="flex flex-col justify-center min-w-0">
+          <span class="truncate text-bodyM">{{ row.name }}</span>
+          <span class="truncate text-uiCaption">{{ row.email }}</span>
         </div>
       </template>
       <template #col-actions="{ row }">
-        <div class="flex flex-wrap justify-end gap-5 z-50">
+        <div class="flex flex-wrap justify-end gap-5">
           <VDropDown
             :id="row.id"
             :items="tableActions"
@@ -178,29 +168,19 @@ onMounted(() => loadData());
   <VModal
     v-model="isOpen"
     title="Remove user"
-    :is-close-btn="false"
+    btn-title="Remove user"
+    btn-variant="dangerous"
+    :loader="mainLoader"
+    @submit="deleteUser"
+    @close="closeModal"
   >
     <template #main>
       <h4 class="font-bold">
-        Are you sure you want to remove this user?
+        Are you sure you want to remove <span>"{{ targetUserName }}"</span> user?
       </h4>
       <p class="text-sm">
         This action can’t be undone
       </p>
-    </template>
-    <template #footer>
-      <div class="flex justify-center gap-5 mt-5">
-        <VButton
-          text="Cancel"
-          @click="closeModal"
-        />
-        <VButton
-          text="Remove user"
-          variant="dangerous"
-          :loader="mainLoader"
-          @click="deleteUser"
-        />
-      </div>
     </template>
   </VModal>
 </template>

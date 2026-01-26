@@ -1,10 +1,8 @@
 <script setup lang="ts">
-
+import Dashboard from "@/widgets/Dashboard/Dashboard.vue";
 </script>
 
 <template>
-  <div class="text-3xl fon-bold p-10">
-    Dashboard is coming soon...
-  </div>
+  <Dashboard />
 </template>
 

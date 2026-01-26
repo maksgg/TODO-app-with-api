@@ -55,7 +55,7 @@ const filteredLinks = computed(() => {
 <template>
   <aside
     :class="[
-      `flex flex-col justify-between items-start gap-5 rounded-r-lg sidebar-bg
+      `flex flex-col justify-between items-start gap-5 border-sidebarBorder rounded-r-lg sidebar-bg
       p-6 text-sm transition-all sidebar-custom-bg border shadow-sidebarBgShadow`,
       expanded ? 'w-[16rem]': 'w-[5rem]'
     ]"
@@ -94,7 +94,11 @@ const filteredLinks = computed(() => {
     <VModal
       v-model="isOpenModal"
       title="Log out"
+      btn-title="Log out"
+      btn-variant="dangerous"
       :is-close-btn="false"
+      @submit="userStore.logOutUser"
+      @close="closeLogoutModal"
     >
       <template #main>
         <h4 class="font-bold">
@@ -103,19 +107,6 @@ const filteredLinks = computed(() => {
         <p class="text-sm">
           You’ll need to sign in again to access your account
         </p>
-      </template>
-      <template #footer>
-        <div class="flex justify-center gap-4 mt-4">
-          <VButton
-            text="Cancel"
-            @click="closeLogoutModal"
-          />
-          <VButton
-            text="Log out"
-            variant="dangerous"
-            @click="userStore.logOutUser"
-          />
-        </div>
       </template>
     </VModal>
   </aside>

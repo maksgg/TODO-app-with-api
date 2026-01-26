@@ -40,7 +40,8 @@ const forms: Record<AuthFormType, Component> = {
 
 <template>
   <div
-    class="flex flex-col justify-center items-center gap-8 p-12 bg-background rounded-2xl w-[28rem]"
+    class="flex flex-col justify-center items-center gap-8 px-12 py-8
+    bg-authForm border border-authBorder rounded-2xl w-[27.5rem]"
   >
     <VTabs
       v-model="activeTab"

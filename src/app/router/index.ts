@@ -14,6 +14,15 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/list/:id",
+    name: "list-tasks",
+    component: () => import("@/pages/List/Tasks.vue"),
+    meta: {
+      requiredAuth: true,
+      title: "Lists of tasks",
+    },
+  },
+  {
     path: "/list",
     name: "list",
     component: () => import("@/pages/List/index.vue"),

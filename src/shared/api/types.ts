@@ -103,8 +103,10 @@ export interface UseApiOptions<T = unknown,
   /** Execute request immediately on creation */
   immediate?: boolean
   /** Callback on successful request - receives full AxiosResponse with data, headers, status, etc. */
+  //eslint-disable-next-line
   onSuccess?: (response: AxiosResponse<T>) => void
   /** Callback on error */
+  //eslint-disable-next-line
   onError?: (error: ApiError) => void
   /** Callback before request */
   onBefore?: () => void
@@ -148,8 +150,10 @@ export interface UseApiReturn<T = unknown, D = unknown> {
   /** Full Axios response - includes headers, status, config (optional, for advanced use) */
   response: Ref<AxiosResponse<T> | null>
   /** Execute request */
+  //eslint-disable-next-line
   execute: (config?: ApiRequestConfig<D>) => Promise<T | null>
   /** Abort request */
+  //eslint-disable-next-line
   abort: (message?: string) => void
   /** Reset state */
   reset: () => void
@@ -223,5 +227,6 @@ export interface RetryOptions {
   /** Use exponential backoff */
   exponentialBackoff?: boolean
   /** Function to check if retry is needed */
+  //eslint-disable-next-line
   shouldRetry?: (error: AxiosError) => boolean
 }

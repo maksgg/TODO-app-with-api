@@ -34,7 +34,7 @@ const submitForm = async () => {
 <template>
   <form
     class="flex flex-col items-center gap-5
-    rounded-xl w-full text-text-color"
+    rounded-xl w-full text-authTitle text-txtPrimaryDark"
     @submit.prevent="submitForm"
   >
     <h1 class="text-login text-center leading-none">
@@ -65,7 +65,7 @@ const submitForm = async () => {
       type="submit"
       size="full"
       :loader="loading"
-      class="text-auth-btn mt-3"
+      class="mt-3"
     />
   </form>
 </template>

@@ -12,7 +12,8 @@
       "log_in": "Log in",
       "enter_your_email": "Enter your email",
       "enter_your_password": "Enter your password",
-      "email": "Email"
+      "email": "Email",
+      "Welcome_back": "Welcome back"
     },
     "register": {
       "success_registration": "Success registration",
