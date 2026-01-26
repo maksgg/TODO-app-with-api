@@ -23,7 +23,7 @@ const updateProfile = async (payload: Partial<UserInfo>) => await execute({ data
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 gap-5 px-12 pt-6 pb-2">
+  <div class="flex flex-col flex-1 gap-5 px-12 py-6">
     <ProfileOverview
       :user-data="authStore.userData"
     />

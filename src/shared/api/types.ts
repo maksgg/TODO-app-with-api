@@ -5,7 +5,7 @@
  */
 
 import type { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
-import type { Ref } from "vue";
+import type { MaybeRefOrGetter, Ref } from "vue";
 
 /**
  * Base API response with typed data
@@ -39,7 +39,27 @@ export type AuthMode = "default" | "public" | "optional";
 /**
  * API request configuration with extended options
  */
-export interface ApiRequestConfig<D = unknown> extends AxiosRequestConfig<D> {
+export interface ApiRequestConfig<D = unknown> extends Omit<AxiosRequestConfig<D>, "data"> {
+  /**
+     * Request body data
+     * Supports reactive values - will be resolved at execute() time:
+     * - Plain value: `data: { name: 'John' }` - used as-is
+     * - Ref: `data: formData` - .value will be extracted at execute()
+     * - Getter function: `data: () => formData.value` - called at execute()
+     *
+     * @example
+     * ```ts
+     * const formData = ref({ name: '' })
+     *
+     * const { execute } = useApiPost('/users', {
+     *   data: formData, // Will use formData.value at execute() time
+     * })
+     *
+     * formData.value.name = 'John'
+     * await execute() // Sends { name: 'John' }
+     * ```
+     */
+  data?: MaybeRefOrGetter<D> | D
   /** Skip error toast notifications */
   skipErrorNotification?: boolean
   /** Skip success toast notifications */

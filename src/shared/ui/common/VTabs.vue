@@ -23,11 +23,11 @@ const modalValue = defineModel<string>();
 const styleVariant: Record<string, string> = {
   primary: `
     relative overflow-hidden
-    text-text-color border-line-color py-5
+    text-uiLabel border-line-color py-4 px-2 border border-black
     transition-all duration-300 ease-out
   `,
   auth: `relative w-[10rem] overflow-hidden
-    text-text-color border-line-color py-5
+    text-primary border-line-color py-1
     transition-all duration-300 ease-out`,
 };
 </script>
@@ -46,7 +46,7 @@ const styleVariant: Record<string, string> = {
   </div>
   <div
     v-else
-    class="flex w-full justify-between"
+    class="flex w-full gap-2"
   >
     <button
       v-for="tab in tabs"
@@ -61,13 +61,20 @@ const styleVariant: Record<string, string> = {
         :name="`tab-${tab.id}`"
         :tab="tab"
       >
-        {{ $t(tab.label) }}
+        <span
+          :class="[
+            tab.id === modelValue ?
+              'drop-shadow-primary' : '']"
+        >
+
+          {{ $t(tab.label) }}
+        </span>
       </slot>
       <div
         :class="[
-          'absolute bottom-3 h-0.5 bg-main transition-all duration-300',
+          'absolute bottom-0 h-0.5 transition-all duration-300 bg-primary',
           tab.id === modelValue ?
-            'w-[75%] opacity-100' :
+            'w-[75%] opacity-100 drop-shadow-primary' :
             'w-0 opacity-0 group-hover:w-1/3 group-hover:opacity-100'
         ]"
       />

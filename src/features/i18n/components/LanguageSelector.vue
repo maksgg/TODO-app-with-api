@@ -1,15 +1,23 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { useLanguages } from "@/features/i18n/composables/useI18n";
-import VDropDown from "@/shared/ui/common/VDropDown.vue";
+import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 
 const { locale, languages } = useLanguages();
+const selectedLangObject = computed({
+  get: () => languages.options.find((el) => el.value === locale.value),
+  set: (newVal) => {
+    if (newVal) locale.value = newVal.value;
+  },
+});
 </script>
 
 <template>
-  <VDropDown
-    v-model="locale"
-    title="EN"
-    :items="languages"
-    variant="languages"
+  <VMultiselect
+    v-model:model="selectedLangObject"
+    :options="languages.options"
+    :title="languages.label"
+    size="sm"
   />
 </template>

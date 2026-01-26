@@ -6,7 +6,6 @@ import { Toaster } from "vue-sonner";
 
 import AuthLayout from "@/app/layouts/AuthLayout.vue";
 import DefaultLayout from "@/app/layouts/DefaultLayout.vue";
-// import Header from "@/widgets/Header/Header.vue";
 
 const route = useRoute();
 
@@ -23,8 +22,12 @@ const routePath = computed(() => {
 </script>
 
 <template>
-  <div class="relative flex flex-col w-full min-h-screen bg-primary">
-    <!-- <Header /> -->
+  <div
+    :class="['relative flex flex-col w-full h-screen overflow-hidden',
+             routePath === AuthLayout ?
+               'bg-authBg bg-cover bg-center' : 'bg-background'
+    ]"
+  >
     <Toaster />
     <component :is="routePath" />
   </div>

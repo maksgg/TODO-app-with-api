@@ -19,9 +19,12 @@ onMounted(useStore.setUser);
   </div>
   <main
     v-else
-    class="relative flex flex-1 w-full"
+    class="relative flex flex-1 w-full h-screen bg-background"
   >
     <Sidebar />
-    <RouterView />
+    <div class="flex flex-col flex-1 w-full">
+      <div id="header-teleport" />
+      <RouterView />
+    </div>
   </main>
 </template>

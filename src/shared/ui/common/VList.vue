@@ -4,7 +4,7 @@ import { computed } from "vue";
 type ListItem = Record<string, any>;
 
 type ListProps = {
-  listItems: ListItem[];
+  listItems: ListItem[] | string[];
   simpleList?: number;
 };
 
@@ -22,7 +22,9 @@ const mainList = computed(() => listItems || simpleList);
       <slot
         :item="item"
         :index="index"
-      />
+      >
+        {{ item }}
+      </slot>
     </li>
   </ul>
 </template>

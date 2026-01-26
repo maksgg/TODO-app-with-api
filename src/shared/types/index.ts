@@ -40,10 +40,6 @@ type TableParams = {
   limit?: number;
   q?: string;
 };
-type ToolBar = {
-  searchField: string,
-  role: TableParams["role"]
-};
 
 type UserRole = {
   role: "user" | "admin";
@@ -86,7 +82,6 @@ export type {
   UserInfo,
   AdminResponse,
   TableParams,
-  ToolBar,
   UserRole,
   UserPermissions,
   PermissionsByRole,

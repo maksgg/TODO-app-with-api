@@ -26,20 +26,22 @@ type Pagination = {
 };
 
 type TableProps = {
-  header: TableHeader[];
+  header?: TableHeader[];
   rows: Record<string, any>[];
+  isHeaderVisible?: boolean;
   loader?: boolean;
   sortAble?: boolean;
   showFilters?: boolean;
   searchable?: boolean;
   toolbarConfig?: ToolbarConfig[];
-  pagination: Pagination;
+  pagination?: Pagination;
 };
 
 const {
   header = [],
   rows = [],
   loader = false,
+  isHeaderVisible = true,
   sortAble = true,
   showFilters = true,
   searchable = false,
@@ -114,7 +116,7 @@ const loadMore = () => {
   <div class="relative flex-1 w-full overflow-auto no-scrollbar">
     <div
       v-if="loader"
-      :class="[`absolute inset-0 z-[100] flex items-center justify-center bg-white/60
+      :class="[`absolute inset-0 z-[100] flex items-center justify-center bg-background
       backdrop-blur-[2px] transition-all duration-300`
       ]"
     >
@@ -122,13 +124,16 @@ const loadMore = () => {
     </div>
     <div
       :class="[`relative self-center flex flex-col w-full
-                bg-primary text-text-color`,
+                bg-background text-text-color`,
                !pagination.hasMore ? 'pb-[7rem]' : 'pb-[2rem]']"
     >
-      <div class="sticky top-0 z-50 bg-primary">
+      <div
+        v-if="isHeaderVisible"
+        class="sticky top-0 z-50 bg-background"
+      >
         <div
-          v-if="searchable"
-          :class="['grid border-line-color bg-primary py-6', gridFrames]"
+          v-if="searchable || showFilters"
+          :class="['grid border-line-color bg-background py-6', gridFrames]"
           :style="gridFrames.style"
         >
           <slot
@@ -138,7 +143,7 @@ const loadMore = () => {
           />
         </div>
         <div
-          :class="['grid border-line-color bg-primary shadow-md',
+          :class="['grid border-line-color bg-disabledBorder',
                    gridFrames
           ]"
           :style="gridFrames.style"
@@ -173,15 +178,18 @@ const loadMore = () => {
       <div
         v-for="(row, index) in rows"
         :key="index"
-        :class="['grid border-line-color bg-primary hover:bg-gray-100 transition', gridFrames]"
+        :class="[
+          'grid border-borderDefault bg-background hover:bg-gray-100 transition',
+          gridFrames
+        ]"
         :style="gridFrames.style"
       >
         <div
           v-for="col in header"
           :key="col.key"
           :class="[
-            col.textAlign, 'pt-4 pb-2 pl-2 border-b text-sm',
-            col.key === 'actions' ? 'overflow-visible' : 'truncate'
+            col.textAlign, 'pt-4 pb-2 border-b border-borderDefault text-sm',
+            col.key === 'actions' ? 'overflow-visible' : 'truncate',
           ]"
         >
           <slot

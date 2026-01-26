@@ -63,7 +63,7 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
     >
     <span
       v-if="!props.icon"
-      :class="[`border stroke-current rounded-sm w-4 h-4
+      :class="[`border stroke-current rounded-sm w-5 h-5
        flex justify-center items-center z-10`,
                checked ? checkboxStyle[props.variant] : '' ]"
     >
@@ -79,7 +79,7 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
       :fill="checked ? 'currentColor' : 'none'"
       :class="checked ? checkboxStyle[props.variant] : ''"
     />
-    <div>
+    <div v-if="props.text">
       <slot>{{ props.text }}</slot>
     </div>
   </label>

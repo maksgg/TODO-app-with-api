@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import List from "@/features/lists/components/List.vue";
+import ListsFeature from "@/features/lists/ListsFeature.vue";
 </script>
 
 <template>
-  <List />
+  <ListsFeature />
 </template>
 
