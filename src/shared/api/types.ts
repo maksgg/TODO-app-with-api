@@ -5,7 +5,7 @@
  */
 
 import type { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
-import type { Ref } from "vue";
+import type { MaybeRefOrGetter, Ref } from "vue";
 
 /**
  * Base API response with typed data
@@ -39,7 +39,27 @@ export type AuthMode = "default" | "public" | "optional";
 /**
  * API request configuration with extended options
  */
-export interface ApiRequestConfig<D = unknown> extends AxiosRequestConfig<D> {
+export interface ApiRequestConfig<D = unknown> extends Omit<AxiosRequestConfig<D>, "data"> {
+  /**
+     * Request body data
+     * Supports reactive values - will be resolved at execute() time:
+     * - Plain value: `data: { name: 'John' }` - used as-is
+     * - Ref: `data: formData` - .value will be extracted at execute()
+     * - Getter function: `data: () => formData.value` - called at execute()
+     *
+     * @example
+     * ```ts
+     * const formData = ref({ name: '' })
+     *
+     * const { execute } = useApiPost('/users', {
+     *   data: formData, // Will use formData.value at execute() time
+     * })
+     *
+     * formData.value.name = 'John'
+     * await execute() // Sends { name: 'John' }
+     * ```
+     */
+  data?: MaybeRefOrGetter<D> | D
   /** Skip error toast notifications */
   skipErrorNotification?: boolean
   /** Skip success toast notifications */
@@ -83,10 +103,8 @@ export interface UseApiOptions<T = unknown,
   /** Execute request immediately on creation */
   immediate?: boolean
   /** Callback on successful request - receives full AxiosResponse with data, headers, status, etc. */
-  //eslint-disable-next-line
   onSuccess?: (response: AxiosResponse<T>) => void
   /** Callback on error */
-  //eslint-disable-next-line
   onError?: (error: ApiError) => void
   /** Callback before request */
   onBefore?: () => void
@@ -130,10 +148,8 @@ export interface UseApiReturn<T = unknown, D = unknown> {
   /** Full Axios response - includes headers, status, config (optional, for advanced use) */
   response: Ref<AxiosResponse<T> | null>
   /** Execute request */
-  //eslint-disable-next-line
   execute: (config?: ApiRequestConfig<D>) => Promise<T | null>
   /** Abort request */
-  //eslint-disable-next-line
   abort: (message?: string) => void
   /** Reset state */
   reset: () => void
@@ -207,6 +223,5 @@ export interface RetryOptions {
   /** Use exponential backoff */
   exponentialBackoff?: boolean
   /** Function to check if retry is needed */
-  //eslint-disable-next-line
   shouldRetry?: (error: AxiosError) => boolean
 }

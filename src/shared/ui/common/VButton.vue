@@ -42,10 +42,9 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const isRouterLink = computed((): boolean => !!props.to);
 
 const baseButtonStyles: string = `
-  group relative
-  flex justify-center items-center 
-  border border-transparent leading-none
-  disabled:bg-gray-500 disabled:bg-none disabled:text-gray-300 disabled:cursor-not-allowed
+  group relative flex justify-center items-center text-uiBtn text-secondaryBg 
+  disabled:border-disabledBtn disabled:bg-disabledBtn disabled:text-txtMutedLight 
+  disabled:drop-shadow-none disabled:cursor-not-allowed
 `;
 const iconTransform = computed(() => {
   if (props.variant !== "sidebar") return "";
@@ -55,28 +54,33 @@ const iconTransform = computed(() => {
 const btnStyleVariants: Record<ButtonStyle, string> = {
   primary: `
     ${baseButtonStyles}
-    text-white
-    gap-2 p-4 rounded-xl bg-btnBg
-    enabled:hover:border-text-color 
-    enabled:hover:text-text-color 
-    enabled:hover:bg-none
+    border border-primary
+    hover:drop-shadow-primary
+    active:bg-activePrimary
+    active:drop-shadow-none
+    active:text-secondaryBg
+    gap-2 p-4 rounded-xl bg-primary
+    enabled:hover:border-text-primary 
+    
   `,
   dangerous: `
     ${baseButtonStyles}
-    text-white
-    gap-2 p-4 rounded-xl bg-red-500
-    enabled:hover:border-text-color 
-    enabled:hover:text-text-color 
-    enabled:hover:bg-transparent
+    border border-dangerous
+    hover:drop-shadow-dangerous
+    active:bg-activeDangerous
+    active:drop-shadow-none
+    active:text-secondaryBg
+    gap-2 p-4 rounded-xl bg-dangerous
+    enabled:hover:border-text-primary 
   `,
   ghost: `
-    border-none text-sidebarText
+    flex border-none text-headingCard text-start truncate
     transition-all duration-300
   `,
-  sidebar: `group relative flex items-center gap-2 px-4 py-2 w-full border-none 
-    whitespace-nowrap text-sidebarText hover:rounded-lg leading-none
+  sidebar: `group relative flex items-center gap-2 px-4 py-3 w-full border-none 
+    whitespace-nowrap text-txtSecondaryDark text-uiBtn hover:rounded-lg leading-none
     [&.router-link-active]:bg-sidebarActiveLink
-    [&.router-link-active]:text-primary
+    [&.router-link-active]:text-txtPrimaryDark
     [&.router-link-active]:rounded-lg
     [&.router-link-active]:shadow-sidebarActive
     hover:shadow-sidebarHoverGradient
@@ -127,7 +131,8 @@ const btnSize: Record<ButtonSize, string> = {
     <Transition name="sidebar-fade">
       <span
         v-if="showText"
-        class="v-button__text"
+        :class="['v-button__text',
+                 props.variant === 'ghost' ? 'truncate w-full' : '' ]"
       >
         <slot>{{ props.text }}</slot>
       </span>
@@ -176,6 +181,6 @@ const btnSize: Record<ButtonSize, string> = {
   display: inline-block;
   white-space: nowrap;
   /* Для плавності можна додати max-width */
-  max-width: 200px;
+  /* max-width: 200px; */
 }
 </style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useId } from "vue";
 
+import VIcon from "./VIcon.vue";
 import VLoader from "./VLoader.vue";
 
 type Item = {
@@ -9,6 +10,7 @@ type Item = {
   label?: string;
   disabled?: boolean | null;
   flag?: string | null;
+  dangerous?: boolean | unknown;
 };
 
 type DropDown = {
@@ -66,12 +68,12 @@ const selectedLabel = computed((): string => {
 });
 
 const triggerStyle: Record<DropDown["variant"], string> = {
-  primary: "border bg-white p-1 rounded-lg",
+  primary: "border bg-secondary p-1 rounded-lg",
   custom: "border rounded-t-md p-1 bg-red-500 text-white",
   languages: "bg-primary p-1 text-text-color",
 };
 const menuStyle: Record<DropDown["variant"], string> = {
-  primary: "border rounded-md bg-white p-1",
+  primary: "border rounded-lg bg-secondaryBg border-borderDefault",
   custom: "border rounded-b-md p-1 bg-red-500 text-white",
   languages: "bg-primary p-1 text-text-color",
 };
@@ -106,16 +108,14 @@ const placementStyle: Record<DropDown["placement"], string> = {
       />
 
       <template v-else>
-        <VueFeather
+        <VIcon
           v-if="props.trigger === 'icon'"
-          type="more-horizontal"
+          type="horizontalDots"
         />
-
         <template v-else>
           <span class="block whitespace-nowrap overflow-hidden text-ellipsis">
             {{ selectedLabel }}
           </span>
-
           <span class="flex items-center shrink-0">
             <VueFeather
               v-if="!props.loader"
@@ -132,7 +132,7 @@ const placementStyle: Record<DropDown["placement"], string> = {
     <ul
       v-if="isOpened"
       :class="[
-        'absolute flex flex-col shadow-lg z-20 w-max min-w-full text-start',
+        'absolute flex flex-col shadow-md z-20 w-max min-w-full text-start px-3 py-2',
         menuStyle[props.variant], placementStyle[props.placement],
         disabled ? 'cursor-not-allowed' : ''
       ]"
@@ -141,7 +141,10 @@ const placementStyle: Record<DropDown["placement"], string> = {
       <li
         v-for="item in props.items"
         :key="item.value"
-        class="px-5 py-4 hover:bg-gray-200"
+        :class="[
+          'px-2 py-1.5 text-bodyL hover:opacity-75',
+          item.dangerous ? 'text-dangerous' : 'text-txtPrimary',
+        ]"
         @click="selectedValue(item)"
       >
         <slot

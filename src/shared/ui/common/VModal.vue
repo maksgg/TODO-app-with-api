@@ -1,32 +1,44 @@
 <script setup lang="ts">
+import VButton from "./VButton.vue";
+
 import { useScrollLock } from "@/shared/composables/useScrollLock";
 
 const {
   as = "div",
   title = "",
+  btnTitle = "Save",
+  btnVariant = "primary",
   size = "md",
-  isCloseBtn = true,
+  loader = false,
+  isChanged = false,
 } = defineProps<{
   as?: "div" | "form" | "dialog";
   title?: string;
+  btnTitle: string;
+  btnVariant?: "primary" | "dangerous" | "ghost" | "sidebar";
   size?: "sm" | "md" | "lg";
-  isCloseBtn?: boolean;
+  loader?: boolean;
+  isChanged?: boolean;
 }>();
 
 defineOptions({
   inheritAttrs: false,
 });
 
-const isOpen = defineModel<boolean>({ required: true });
+const emit = defineEmits<{ "submit": [void] }>();
+
+const submit = () => emit("submit");
+
+const isOpen = defineModel<boolean>();
 
 const closeModal = () => isOpen.value = false;
 
-useScrollLock(() => isOpen.value);
+useScrollLock(() => Boolean(isOpen.value));
 
 const sizeClasses = {
   sm: "w-[20rem]",
   md: "w-[25rem]",
-  lg: "w-[48rem]",
+  lg: "w-[27.5rem]",
 };
 </script>
 
@@ -51,29 +63,18 @@ const sizeClasses = {
           role="dialog"
           aria-modal="true"
           :class="[
-            `bg-primary p-6 flex flex-col items-center gap-4 rounded-xl
-            text-text-color shadow-soft transition-all`,
+            `bg-secondaryBg p-6 flex flex-col items-center gap-4 rounded-xl
+            shadow-soft transition-all`,
             sizeClasses[size]
           ]"
+          @submit.prevent="as === 'form' ? submit() : null"
         >
-          <button
-            v-if="isCloseBtn"
-            class="flex justify-center items-center self-end
-            h-8 w-8 rounded-full hover:text-gray-600 transition-all"
-            type="button"
-            @click="closeModal"
-          >
-            <VueFeather
-              type="x"
-              size="24"
-            />
-          </button>
           <header
             v-if="title || $slots.header"
             class="flex w-full text-center"
           >
             <slot name="header">
-              <h3 class="self-start text-2xl font-semibold leading-none">
+              <h3 class="self-start text-modalHead text-txtPrimary">
                 {{ title }}
               </h3>
             </slot>
@@ -82,10 +83,28 @@ const sizeClasses = {
             <slot name="main" />
           </div>
           <footer
-            v-if="$slots.footer"
             class="flex justify-center gap-4 w-full"
           >
-            <slot name="footer" />
+            <slot name="footer">
+              <div
+                :class="[
+                  'flex gap-5 mt-5 w-full',
+                  as === 'form' ? 'justify-end' : 'justify-center']"
+              >
+                <VButton
+                  text="Cancel"
+                  @click="closeModal"
+                />
+                <VButton
+                  :text="btnTitle"
+                  :type="as === 'form' ? 'submit' : 'button'"
+                  :variant="btnVariant"
+                  :loader="loader"
+                  :disabled="loader || isChanged"
+                  @click="as === 'div' ? submit() : null"
+                />
+              </div>
+            </slot>
           </footer>
         </component>
       </div>

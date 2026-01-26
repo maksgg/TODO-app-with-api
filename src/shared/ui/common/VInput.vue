@@ -2,9 +2,10 @@
 import { ref, computed, useId } from "vue";
 import type { Ref } from "vue";
 
+import VIcon from "./VIcon.vue";
 import VLoader from "./VLoader.vue";
 
-type VariantStyles = "main" | "table";
+type VariantStyles = "main" | "toolbar";
 
 type ValidationError = {
   $message: string | Ref<string>;
@@ -69,22 +70,23 @@ const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPa
 
 const inputStylesVariant: Record<VariantStyles, string> = {
   main: `
-    px-4 py-3 text-text-color bg-primary border border-gray-300 rounded-lg 
-    placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed
+    py-3 pl-4 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover rounded-lg 
+    placeholder-muted disabled:border-disabled disabled:cursor-not-allowed focus:shadow-innerOutline
   `,
-  table: `
-   max-w-[30rem] py-2 px-5 text-sm text-text-color
-          border border-line-color rounded-2xl bg-gray-50
-          focus:ring-primary focus:border-blue-500 outline-none transition-all
+  toolbar: `
+   max-w-[30rem] py-3 pl-10 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover rounded-2xl 
+    placeholder-muted disabled:border-disabled disabled:cursor-not-allowed focus:shadow-innerOutline
   `,
 };
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 w-full">
+  <div class="flex flex-col gap-2 w-full">
     <label
       v-if="props.label"
       :for="inputId"
+      :class="['text-uiLabel disabled:text-disabled', props.validation.$error ?
+        'text-dangerous' : 'text-txtSecondaryDark']"
     >
       <slot name="label">
         {{ props.label }}
@@ -93,11 +95,11 @@ const inputStylesVariant: Record<VariantStyles, string> = {
     <div class="flex relative">
       <div
         v-if="$slots['icon-left'] || props.icon || props.loader"
-        class="absolute left-1 bottom-3 flex justify-center items-center"
+        class="absolute left-4 bottom-4 flex justify-center items-center text-muted"
       >
         <slot name="icon-left">
           <VLoader v-if="props.loader" />
-          <VueFeather
+          <VIcon
             v-else
             :type="props.icon"
           />
@@ -109,7 +111,8 @@ const inputStylesVariant: Record<VariantStyles, string> = {
         :class="['w-full outline-none bg-transparent',
                  inputStylesVariant[props.variant],
                  props.validation.$error ?
-                   'border-red-500' : 'border-line-color']"
+                   'border-dangerous focus:shadow-none' :
+                   'border-borderDefault']"
         :type="inputType"
         :value="props.modelValue"
         @input="updateModelValue"
@@ -117,18 +120,21 @@ const inputStylesVariant: Record<VariantStyles, string> = {
       <button
         v-if="props.type === 'password'"
         type="button"
-        class="absolute right-4 bottom-3 flex pl-2 cursor-pointer bg-primary"
+        class="absolute right-4 bottom-3.5 flex pl-2 cursor-pointer text-muted"
         @click="togglePasswordIcon"
       >
-        <VueFeather :type="isPasswordType ? 'eye-off' : 'eye'" />
+        <VIcon :type="isPasswordType ? 'eyeOff' : 'eye'" />
       </button>
     </div>
-    <div v-if="validation?.$error">
+    <div
+      v-if="validation?.$error"
+      class="flex"
+    >
       <slot
         name="errorMsg"
         :message="validation?.$errors[0]?.$message"
       >
-        <span class="text-red-500 text-sm">
+        <span class="text-dangerousErrMsg text-uiCaption">
           {{ validation?.$errors[0]?.$message }}
         </span>
       </slot>
