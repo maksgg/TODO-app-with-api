@@ -6,10 +6,12 @@ import VIcon from "./VIcon.vue";
 
 const {
   title = "",
+  label = "",
   options = [],
   placeholder = "",
 } = defineProps<{
   title?: string;
+  label?: string;
   options: { name: string, value: string }[];
   placeholder?: string;
 }>();
@@ -22,16 +24,18 @@ const isOpen = ref(false);
 <template>
   <div class="flex items-center gap-2">
     <span
-      v-if="title"
-      class="whitespace-nowrap"
+      v-if="title || label"
+      :class="['whitespace-nowrap',
+               title ? 'text-bodyL text-txtPrimary' : 'text-uiLabel text-secondary']"
     >
-      {{ title }}
+      {{ title || label }}
     </span>
     <Multiselect
       v-model="model"
       :options="options"
       :searchable="false"
       :clear-on-select="true"
+      :allow-empty="false"
       label="name"
       track-by="value"
       :placeholder="placeholder"
@@ -59,27 +63,27 @@ const isOpen = ref(false);
 <style scoped>
   /* Основне поле */
 :deep(.multiselect) {
-  @apply relative h-10 cursor-pointer;
+  @apply relative h-10 cursor-pointer ;
 }
 :deep(.multiselect--active) {
   @apply rounded-none;
 }
 :deep(.multiselect__single) {
-  @apply truncate;
+  @apply truncate bg-secondaryBg;
 }
 
 /* Випадаючий список */
 :deep(.multiselect__content-wrapper) {
-  @apply absolute left-0 bg-secondaryBg mt-1 rounded-lg
+  @apply absolute left-0 bg-secondaryBg mt-1 rounded-lg text-txtPrimary
   border-borderDefault hover:border-borderHover drop-shadow-primary
   shadow-xl z-[100] overflow-y-auto max-h-[500px];
 }
 /* Підсвітка при наведенні */
 :deep(.multiselect__option--highlight) {
-  @apply bg-transparent text-txtPrimary;
+  @apply bg-transparent text-txtPrimary hover:bg-primaryBg;
 }
 :deep(.multiselect__tags) {
-  @apply pr-10 rounded-lg border-2 bg-none
+  @apply pr-10 rounded-lg border-2 bg-secondaryBg text-txtPrimary
   border-borderDefault hover:border-borderHover;
 }
 :deep(.multiselect--active .multiselect__tags) {

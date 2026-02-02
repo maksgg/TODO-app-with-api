@@ -42,7 +42,7 @@ const isOpened = ref(false);
 
 const emit = defineEmits<{
   "update:modelValue": [string],
-  "action": [id?: string, value?: string, key?: string],
+  "action": [value?: string, id?: string, key?: string],
   "update:loader": [value: boolean],
 }>();
 
@@ -53,7 +53,7 @@ const toggle = (): void => {
 
 const selectedValue = (item: Item) => {
   emit("update:modelValue", item.value);
-  emit("action", mainId.value, item.value, item.key);
+  emit("action", item.value, mainId.value, item.key);
   isOpened.value = !isOpened.value;
 };
 
@@ -117,7 +117,7 @@ const placementStyle: Record<DropDown["placement"], string> = {
             {{ selectedLabel }}
           </span>
           <span class="flex items-center shrink-0">
-            <VueFeather
+            <VIcon
               v-if="!props.loader"
               type="chevron-down"
             />

@@ -17,7 +17,7 @@ const filters = defineModel<Record<string, any>>("filters", { required: true });
 </script>
 
 <template>
-  <div class="flex items-center gap-6 py-4">
+  <div class="flex items-center gap-6">
     <div
       v-if="isSearchable"
       class="w-[20rem]"

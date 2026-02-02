@@ -27,6 +27,7 @@ type InputProps = {
   modelValue?: string;
   icon?: string;
   loader?: boolean;
+  disabled?: boolean;
   validation?: Validation;
   supportText?: string;
   variant?: VariantStyles;
@@ -39,6 +40,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   modelValue: "",
   icon: "",
   loader: false,
+  disabled: false,
   validation: () => ({ $error: false, message: null }),
   supportText: "",
   variant: "main",
@@ -70,12 +72,13 @@ const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPa
 
 const inputStylesVariant: Record<VariantStyles, string> = {
   main: `
-    py-3 pl-4 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover rounded-lg 
-    placeholder-muted disabled:border-disabled disabled:cursor-not-allowed focus:shadow-innerOutline
+    py-3 pl-4 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover 
+    rounded-lg placeholder-muted placeholder:disabled:text-disabledBorder 
+    disabled:border-disabledBorder disabled:cursor-not-allowed focus:shadow-innerOutline
   `,
   toolbar: `
    max-w-[30rem] py-3 pl-10 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover rounded-2xl 
-    placeholder-muted disabled:border-disabled disabled:cursor-not-allowed focus:shadow-innerOutline
+    placeholder-muted disabled:border-disabledBorder disabled:cursor-not-allowed focus:shadow-innerOutline
   `,
 };
 </script>
@@ -85,8 +88,10 @@ const inputStylesVariant: Record<VariantStyles, string> = {
     <label
       v-if="props.label"
       :for="inputId"
-      :class="['text-uiLabel disabled:text-disabled', props.validation.$error ?
-        'text-dangerous' : 'text-txtSecondaryDark']"
+      :class="['text-uiLabel disabled:text-disabledBorder',
+               props.disabled ? 'text-disabledBorder' : '',
+               props.validation.$error ?
+                 'text-dangerous' : 'text-secondary']"
     >
       <slot name="label">
         {{ props.label }}
@@ -114,6 +119,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
                    'border-dangerous focus:shadow-none' :
                    'border-borderDefault']"
         :type="inputType"
+        :disabled="props.disabled"
         :value="props.modelValue"
         @input="updateModelValue"
       >
@@ -121,6 +127,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
         v-if="props.type === 'password'"
         type="button"
         class="absolute right-4 bottom-3.5 flex pl-2 cursor-pointer text-muted"
+        :disabled="props.disabled"
         @click="togglePasswordIcon"
       >
         <VIcon :type="isPasswordType ? 'eyeOff' : 'eye'" />

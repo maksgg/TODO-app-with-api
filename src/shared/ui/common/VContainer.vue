@@ -15,8 +15,8 @@ const {
 
 const styleVariants: Record<BoxStyle, string> = {
   form: "text-white gap-10 p-5 rounded-lg bg-blur",
-  card: "flex flex-col text-text-color gap-5 p-5 bg-primary rounded-2xl shadow-soft",
-  custom: "flex flex-wrap-reverse",
+  card: "flex flex-col gap-5 p-6 bg-secondaryBg rounded-xl border border-listCardBorder",
+  custom: "flex flex-wrap",
 };
 </script>
 
@@ -28,21 +28,21 @@ const styleVariants: Record<BoxStyle, string> = {
   >
     <div
       v-if="$slots.header || title"
-      class="flex flex-col justify-between"
+      class="flex justify-between"
     >
       <slot name="header">
         {{ title }}
       </slot>
     </div>
     <div
-      v-if="$slots.default"
+      v-if="$slots.main"
       class="flex flex-col justify-between"
     >
-      <slot name="default" />
+      <slot name="main" />
     </div>
     <div
       v-if="$slots.footer"
-      class="flex flex-col justify-between"
+      class="relative flex justify-between"
     >
       <slot name="footer" />
     </div>

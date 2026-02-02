@@ -30,6 +30,7 @@ type TableProps = {
   rows: Record<string, any>[];
   isHeaderVisible?: boolean;
   loader?: boolean;
+  localLoader?: string;
   sortAble?: boolean;
   showFilters?: boolean;
   searchable?: boolean;
@@ -41,6 +42,7 @@ const {
   header = [],
   rows = [],
   loader = false,
+  localLoader = "",
   isHeaderVisible = true,
   sortAble = true,
   showFilters = true,
@@ -113,27 +115,16 @@ const loadMore = () => {
 </script>
 
 <template>
-  <div class="relative flex-1 w-full overflow-auto no-scrollbar">
-    <div
-      v-if="loader"
-      :class="[`absolute inset-0 z-[100] flex items-center justify-center bg-background
-      backdrop-blur-[2px] transition-all duration-300`
-      ]"
-    >
-      <VLoader size="lg" />
-    </div>
+  <div class="relative w-full overflow-auto no-scrollbar">
     <div
       :class="[`relative self-center flex flex-col w-full
-                bg-background text-text-color`,
-               !pagination.hasMore ? 'pb-[7rem]' : 'pb-[2rem]']"
+                bg-primaryBg text-text-color`
+      ]"
     >
-      <div
-        v-if="isHeaderVisible"
-        class="sticky top-0 z-50 bg-background"
-      >
+      <div class="sticky top-0 z-50 bg-primaryBg">
         <div
           v-if="searchable || showFilters"
-          :class="['grid border-line-color bg-background py-6', gridFrames]"
+          :class="['grid border-line-color bg-primaryBg pb-6', gridFrames]"
           :style="gridFrames.style"
         >
           <slot
@@ -143,6 +134,7 @@ const loadMore = () => {
           />
         </div>
         <div
+          v-if="isHeaderVisible"
           :class="['grid border-line-color bg-disabledBorder',
                    gridFrames
           ]"
@@ -152,7 +144,7 @@ const loadMore = () => {
             v-for="head in header"
             :key="head.key"
             :class="[
-              'p-2 font-medium overflow-hidden bg-table-head',
+              'p-2 text-uiHead text-txtPrimary overflow-hidden',
               sortAble && shouldShowFilter(head) ? 'flex': head.textAlign
             ]"
           >
@@ -175,37 +167,55 @@ const loadMore = () => {
           </div>
         </div>
       </div>
-      <div
-        v-for="(row, index) in rows"
-        :key="index"
-        :class="[
-          'grid border-borderDefault bg-background hover:bg-gray-100 transition',
-          gridFrames
-        ]"
-        :style="gridFrames.style"
-      >
+      <div class="relative flex flex-col flex-1">
         <div
-          v-for="col in header"
-          :key="col.key"
-          :class="[
-            col.textAlign, 'pt-4 pb-2 border-b border-borderDefault text-sm',
-            col.key === 'actions' ? 'overflow-visible' : 'truncate',
-          ]"
+          v-if="loader"
+          class="absolute inset-0 z-40 flex items-center justify-center bg-white/5
+          backdrop-blur-sm pointer-events-auto"
         >
-          <slot
-            :name="`col-${col.key}`"
-            :row="row"
-            :index="index"
+          <div class="sticky top-1/2 -translate-y-1/2">
+            <VLoader />
+          </div>
+        </div>
+        <div
+          v-for="(row, index) in rows"
+          :key="index"
+          :class="[
+            'relative grid border-borderDefault hover:bg-secondaryBg transition',
+            gridFrames
+          ]"
+          :style="gridFrames.style"
+        >
+          <div
+            v-if="localLoader === row.id"
+            class="absolute inset-0 z-10 flex items-center justify-center
+             bg-white/10 backdrop-blur-[1px] rounded-md"
           >
-            {{ firstLetterUp(row[col.key]) }}
-          </slot>
+            <VLoader size="sm" />
+          </div>
+          <div
+            v-for="col in header"
+            :key="col.key"
+            :class="[
+              col.textAlign, 'pt-4 pb-2 px-2 border-b border-borderDefault',
+              col.key === 'actions' ? 'overflow-visible' : 'truncate',
+            ]"
+          >
+            <slot
+              :name="`col-${col.key}`"
+              :row="row"
+              :index="index"
+              :local-loader="localLoader"
+            >
+              {{ firstLetterUp(row[col.key]) }}
+            </slot>
+          </div>
         </div>
       </div>
       <VButton
         v-if="pagination.hasMore"
         text="Load more"
-        class="mt-5 self-center"
-        :loader="loader"
+        class="my-5 self-center"
         :disabled="loader"
         @click="loadMore"
       />

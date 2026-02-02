@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 import type { UseApiOptions } from "../api";
@@ -9,26 +8,17 @@ import { tokenManager } from "@/shared/api/tokenManager";
 import type { UserInfo } from "@/shared/types/index";
 
 export const useAuthStore = defineStore("user", () => {
-  const userData = ref<UserInfo | null>(null);
-
   const fetchOwnProfile = (options?: UseApiOptions<UserInfo>) => {
     return useApiGet("/me", options);
   };
 
-  const { data: user, loading, execute } = fetchOwnProfile();
-
-  const getUser = async () => {
-    await execute();
-
-    if (user.value) {
-      userData.value = user.value;
-    }
-  };
+  const { data: userData, loading, execute } = fetchOwnProfile();
 
   const setUser = async () => {
-    if (userData.value) return;
+    if (userData.value || !tokenManager.getAccessToken()) return;
 
-    await getUser();
+    await execute();
+    return userData.value ;
   };
 
   const router =  useRouter();
@@ -46,7 +36,6 @@ export const useAuthStore = defineStore("user", () => {
     loading,
     isAdmin,
     setUser,
-    getUser,
     logOutUser,
   };
 });

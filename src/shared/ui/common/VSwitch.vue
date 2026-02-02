@@ -36,19 +36,14 @@ const checked = computed({
 
 const id = computed(() => props.id || useId());
 
-const switchStyle: Record<string, string> = {
-  primary: "bg-blue-500",
-  default: "bg-switch-bg",
-};
-
 const toggleSize: Record<ToggleSize, string> = {
-  sm: "w-[16.5px] h-[16.5px]",
-  md: "w-7 h-7",
+  sm: "w-2 h-2",
+  md: "w-5 h-5",
   lg: "w-9 h-9",
 };
 const trackSize: Record<ToggleSize, string> = {
   sm: "w-10 h-5",
-  md: "w-14 h-7",
+  md: "w-11 h-6",
   lg: "w-20 h-7",
 };
 </script>
@@ -81,17 +76,16 @@ const trackSize: Record<ToggleSize, string> = {
       :class="['rounded-2xl border relative transition-all',
                trackSize[props.size], { 'opacity-50': props.disabled },
                checked ?
-                 `border-none ${switchStyle[props.variant]}` :
-                 'bg-white border-gray-200 shadow-inner'
+                 `border-none bg-primary ` :
+                 'bg-secondaryBg border-toggle'
       ]"
     >
       <span
         :class="['flex justify-center items-center', toggleSize[props.size],
                  'rounded-full absolute top-1/2 -translate-y-1/2 transition-all',
                  checked ?
-                   `bg-white left-[calc(100%-3px)] -translate-x-full
-                   shadow-[0_0_1px_rgba(0,0,0,0.3)]` :
-                   `${switchStyle[props.variant]} left-[3px] translate-x-0`
+                   `bg-secondaryBg left-[calc(100%-1px)] -translate-x-full` :
+                   `bg-toggle left-[1px] translate-x-0`
         ]"
       >
         <slot

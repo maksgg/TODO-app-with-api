@@ -64,7 +64,7 @@ const styleVariant: Record<string, string> = {
         <span
           :class="[
             tab.id === modelValue ?
-              'drop-shadow-primary' : '']"
+              'drop-shadow-primary' : ' text-txtPrimaryDark']"
         >
 
           {{ $t(tab.label) }}
@@ -72,10 +72,10 @@ const styleVariant: Record<string, string> = {
       </slot>
       <div
         :class="[
-          'absolute bottom-0 h-0.5 transition-all duration-300 bg-primary',
+          'absolute bottom-0 h-0.5 transition-all duration-300',
           tab.id === modelValue ?
-            'w-[75%] opacity-100 drop-shadow-primary' :
-            'w-0 opacity-0 group-hover:w-1/3 group-hover:opacity-100'
+            'w-[75%] opacity-100 drop-shadow-primary bg-primary' :
+            'w-0 opacity-0 group-hover:w-1/3 group-hover:opacity-100 bg-txtPrimaryDark'
         ]"
       />
     </button>

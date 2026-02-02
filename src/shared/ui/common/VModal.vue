@@ -1,112 +1,140 @@
 <script setup lang="ts">
-import VButton from "./VButton.vue";
+import { computed } from "vue";
 
-import { useScrollLock } from "@/shared/composables/useScrollLock";
+import { useModal } from "@/shared/composables/useModal";
 
-const {
-  as = "div",
-  title = "",
-  btnTitle = "Save",
-  btnVariant = "primary",
-  size = "md",
-  loader = false,
-  isChanged = false,
-} = defineProps<{
-  as?: "div" | "form" | "dialog";
-  title?: string;
-  btnTitle: string;
-  btnVariant?: "primary" | "dangerous" | "ghost" | "sidebar";
-  size?: "sm" | "md" | "lg";
-  loader?: boolean;
-  isChanged?: boolean;
-}>();
+interface Props {
+  id: string
+  title?: string
+  showCloseButton?: boolean
+  closeOnBackdrop?: boolean
+  closeOnEscape?: boolean
+  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full"
+}
 
-defineOptions({
-  inheritAttrs: false,
+const props = withDefaults(defineProps<Props>(), {
+  title: "",
+  showCloseButton: false,
+  closeOnBackdrop: true,
+  closeOnEscape: true,
+  maxWidth: "md",
 });
 
-const emit = defineEmits<{ "submit": [void] }>();
+const emit = defineEmits<{
+  close: []
+  open: []
+}>();
 
-const submit = () => emit("submit");
+const { isOpen, close, zIndex } = useModal(props.id);
 
-const isOpen = defineModel<boolean>();
+const maxWidthClass = computed(() => {
+  const widths = {
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+    full: "max-w-full",
+  };
+  return widths[props.maxWidth];
+});
 
-const closeModal = () => isOpen.value = false;
+const handleClose = () => {
+  close();
+  emit("close");
+};
 
-useScrollLock(() => Boolean(isOpen.value));
+const handleBackdropClick = () => {
+  if (props.closeOnBackdrop) {
+    handleClose();
+  }
+};
 
-const sizeClasses = {
-  sm: "w-[20rem]",
-  md: "w-[25rem]",
-  lg: "w-[27.5rem]",
+const handleKeydown = (event: KeyboardEvent) => {
+  if (props.closeOnEscape && event.key === "Escape") {
+    handleClose();
+  }
 };
 </script>
 
 <template>
   <Teleport to="body">
     <Transition
-      enter-active-class="transition duration-100 ease-out"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="transition duration-100 ease-in"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
+      name="modal"
+      @after-enter="emit('open')"
     >
       <div
         v-if="isOpen"
-        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4"
-        @click.self="closeModal"
+        class="modal-backdrop"
+        :style="{ zIndex }"
+        @click="handleBackdropClick"
+        @keydown="handleKeydown"
       >
-        <component
-          :is="as"
-          v-bind="$attrs"
-          role="dialog"
-          aria-modal="true"
-          :class="[
-            `bg-secondaryBg p-6 flex flex-col items-center gap-4 rounded-xl
-            shadow-soft transition-all`,
-            sizeClasses[size]
-          ]"
-          @submit.prevent="as === 'form' ? submit() : null"
+        <div
+          class="modal-container bg-secondaryBg"
+          :class="maxWidthClass"
+          @click.stop
         >
-          <header
-            v-if="title || $slots.header"
-            class="flex w-full text-center"
+          <!-- Header -->
+          <div
+            v-if="title || showCloseButton || $slots.header"
+            class="modal-header"
           >
             <slot name="header">
-              <h3 class="self-start text-modalHead text-txtPrimary">
+              <h3
+                v-if="title"
+                class="text-modalHead text-txtPrimary"
+              >
                 {{ title }}
               </h3>
             </slot>
-          </header>
-          <div class="flex flex-col justify-center text-center gap-2 w-full">
-            <slot name="main" />
-          </div>
-          <footer
-            class="flex justify-center gap-4 w-full"
-          >
-            <slot name="footer">
-              <div
-                :class="[
-                  'flex gap-5 mt-5 w-full',
-                  as === 'form' ? 'justify-end' : 'justify-center']"
+            <button
+              v-if="showCloseButton"
+              class="modal-close-btn"
+              type="button"
+              aria-label="Close modal"
+              @click="handleClose"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
-                <VButton
-                  text="Cancel"
-                  @click="closeModal"
+                <line
+                  x1="18"
+                  y1="6"
+                  x2="6"
+                  y2="18"
                 />
-                <VButton
-                  :text="btnTitle"
-                  :type="as === 'form' ? 'submit' : 'button'"
-                  :variant="btnVariant"
-                  :loader="loader"
-                  :disabled="loader || isChanged"
-                  @click="as === 'div' ? submit() : null"
+                <line
+                  x1="6"
+                  y1="6"
+                  x2="18"
+                  y2="18"
                 />
-              </div>
-            </slot>
-          </footer>
-        </component>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Content -->
+          <div class="modal-content">
+            <slot />
+          </div>
+
+          <!-- Footer -->
+          <div
+            v-if="$slots.footer"
+            class="modal-footer"
+          >
+            <slot name="footer" />
+          </div>
+        </div>
       </div>
     </Transition>
   </Teleport>

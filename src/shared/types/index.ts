@@ -77,6 +77,15 @@ type UserPayload = {
 
 type DateVariant = "short" | "long";
 
+type ModalType = "delete" | "edit" | "create" | "addWeeklyGoals" | "editWeeklyGoals";
+
+type SidebarLink = {
+  title: string;
+  icon: string;
+  to: string;
+  tooltip?: string;
+};
+
 export type {
   UserProfileData,
   UserInfo,
@@ -92,5 +101,6 @@ export type {
   Response,
   Pagination,
   DateVariant,
+  ModalType,
+  SidebarLink,
 };
-
