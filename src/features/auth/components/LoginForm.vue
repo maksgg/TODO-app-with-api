@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { tokenManager } from "@ametie/vue-muza-use";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useLoginFormValidation } from "@/features/auth/composables/useAuthValidation";
-import { tokenManager } from "@/shared/api/tokenManager";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
@@ -18,7 +18,10 @@ const { loading, error, execute: request } = fetchLoginUser({
   authMode: "public",
   onSuccess: async ({ data }) => {
     toast.success(t("auth.login.success"));
-    tokenManager.setTokens({ accessToken: data.accessToken });
+    tokenManager.setTokens({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
     await useStore.setUser();
     useStore.isAdmin();
   },
@@ -39,7 +42,7 @@ const submitForm = async () => {
     rounded-xl w-full text-authTitle text-txtPrimaryDark"
     @submit.prevent="submitForm"
   >
-    <h1 class="text-login leading-none">
+    <h1>
       {{ $t('auth.login.Welcome_back') }}
     </h1>
     <VInput
@@ -58,14 +61,12 @@ const submitForm = async () => {
       :placeholder="$t('auth.login.enter_your_password')"
       @input="error = null"
     />
-    <div class="flex flex-col w-full gap-5">
-      <VButton
-        :text="$t('auth.login.log_in')"
-        type="submit"
-        size="full"
-        :loader="loading"
-        class="mt-3"
-      />
-    </div>
+    <VButton
+      :text="$t('auth.login.sign_in')"
+      type="submit"
+      size="full"
+      :loader="loading"
+      class="mt-3"
+    />
   </form>
 </template>
