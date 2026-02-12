@@ -1,91 +1,30 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, computed } from "vue";
+import { debouncedRef } from "@vueuse/core";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 import useUsersRequests from "./api/useUsersRequests";
+import UsersTableSkeleton from "./components/UsersTableSkeleton.vue";
 
-import { TableParams } from "@/shared/types";
+import { useModal } from "@/shared/composables/useModal";
+import { FilterConfig, TableParams } from "@/shared/types";
+import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
-import VTable from "@/shared/ui/common/VTable.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
-import { formatDate } from "@/shared/utils/index";
+import VTable from "@/shared/ui/table/VTable.vue";
+import { firstLetterUp, formatDate } from "@/shared/utils/index";
 
-const isOpen = ref(false);
-const userId = ref<string | null>(null);
-const router = useRouter();
-const pagination = ref({
-  limit: 20,
-  hasMore: false,
-});
-const toolBar = ref({
-  searchField: "",
-  role: { name: "All roles", value: "all" },
-});
-
-const { fetchAllUsers, deleteTargetUser } = useUsersRequests();
-
-const {
-  data: usersData,
-  loading: mainLoader,
-  execute: usersResponse,
-} = fetchAllUsers({
-  onSuccess: ({ data }) => {
-    data.data.forEach(el => el.createdAt = formatDate(el.createdAt, "long"));
-    pagination.value = data.pagination;
-  },
-  debounce: 500,
-});
-
-const targetUserName = computed(
-  () => usersData.value?.data.find((el) => el.id === userId.value)?.name,
-);
-
-const openModal = (id: string) => {
-  isOpen.value = true;
-  userId.value = id;
-};
-
-const closeModal = () => isOpen.value = false;
-
-const deleteUser = async () => {
-  mainLoader.value = true;
-  const { execute } = deleteTargetUser(userId.value);
-
-  await Promise.all([
-    execute(),
-    loadData(),
-  ]);
-  isOpen.value = false;
-  userId.value = null;
-  mainLoader.value = false;
-};
-
-const loadData = async (params?: TableParams) => {
-  const queryParams: TableParams = {
-    limit: params?.limit || 20,
-    sort: params?.sort || "createdAt",
-    order: params?.order || "desc",
-    q: toolBar.value.searchField,
-  };
-
-  if (toolBar.value.role.value !== "all") {
-    queryParams.role = toolBar.value.role.value as "user" | "admin";
-  }
-
-  await usersResponse({ params: queryParams });
-};
-
-const userHeader = [
+const usersHeader = [
   { key: "member", label: "Member", width: "45%" },
   { key: "role", label: "Role" },
   { key: "createdAt", label: "Registered" },
   { key: "actions", label: "Actions", textAlign: "text-end", width: "30%" },
 ];
-const toolbarConfig = [
+const toolbarConfig: FilterConfig = [
   {
     key: "role",
-    label: "Sort by",
+    label: "Role",
     options: [
       { name: "All roles", value: "all" },
       { name: "User", value: "user" },
@@ -95,92 +34,153 @@ const toolbarConfig = [
 ];
 const tableActions = [
   { value: "user", label: "User Profile" },
-  { value: "remove", label: "Remove user", dangerous: true },
+  { value: "delete", label: "Remove user", dangerous: true },
 ];
 
-const actions = (id: string, value: string) => {
+const targetUser = ref({ id: "", name: "" });
+const router = useRouter();
+const searchQuery = ref("");
+const debounceSearch = debouncedRef<string>(searchQuery, 700);
+const tablePayloadParams = ref({
+  limit: 20,
+  sort: "createdAt",
+  order: "desc",
+  role: { name: "All roles", value: "all" }, //toolbarConfig[0].options[0].name
+});
+
+const { fetchAllUsers, deleteTargetUser } = useUsersRequests();
+
+const {
+  data: usersData,
+  loading: usersLoader,
+  execute: usersResponse,
+} = fetchAllUsers({
+  immediate: true,
+  watch: [tablePayloadParams, debounceSearch],
+  params: () => ({
+    ...tablePayloadParams.value,
+    q: debounceSearch.value,
+    role: tablePayloadParams.value.role.value !== "all" ?
+      tablePayloadParams.value.role.value : undefined,
+  }),
+});
+
+const modal = useModal("delete-user");
+
+const openModal = (user: { id: string, name: string }) => {
+  targetUser.value = { id: user.id, name: user.name };
+  modal.open();
+};
+
+const {
+  execute: deleteUser,
+  loading: deleteUserLoader,
+} = deleteTargetUser(() => targetUser.value.id, {
+  onSuccess: () => {
+    usersResponse();
+    modal.close();
+    targetUser.value = { id: "", name: "" };
+  },
+},
+);
+
+const usersActions = (value: string, user: { id: string, name: string }) => {
   switch (value) {
-    case "user": targetUserInfo(id);
-      break;
-    case "remove": openModal(id);
-      break;
+    case "user": targetUserInfo(user.id); break;
+    case "delete": openModal(user); break;
   }
 };
 
-const targetUserInfo = (id: string) => router.push({ name: "user", params: { id } });
+const targetUserInfo = (id: string) => router.replace({ name: "profile", query: { id } });
 
-const requestSortTable = (params: TableParams) => loadData(params);
-
-watch(
-  toolBar,
-  (newValue) => {
-    loadData({
-      q: newValue.searchField,
-      role: newValue.role.value as "user" | "admin",
-    });
-  },
-  { deep: true },
-);
-
-onMounted(() => loadData());
+const requestSortTable = (params: TableParams) => {
+  return tablePayloadParams.value = {
+    ...tablePayloadParams.value,
+    limit: params.limit,
+    sort: params?.sort || "createdAt",
+    order: params?.order || "desc",
+  };
+};
 </script>
 
 <template>
-  <div class="relative flex flex-col h-screen px-12 py-6">
-    <h1 class="text-4xl font-semibold">
-      User Management
-    </h1>
-    <VTable
-      :header="userHeader"
-      :rows="usersData?.data"
-      :loader="mainLoader"
-      :searchable="true"
-      :pagination="pagination"
-      @request="requestSortTable"
-    >
-      <template #toolBar>
-        <VToolbar
-          v-model:search="toolBar.searchField"
-          v-model:filters="toolBar"
-          :filter-configs="toolbarConfig"
-          class="col-span-full"
-        />
-      </template>
-      <template #col-member="{ row }">
-        <div class="flex flex-col justify-center min-w-0">
-          <span class="truncate text-bodyM">{{ row.name }}</span>
-          <span class="truncate text-uiCaption">{{ row.email }}</span>
-        </div>
-      </template>
-      <template #col-actions="{ row }">
-        <div class="flex flex-wrap justify-end gap-5">
-          <VDropDown
-            :id="row.id"
-            :items="tableActions"
-            trigger="icon"
-            placement="bottomRight"
-            @action="actions"
-          />
-        </div>
-      </template>
-    </VTable>
-  </div>
-  <VModal
-    v-model="isOpen"
-    title="Remove user"
-    btn-title="Remove user"
-    btn-variant="dangerous"
-    :loader="mainLoader"
-    @submit="deleteUser"
-    @close="closeModal"
+  <h1 class="text-headPrimary text-txtPrimary">
+    User Management
+  </h1>
+  <UsersTableSkeleton v-if="usersLoader && !usersData?.data?.length" />
+  <VTable
+    v-else
+    :header="usersHeader"
+    :rows="usersData?.data"
+    :loader="usersLoader"
+    :searchable="true"
+    :pagination="usersData?.pagination"
+    @request="requestSortTable"
   >
-    <template #main>
-      <h4 class="font-bold">
-        Are you sure you want to remove <span>"{{ targetUserName }}"</span> user?
+    <template #toolBar>
+      <VToolbar
+        v-model:search="searchQuery"
+        v-model:filters="tablePayloadParams"
+        :filter-configs="toolbarConfig"
+        class="col-span-full"
+      />
+    </template>
+    <template #col-member="{ row }">
+      <div class="flex flex-col justify-center min-w-0">
+        <span class="truncate text-bodyM text-txtPrimary">{{ row.name }}</span>
+        <span class="truncate text-uiCaption text-secondary">{{ row.email }}</span>
+      </div>
+    </template>
+    <template #col-role="{ row }">
+      <span
+        :class="['truncate text-toggle', row.role === 'admin' ? 'text-uiLabel' : 'text-bodyM']"
+      >
+        {{ firstLetterUp(row.role) }}
+      </span>
+    </template>
+    <template #col-createdAt="{ row }">
+      <span class="truncate text-uiCaption text-secondary">
+        {{ formatDate(row.createdAt, "long") }}
+      </span>
+    </template>
+    <template #col-actions="{ row, index }">
+      <div class="flex flex-wrap justify-end gap-5">
+        <VDropDown
+          :options="tableActions"
+          trigger="icon"
+          :placement="index >= usersData?.data.length - 1 ? 'topRight' : 'bottomRight'"
+          class="text-primary"
+          @action="(val) => usersActions(val, row as { id: string; name: string; })"
+        />
+      </div>
+    </template>
+  </VTable>
+  <VModal
+    id="delete-user"
+    title="Remove user"
+  >
+    <div class="flex flex-col gap-2 text-center">
+      <h4 class="text-uiHead text-txtPrimary">
+        Are you sure you want to remove <span>"{{ targetUser.name }}"</span> user?
       </h4>
-      <p class="text-sm">
+      <p class="text-bodyM text-secondary">
         This action can’t be undone
       </p>
+    </div>
+    <template #footer>
+      <div class="flex justify-center gap-4">
+        <VButton
+          text="Cancel"
+          class="!bg-transparent text-primary"
+          @click="modal.close()"
+        />
+        <VButton
+          text="Remove user"
+          variant="dangerous"
+          :loader="deleteUserLoader"
+          @click="deleteUser"
+        />
+      </div>
     </template>
   </VModal>
 </template>
