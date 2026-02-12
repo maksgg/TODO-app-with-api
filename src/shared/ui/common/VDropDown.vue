@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, useId } from "vue";
+import { computed, ref } from "vue";
 
 import VIcon from "./VIcon.vue";
 import VLoader from "./VLoader.vue";
 
-type Item = {
+type Option = {
   key?: string;
   value: string;
   label?: string;
@@ -17,7 +17,7 @@ type DropDown = {
   id?: string;
   title?: string;
   modelValue?: string | number | null;
-  items: Item[];
+  options: Option[];
   disabled?: boolean;
   trigger?: "icon" | null;
   variant?: "primary" | "custom" | "languages";
@@ -37,12 +37,11 @@ const props = withDefaults(defineProps<DropDown>(), {
   loader: false,
 });
 
-const mainId = computed(() => props.id || useId());
 const isOpened = ref(false);
 
 const emit = defineEmits<{
   "update:modelValue": [string],
-  "action": [value?: string, id?: string, key?: string],
+  "action": [value?: any, key?: string],
   "update:loader": [value: boolean],
 }>();
 
@@ -51,9 +50,9 @@ const toggle = (): void => {
   isOpened.value = !isOpened.value;
 };
 
-const selectedValue = (item: Item) => {
+const selectedValue = (item: Option) => {
   emit("update:modelValue", item.value);
-  emit("action", item.value, mainId.value, item.key);
+  emit("action", item.value, item.key);
   isOpened.value = !isOpened.value;
 };
 
@@ -62,13 +61,13 @@ const selectedLabel = computed((): string => {
     return props.title;
   }
 
-  const selectedItem = props.items.find(el => el.value === props.modelValue);
+  const selectedItem = props.options.find(el => el.value === props.modelValue);
 
   return !selectedItem ? props.title : selectedItem.label || selectedItem.value;
 });
 
 const triggerStyle: Record<DropDown["variant"], string> = {
-  primary: "border bg-secondary p-1 rounded-lg",
+  primary: "border bg-secondary p-1 rounded-lg shadow-selectShadow",
   custom: "border rounded-t-md p-1 bg-red-500 text-white",
   languages: "bg-primary p-1 text-text-color",
 };
@@ -139,7 +138,7 @@ const placementStyle: Record<DropDown["placement"], string> = {
       @mousedown.prevent
     >
       <li
-        v-for="item in props.items"
+        v-for="item in props.options"
         :key="item.value"
         :class="[
           'px-2 py-1.5 text-bodyL hover:opacity-75',

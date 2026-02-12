@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type BoxStyle = "form" | "card" | "custom";
+type BoxStyle = "weekly" | "card" | "custom";
 
 type ContainerProps = {
   title?: string;
@@ -14,9 +14,9 @@ const {
 } = defineProps<ContainerProps>();
 
 const styleVariants: Record<BoxStyle, string> = {
-  form: "text-white gap-10 p-5 rounded-lg bg-blur",
+  weekly: "flex flex-col p-4 bg-primaryBg rounded-xl border border-listCardBorder",
   card: "flex flex-col gap-5 p-6 bg-secondaryBg rounded-xl border border-listCardBorder",
-  custom: "flex flex-wrap",
+  custom: "flex flex-col gap-5 p-6 bg-secondaryBg border border-listCardBorder",
 };
 </script>
 
@@ -34,11 +34,8 @@ const styleVariants: Record<BoxStyle, string> = {
         {{ title }}
       </slot>
     </div>
-    <div
-      v-if="$slots.main"
-      class="flex flex-col justify-between"
-    >
-      <slot name="main" />
+    <div class="flex flex-col justify-between">
+      <slot />
     </div>
     <div
       v-if="$slots.footer"

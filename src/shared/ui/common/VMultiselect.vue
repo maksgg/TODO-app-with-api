@@ -74,10 +74,14 @@ const isOpen = ref(false);
 
 /* Випадаючий список */
 :deep(.multiselect__content-wrapper) {
-  @apply absolute left-0 bg-secondaryBg mt-1 rounded-lg text-txtPrimary
-  border-borderDefault hover:border-borderHover drop-shadow-primary
-  shadow-xl z-[100] overflow-y-auto max-h-[500px];
+  /* Додаємо top: 100%, щоб mt-2 відштовхувався від низу інпуту коректно */
+  @apply absolute left-0 bg-secondaryBg mt-2 rounded-lg text-txtPrimary
+  border-2 border-borderDefault hover:border-borderHover
+  shadow-selectShadow z-[100] overflow-y-auto max-h-[500px];
+
+ border-top-style: solid;
 }
+
 /* Підсвітка при наведенні */
 :deep(.multiselect__option--highlight) {
   @apply bg-transparent text-txtPrimary hover:bg-primaryBg;

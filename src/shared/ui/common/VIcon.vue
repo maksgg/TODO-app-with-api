@@ -25,7 +25,6 @@ type IconProps = {
   size?: "sm" | "md" | "lg";
 };
 
-
 const { type, size = "md" } = defineProps<IconProps>();
 
 const icons: Record<string, Component> = {
@@ -49,15 +48,18 @@ const icons: Record<string, Component> = {
 };
 
 const sizeStyle: Record<IconProps["size"], string> = {
-  sm: "w-1.5 h-1.5",
+  sm: "w-2.5 h-1.5",
   md: "w-4 h-4",
   lg: "w-6 h-6",
 };
 </script>
 
 <template>
-  <div :class="['flex justify-center items-center', sizeStyle[size]]">
-    <component :is="icons[type]" />
-  </div>
+  <!-- <div :class="['flex justify-center items-center', sizeStyle[size]]"> -->
+  <component
+    :is="icons[type]"
+    :class="['flex justify-center items-center', sizeStyle[size]]"
+  />
+  <!-- </div> -->
 </template>
 

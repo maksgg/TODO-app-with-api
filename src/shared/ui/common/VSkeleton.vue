@@ -7,7 +7,7 @@ type SkeletonProps = {
   variant?: "text" | "circle" | "rectangle";
 };
 
-const { width, height, variant }= defineProps<SkeletonProps>();
+const { width, height, variant = "rectangle" }= defineProps<SkeletonProps>();
 
 const formatSize = (val?: string) => {
   const isPureNumber = /^\d+$/.test(val);
@@ -16,7 +16,7 @@ const formatSize = (val?: string) => {
 };
 
 const skeletonStyles = computed(() => ({
-  width: formatSize(width),
+  width: width ? formatSize(width) : "100%",
   height: formatSize(height),
 }));
 
@@ -31,7 +31,7 @@ const variantClasses = {
   <div
     :class="[
       `skeleton-loader relative overflow-hidden rounded-2xl
-      animate-pulse bg-gray-300 dark:bg-gray-700`,
+      animate-pulse bg-skeletonBg`,
       variantClasses[variant]
     ]"
     :style="skeletonStyles"

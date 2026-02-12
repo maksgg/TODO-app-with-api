@@ -1,19 +1,25 @@
 <script setup lang="ts">
-import { FilterConfig } from "../../../features/lists/types";
-
+import { FilterConfig } from "@/shared/types";
 import VInput from "@/shared/ui/common/VInput.vue";
 import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 
 type ToolbarProps = {
-  filterConfigs?: FilterConfig[];
+  filterConfigs?: FilterConfig;
   isSearchable?: boolean;
+  selectWidth?: "sm" | "md" | "lg";
 };
 
-const { filterConfigs = [], isSearchable = true } = defineProps<ToolbarProps>();
+const { filterConfigs = [], isSearchable = true, selectWidth = "sm" } = defineProps<ToolbarProps>();
 
 const search = defineModel<string>("search");
 
 const filters = defineModel<Record<string, any>>("filters", { required: true });
+
+const size: Record<ToolbarProps["selectWidth"], string> = {
+  sm: "w-[10rem]",
+  md: "w-[15rem]",
+  lg: "w-[20rem]",
+};
 </script>
 
 <template>
@@ -35,6 +41,7 @@ const filters = defineModel<Record<string, any>>("filters", { required: true });
       v-model:model="filters[config.key]"
       :options="config.options"
       :title="config.label"
+      :class="size[selectWidth]"
     />
   </div>
 </template>

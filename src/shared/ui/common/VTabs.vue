@@ -67,7 +67,7 @@ const styleVariant: Record<string, string> = {
               'drop-shadow-primary' : ' text-txtPrimaryDark']"
         >
 
-          {{ $t(tab.label) }}
+          {{ tab.label }}
         </span>
       </slot>
       <div

@@ -73,7 +73,7 @@ const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPa
 const inputStylesVariant: Record<VariantStyles, string> = {
   main: `
     py-3 pl-4 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover 
-    rounded-lg placeholder-muted placeholder:disabled:text-disabledBorder 
+    rounded-lg placeholder-muted placeholder:disabled:text-disabledBorder disabled:text-disabledBorder
     disabled:border-disabledBorder disabled:cursor-not-allowed focus:shadow-innerOutline
   `,
   toolbar: `

@@ -29,7 +29,7 @@ type Response<T, D> = {
   pagination: D;
 };
 
-type AdminResponse = Response<UserInfo, Pagination>;
+type UsersResponse = Response<UserInfo, Pagination>;
 
 type TableParams = {
   searchField?: string;
@@ -77,7 +77,7 @@ type UserPayload = {
 
 type DateVariant = "short" | "long";
 
-type ModalType = "delete" | "edit" | "create" | "addWeeklyGoals" | "editWeeklyGoals";
+type ModalType = "delete" | "edit" | "create" | "add";
 
 type SidebarLink = {
   title: string;
@@ -86,10 +86,21 @@ type SidebarLink = {
   tooltip?: string;
 };
 
+type SelectOption = {
+  name: string;
+  value: string;
+};
+
+type FilterConfig = {
+  key: string;
+  label: string;
+  options: SelectOption[];
+}[];
+
 export type {
   UserProfileData,
   UserInfo,
-  AdminResponse,
+  UsersResponse,
   TableParams,
   UserRole,
   UserPermissions,
@@ -103,4 +114,5 @@ export type {
   DateVariant,
   ModalType,
   SidebarLink,
+  FilterConfig,
 };

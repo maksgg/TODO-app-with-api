@@ -58,9 +58,8 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     hover:drop-shadow-primary
     active:bg-activePrimary
     active:drop-shadow-none
-    gap-2 p-4 rounded-xl bg-primary
+    gap-2 px-4 py-3 rounded-xl bg-primary
     enabled:hover:border-text-primary 
-    
   `,
   dangerous: `
     ${baseButtonStyles}
@@ -68,11 +67,11 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     hover:drop-shadow-dangerous
     active:bg-activeDangerous
     active:drop-shadow-none
-    gap-2 p-4 rounded-xl bg-dangerous
+    gap-2 px-4 py-3 rounded-xl bg-dangerous
     enabled:hover:border-text-primary 
   `,
   ghost: `
-    flex border-none text-bodyM text-start truncate
+    flex items-center gap-2 border-none text-bodyL text-start truncate
     transition-all duration-300
   `,
   sidebar: `group relative flex items-center gap-2 px-4 py-3 w-full border-none 
@@ -136,7 +135,7 @@ const btnSize: Record<ButtonSize, string> = {
       </span>
     </Transition>
     <div
-      v-if="$slots['icon-right'] && props.icon"
+      v-if="$slots['icon-right']"
       class="flex"
     >
       <slot name="icon-right" />

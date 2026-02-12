@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import VButton from "./VButton.vue";
-import VLoader from "./VLoader.vue";
+import VButton from "../common/VButton.vue";
+import VLoader from "../common/VLoader.vue";
 
 import { TableParams } from "@/shared/types";
 import VTableSortIcon from "@/shared/ui/common/VTableSortIcon.vue";
@@ -121,7 +121,7 @@ const loadMore = () => {
                 bg-primaryBg text-text-color`
       ]"
     >
-      <div class="sticky top-0 z-50 bg-primaryBg">
+      <div class="sticky top-0 z-20 bg-primaryBg">
         <div
           v-if="searchable || showFilters"
           :class="['grid border-line-color bg-primaryBg pb-6', gridFrames]"
@@ -168,57 +168,59 @@ const loadMore = () => {
         </div>
       </div>
       <div class="relative flex flex-col flex-1">
-        <div
-          v-if="loader"
-          class="absolute inset-0 z-40 flex items-center justify-center bg-white/5
-          backdrop-blur-sm pointer-events-auto"
-        >
-          <div class="sticky top-1/2 -translate-y-1/2">
-            <VLoader />
-          </div>
-        </div>
-        <div
-          v-for="(row, index) in rows"
-          :key="index"
-          :class="[
-            'relative grid border-borderDefault hover:bg-secondaryBg transition',
-            gridFrames
-          ]"
-          :style="gridFrames.style"
-        >
+        <div class="relative flex flex-col flex-1 min-h-[100px]">
           <div
-            v-if="localLoader === row.id"
-            class="absolute inset-0 z-10 flex items-center justify-center
-             bg-white/10 backdrop-blur-[1px] rounded-md"
+            v-if="loader && rows.length > 0"
+            class="absolute inset-0 z-10 flex items-center
+            justify-center bg-white/5 backdrop-blur-[2px] pointer-events-auto rounded-md"
           >
-            <VLoader size="sm" />
+            <div class="sticky top-1/2 -translate-y-1/2">
+              <VLoader size="md" />
+            </div>
           </div>
           <div
-            v-for="col in header"
-            :key="col.key"
+            v-for="(row, index) in rows"
+            :key="index"
             :class="[
-              col.textAlign, 'pt-4 pb-2 px-2 border-b border-borderDefault',
-              col.key === 'actions' ? 'overflow-visible' : 'truncate',
+              'relative grid border-borderDefault hover:bg-secondaryBg transition',
+              gridFrames
             ]"
+            :style="gridFrames.style"
           >
-            <slot
-              :name="`col-${col.key}`"
-              :row="row"
-              :index="index"
-              :local-loader="localLoader"
+            <div
+              v-if="localLoader === row.id"
+              class="absolute inset-0 z-10 flex items-center justify-center
+             bg-white/10 backdrop-blur-[1px] rounded-md"
             >
-              {{ firstLetterUp(row[col.key]) }}
-            </slot>
+              <VLoader size="sm" />
+            </div>
+            <div
+              v-for="col in header"
+              :key="col.key"
+              :class="[
+                col.textAlign, 'pt-4 pb-2 px-2 border-b border-borderDefault',
+                col.key === 'actions' ? 'overflow-visible' : 'truncate',
+              ]"
+            >
+              <slot
+                :name="`col-${col.key}`"
+                :row="row"
+                :index="index"
+                :local-loader="localLoader"
+              >
+                {{ firstLetterUp(row[col.key]) }}
+              </slot>
+            </div>
           </div>
         </div>
+        <VButton
+          v-if="pagination.hasMore"
+          text="Load more"
+          class="my-5 self-center"
+          :disabled="loader"
+          @click="loadMore"
+        />
       </div>
-      <VButton
-        v-if="pagination.hasMore"
-        text="Load more"
-        class="my-5 self-center"
-        :disabled="loader"
-        @click="loadMore"
-      />
     </div>
   </div>
 </template>

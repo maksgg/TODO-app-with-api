@@ -51,7 +51,7 @@ const trackSize: Record<ToggleSize, string> = {
 <template>
   <label
     :for="id"
-    class="flex justify-start items-center gap-2 relative w-full"
+    class="flex items-center gap-2 relative w-full"
   >
     <input
       :id="id"
@@ -96,7 +96,7 @@ const trackSize: Record<ToggleSize, string> = {
     </div>
     <div
       v-if="props.text"
-      class="text-text-color"
+      class="text-bodyM text-txtPrimary"
     >
       <slot>{{ props.text }}</slot>
     </div>

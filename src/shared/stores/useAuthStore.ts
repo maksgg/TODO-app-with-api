@@ -1,10 +1,7 @@
+import { tokenManager, type UseApiOptions, useApiGet } from "@ametie/vue-muza-use";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 
-import type { UseApiOptions } from "../api";
-import { useApiGet } from "../composables";
-
-import { tokenManager } from "@/shared/api/tokenManager";
 import type { UserInfo } from "@/shared/types/index";
 
 export const useAuthStore = defineStore("user", () => {

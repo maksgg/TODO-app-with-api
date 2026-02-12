@@ -12,6 +12,7 @@ type CheckboxProps = {
   disabled?: boolean;
   icon?: string;
   variant?: CheckboxStyle;
+  type?: string;
 };
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   disabled: false,
   icon: "",
   variant: "primary",
+  type: "checkbox",
 });
 
 const inputId = computed(() => props.id || `v-input-${useId()}`);
@@ -48,7 +50,7 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
 
 <template>
   <label
-    :class="['flex justify-start items-center gap-2',
+    :class="['flex justify-start gap-2',
              {
                'opacity-50 pointer-events-none': props.disabled,
                'cursor-pointer': !props.disabled
@@ -65,9 +67,11 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
     >
     <span
       v-if="!props.icon"
-      :class="[`border-2 bg-elevated border-borderDefault stroke-current rounded-[4px] w-5 h-5
+      :class="[`border-2 bg-elevated border-borderDefault stroke-current w-5 h-5
        flex justify-center items-center`,
-               checked ? checkboxStyle[props.variant] : '' ]"
+               checked ? checkboxStyle[props.variant] : '',
+               props.type === 'radio' ? 'rounded-full' : 'rounded-[4px]',
+      ]"
     >
       <VIcon
         v-if="checked"
