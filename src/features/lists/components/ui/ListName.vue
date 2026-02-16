@@ -21,8 +21,7 @@ const openList = () => emit("openList", listId);
       v-if="listId"
       :text="title"
       variant="ghost"
-      size="md"
-      class="text-center hover:opacity-50 text-txtPrimary"
+      class="text-center hover:text-activePrimary text-txtPrimary"
       @click="openList"
     />
     <span

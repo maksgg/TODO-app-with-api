@@ -11,6 +11,7 @@ const { list , listActions } = defineProps<{
   listActions: {
     value: string;
     label: string;
+    disabled?: boolean;
     dangerous?: boolean;
   }[];
 }>();
@@ -25,7 +26,7 @@ const openModal = (modalType: ModalType) => emit("openModal", modalType, list);
 </script>
 
 <template>
-  <VContainer>
+  <VContainer class="hover:scale-105 transition-all">
     <div class="flex justify-between items-center gap-2">
       <ListName
         :hex-color="list.hexColor"
@@ -37,7 +38,7 @@ const openModal = (modalType: ModalType) => emit("openModal", modalType, list);
         :options="listActions"
         trigger="icon"
         placement="bottomRight"
-        class="text-primary"
+        icon-type="horizontalDots"
         @action="(val) => openModal(val as ModalType)"
       />
     </div>

@@ -1,8 +1,9 @@
-import type { UseApiOptions } from "@/shared/api/types";
-import { useApiPatch } from "@/shared/composables";
+import { useApiPatch, type UseApiOptions } from "@ametie/vue-muza-use";
+
+import { UserInfo } from "@/shared/types";
 
 export default () => {
-  const updateOwnProfile = (options?: UseApiOptions<{ name: string }>) => {
+  const updateOwnProfile = (options?: UseApiOptions<UserInfo, Partial<UserInfo>>) => {
     return useApiPatch("/me", options);
   };
 

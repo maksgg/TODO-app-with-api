@@ -7,7 +7,7 @@ import { UserGroupInfo } from "../../types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VIcon from "@/shared/ui/common/VIcon.vue";
 
-const { userListsInfo, totalLists, isExpanded } = defineProps<UserGroupInfo>();
+const { userListsInfo, totalLists, isExpanded, disabled } = defineProps<UserGroupInfo>();
 
 const emit = defineEmits<{ "expandList": [id: string], "openList": [id: string] }>();
 
@@ -26,7 +26,7 @@ onClickOutside(target, () => {
   <div
     ref="target"
     :class="[
-      'flex flex-col gap-5 p-6 bg-secondaryBg shadow-innerBorder transition-all duration-300',
+      `flex flex-col gap-5 p-6 bg-secondaryBg shadow-innerBorder transition-all hover:scale-105`,
       isExpanded ? 'rounded-t-xl z-50 relative' : 'rounded-xl z-0 relative',
     ]"
   >
@@ -71,18 +71,23 @@ onClickOutside(target, () => {
             v-for="(list, index) in userListsInfo.allTitles"
             :key="list.listId"
             :style="{ zIndex: userListsInfo.allTitles.length - index }"
-            class="relative flex items-center gap-1 text-bodyM text-txtPrimary
-                bg-secondaryBg rounded-lg border border-transparent
+            class="group relative flex items-center gap-1 text-bodyM text-txtPrimary
+                bg-secondaryBg rounded-lg border border-transparent cursor-pointer
                 transition-all"
           >
             <VButton
               :text="list.title"
               variant="ghost"
               icon-size="sm"
-              class="hover:opacity-50"
+              :disabled="disabled"
+              class="group-hover:text-activePrimary transition-colors"
               @click="openList(list.listId)"
             />
-            <span class="text-muted text-uiCaption">({{ list.totalTasks }})</span>
+            <span
+              class="text-muted text-uiCaption transition-colors group-hover:text-activePrimary"
+            >
+              ({{ list.totalTasks }})
+            </span>
           </div>
         </div>
       </div>

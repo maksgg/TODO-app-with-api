@@ -36,6 +36,7 @@ type List = {
 
 type UserGroupInfo = {
   isExpanded: boolean;
+  disabled?: boolean;
   totalLists: number;
   userListsInfo: {
     ownerId: string;
