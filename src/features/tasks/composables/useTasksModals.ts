@@ -24,7 +24,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
   const taskPayload = computed(() => {
     return {
       ...modalFields.value,
-      dueDate: new Date(modalFields.value.deadline),
+      dueDate: new Date(modalFields.value.deadline).toISOString(),
       tags: tagsFormatter(modalFields.value.tags),
       priority: modalFields.value.priority.value as Task["priority"],
     };
@@ -53,8 +53,8 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
       modalFields.value = {
         title: task.title,
         tags: task.tags.join(", "),
-        dueDate: new Date(task.dueDate),
-        deadline: new Date(task.dueDate),
+        dueDate: new Date(task.dueDate).toISOString(),
+        deadline: new Date(task.dueDate).toISOString(),
         priority: {
           name: firstLetterUp(task.priority),
           value: task.priority,
