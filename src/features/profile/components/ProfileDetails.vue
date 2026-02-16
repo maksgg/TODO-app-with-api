@@ -14,24 +14,18 @@ const formField = ref({
   name: userData?.name || "",
 });
 
-const isChanged = computed(() => {
-  return formField.value.name !== userData?.name;
-});
+const isChanged = computed(() => formField.value.name !== userData?.name);
 
 const emit = defineEmits<{ "updateUserData": [Partial<UserInfo>] }>();
 
-const updateUser = () => {
-  if (!isChanged.value) return;
-
-  emit("updateUserData", formField.value);
-};
+const updateUser = () => emit("updateUserData", formField.value);
 </script>
 
 <template>
-  <h2 class="text-3xl font-bold">
+  <h2 class="text-headPrimary text-txtPrimary">
     Account Details
   </h2>
-  <div class="border rounded-lg p-6">
+  <div class="border border-borderDefault bg-secondaryBg rounded-lg p-6">
     <form
       class="flex flex-col gap-5 max-w-[30rem]"
       @submit.prevent="updateUser"

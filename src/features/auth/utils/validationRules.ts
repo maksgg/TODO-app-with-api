@@ -1,4 +1,4 @@
-import { required, email, minLength, helpers, sameAs } from "@vuelidate/validators";
+import { required, email, minLength, helpers } from "@vuelidate/validators";
 import { useI18n } from "vue-i18n";
 
 export default () => {
@@ -19,15 +19,9 @@ export default () => {
     minLength: helpers.withMessage(() => t("auth.errorMsg.password_need_to_be_8_symbols"), minLength(8)),
   };
 
-  const confirmPasswordRules = (passwordState: string) => ({
-    required: helpers.withMessage(() => t("auth.errorMsg.repeat_password"), required),
-    sameAs: helpers.withMessage(() => t("auth.errorMsg.passwords_must_match"), sameAs(passwordState)),
-  });
-
   return {
     nameRules,
     emailRules,
     passwordRules,
-    confirmPasswordRules,
   };
 };

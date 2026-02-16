@@ -1,14 +1,24 @@
 import type { Pagination, Response } from "@/shared/types/index";
 
+type RequestParams = {
+  q: string;
+  sort: string;
+  order: string;
+  isOwn?: boolean;
+};
+
 type User = {
   id: string;
   email: string;
   name: string;
+  role: "user" | "admin";
 };
+
 type TaskItem = {
   id: string;
   title: string;
   status: string;
+  isWeeklyGoal: boolean;
 };
 
 type List = {
@@ -16,12 +26,25 @@ type List = {
   title: string;
   deadline: string;
   hexColor: string;
-  ownerId: User | string;
+  owner: User;
   tasks: TaskItem[];
   createdAt: string;
   updatedAt: string;
   totalTasks: number;
   completedTasks: number;
+};
+
+type UserGroupInfo = {
+  isExpanded: boolean;
+  disabled?: boolean;
+  totalLists: number;
+  userListsInfo: {
+    ownerId: string;
+    name: string;
+    email: string;
+    role: string;
+    allTitles: { listId: string; title: string; totalTasks: number }[]
+  }
 };
 
 type CreateListRequest = Pick<List, "title" | "hexColor">;
@@ -36,47 +59,17 @@ type ListResponse = List;
 
 type AllListResponse = Response<List, Pagination>;
 
-type ModalType = "delete" | "edit" | "create";
-
-type SelectOption = {
-  name: string;
-  value: string;
-};
-
-type FilterConfig = {
-  key: string;
-  label: string;
-  options: SelectOption[];
-};
-
-// analytics types
-
-type ListAnalytics = {
-  total: number;
-};
-
-type TaskAnalytics = {
-  total: number;
-  completed: number;
-  archived: number;
-  todo: number;
-  inProgress: number;
-};
-
-type AnalyticsResponse = {
-  lists: ListAnalytics;
-  tasks: TaskAnalytics;
-};
+type ListModal = "create" | "edit" | "delete";
 
 export type {
   List,
+  UserGroupInfo,
   CreateListRequest,
   CreateListResponse,
   UpdateListRequest,
   UpdateListResponse,
   AllListResponse,
   ListResponse,
-  AnalyticsResponse,
-  ModalType,
-  FilterConfig,
+  ListModal,
+  RequestParams,
 };

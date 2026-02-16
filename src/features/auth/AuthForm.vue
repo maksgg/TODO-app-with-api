@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { computed, type Component } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
 import LoginForm from "@/features/auth/components/LoginForm.vue";
 import RegisterForm from "@/features/auth/components/RegisterForm.vue";
 import type { AuthFormType } from "@/features/auth/types/index";
-import { Tabs } from "@/shared/types";
+// import { Tabs } from "@/shared/types";
 import VTabs from "@/shared/ui/common/VTabs.vue";
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const authTabs: Tabs[] = [
-  { id: "login", label: "auth.tabs.sign_in" },
-  { id: "register", label: "auth.tabs.sign_up" },
-];
+const authTabs = computed(() => {
+  return [
+    { id: "login", label: t("auth.tabs.sign_in") },
+    { id: "register", label: t("auth.tabs.sign_up") },
+  ];
+});
 
 const activeTab = computed({
   get: () => {

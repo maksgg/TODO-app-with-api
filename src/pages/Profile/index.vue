@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import NewUserProfile from "@/features/profile/NewUserProfile.vue";
+import { useRoute } from "vue-router";
+
+import UserProfile from "@/features/profile/UserProfile.vue";
+import UserInfo from "@/widgets/UserInfo/UserInfo.vue";
+
+const route = useRoute();
 </script>
 
 <template>
-  <NewUserProfile />
+  <UserInfo v-if="route.query.id" />
+  <UserProfile v-else />
 </template>

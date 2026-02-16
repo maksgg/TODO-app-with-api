@@ -1,38 +1,69 @@
 <script setup lang="ts">
 type LoaderProps = {
-  size?: "sm" | "md" |"lg";
+  size?: "sm" | "md" | "lg";
 };
+
 const props = withDefaults(defineProps<LoaderProps>(), {
   size: "sm",
 });
 
-const loaderSize: Record<LoaderProps["size"], string> = {
-  sm: "w-4 h-4",
-  md: "w-7 h-7",
-  lg: "w-10 h-10",
+// Визначаємо конкретний розмір у пікселях для кожного пропса
+const sizes = {
+  sm: "20px",
+  md: "28px",
+  lg: "40px",
 };
 </script>
 
 <template>
   <div
-    :class="['loader', loaderSize[props.size]]"
-  />
+    class="loader-wrapper"
+    :style="{ '--size': sizes[props.size] }"
+  >
+    <div class="loader" />
+  </div>
 </template>
 
 <style scoped>
-.loader {
-  background-color: #696565;
-  padding: 5px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  --_m:
-    conic-gradient(#0000 10%,#000),
-    linear-gradient(#000 0 0) content-box;
-  -webkit-mask: var(--_m);
-          mask: var(--_m);
-  -webkit-mask-composite: source-out;
-          mask-composite: subtract;
-  animation: l3 1s infinite linear;
+.loader-wrapper {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  z-index: 100;
 }
-@keyframes l3 {to{transform: rotate(1turn)}}
+
+.loader {
+  /* Використовуємо значення з пропса */
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #A6ADCF;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  position: relative;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* Після тегу ::after розмір має бути 100% від батька */
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  border-bottom: 3px solid #4B5BFF;
+  border-left: 3px solid transparent;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { type Component } from "vue";
 
+import Checked from "../icons/Checked.vue";
+
 import Analytic from "@/shared/ui/icons/Analytic.vue";
 import ChevronDown from "@/shared/ui/icons/ChevronDown.vue";
 import ChevronLeft from "@/shared/ui/icons/ChevronLeft.vue";
@@ -18,9 +20,12 @@ import Plus from "@/shared/ui/icons/Plus.vue";
 import Tool from "@/shared/ui/icons/Tool.vue";
 import UserIcon from "@/shared/ui/icons/UserIcon.vue";
 
-const { type } = defineProps<{
+type IconProps = {
   type: string;
-}>();
+  size?: "sm" | "md" | "lg";
+};
+
+const { type, size = "md" } = defineProps<IconProps>();
 
 const icons: Record<string, Component> = {
   magnifyingGlass: MagnifyingGlass,
@@ -39,12 +44,22 @@ const icons: Record<string, Component> = {
   plus: Plus,
   x: Close,
   horizontalDots: HorizontalDots,
+  checked: Checked,
+};
+
+const sizeStyle: Record<IconProps["size"], string> = {
+  sm: "w-2.5 h-1.5",
+  md: "w-4 h-4",
+  lg: "w-6 h-6",
 };
 </script>
 
 <template>
-  <div class="flex justify-center items-center w-[16px] h-[16px]">
-    <component :is="icons[type]" />
-  </div>
+  <!-- <div :class="['flex justify-center items-center', sizeStyle[size]]"> -->
+  <component
+    :is="icons[type]"
+    :class="['flex justify-center items-center', sizeStyle[size]]"
+  />
+  <!-- </div> -->
 </template>
 

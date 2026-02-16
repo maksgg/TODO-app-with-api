@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useId } from "vue";
 
+import VIcon from "./VIcon.vue";
+
 type CheckboxStyle = "primary" | "custom" | "icon";
 
 type CheckboxProps = {
@@ -10,6 +12,7 @@ type CheckboxProps = {
   disabled?: boolean;
   icon?: string;
   variant?: CheckboxStyle;
+  type?: string;
 };
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
@@ -19,6 +22,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   disabled: false,
   icon: "",
   variant: "primary",
+  type: "checkbox",
 });
 
 const inputId = computed(() => props.id || `v-input-${useId()}`);
@@ -38,7 +42,7 @@ const checked = computed({
 });
 
 const checkboxStyle: Record<CheckboxStyle, string> = {
-  primary: "border-none bg-blue-500 text-white",
+  primary: "border-none bg-primary text-white",
   custom: "border-none bg-green-500",
   icon: "text-red-500",
 };
@@ -46,7 +50,7 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
 
 <template>
   <label
-    :class="['flex justify-start items-center gap-2',
+    :class="['flex justify-start gap-2',
              {
                'opacity-50 pointer-events-none': props.disabled,
                'cursor-pointer': !props.disabled
@@ -63,23 +67,28 @@ const checkboxStyle: Record<CheckboxStyle, string> = {
     >
     <span
       v-if="!props.icon"
-      :class="[`border stroke-current rounded-sm w-5 h-5
-       flex justify-center items-center z-10`,
-               checked ? checkboxStyle[props.variant] : '' ]"
+      :class="[`border-2 bg-elevated border-borderDefault stroke-current w-5 h-5
+       flex justify-center items-center`,
+               checked ? checkboxStyle[props.variant] : '',
+               props.type === 'radio' ? 'rounded-full' : 'rounded-[4px]',
+      ]"
     >
-      <VueFeather
+      <VIcon
         v-if="checked"
-        type="check"
-        class="w-4 h-4"
+        type="checked"
+        class="w-4 h-4 text-secondaryBg"
       />
     </span>
-    <VueFeather
+    <VIcon
       v-else
       :type="props.icon"
       :fill="checked ? 'currentColor' : 'none'"
       :class="checked ? checkboxStyle[props.variant] : ''"
     />
-    <div v-if="props.text">
+    <div
+      v-if="props.text"
+      class="relative flex gap-2 text-uiBtn text-txtPrimary truncate"
+    >
       <slot>{{ props.text }}</slot>
     </div>
   </label>

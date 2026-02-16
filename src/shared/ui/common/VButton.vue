@@ -20,7 +20,7 @@ type ButtonProps = {
   size?: ButtonSize;
   to?: string;
   icon?: string;
-  iconSize?: string;
+  iconSize?: "sm" | "md" | "lg";
   tooltip?: string;
 };
 
@@ -35,14 +35,14 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   size: "fit",
   to: "",
   icon: "",
-  iconSize: "24",
+  iconSize: "md",
   tooltip: "",
 });
 
 const isRouterLink = computed((): boolean => !!props.to);
 
 const baseButtonStyles: string = `
-  group relative flex justify-center items-center text-uiBtn text-secondaryBg 
+  group relative flex justify-center items-center text-uiBtn text-secondaryBgLight
   disabled:border-disabledBtn disabled:bg-disabledBtn disabled:text-txtMutedLight 
   disabled:drop-shadow-none disabled:cursor-not-allowed
 `;
@@ -58,10 +58,8 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     hover:drop-shadow-primary
     active:bg-activePrimary
     active:drop-shadow-none
-    active:text-secondaryBg
-    gap-2 p-4 rounded-xl bg-primary
+    gap-2 px-4 py-3 rounded-xl bg-primary
     enabled:hover:border-text-primary 
-    
   `,
   dangerous: `
     ${baseButtonStyles}
@@ -69,21 +67,21 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     hover:drop-shadow-dangerous
     active:bg-activeDangerous
     active:drop-shadow-none
-    active:text-secondaryBg
-    gap-2 p-4 rounded-xl bg-dangerous
+    gap-2 px-4 py-3 rounded-xl bg-dangerous
     enabled:hover:border-text-primary 
   `,
   ghost: `
-    flex border-none text-headingCard text-start truncate
-    transition-all duration-300
+    group flex items-center gap-2 border-none text-bodyL text-start truncate
+    transition-all duration-300 disabled:text-txtMutedLight 
+    disabled:drop-shadow-none disabled:cursor-not-allowed disabled:pointer-events-none
   `,
   sidebar: `group relative flex items-center gap-2 px-4 py-3 w-full border-none 
     whitespace-nowrap text-txtSecondaryDark text-uiBtn hover:rounded-lg leading-none
-    [&.router-link-active]:bg-sidebarActiveLink
+    [&.router-link-active]:bg-secondaryBgDark
     [&.router-link-active]:text-txtPrimaryDark
     [&.router-link-active]:rounded-lg
     [&.router-link-active]:shadow-sidebarActive
-    hover:shadow-sidebarHoverGradient
+    hover:bg-sidebarHoverBtn
     hover:text-white
   `,
 };
@@ -138,7 +136,7 @@ const btnSize: Record<ButtonSize, string> = {
       </span>
     </Transition>
     <div
-      v-if="$slots['icon-right'] && props.icon"
+      v-if="$slots['icon-right']"
       class="flex"
     >
       <slot name="icon-right" />

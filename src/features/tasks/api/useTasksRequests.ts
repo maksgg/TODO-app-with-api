@@ -1,3 +1,6 @@
+import { useApiDelete, useApiGet, useApiPatch, useApiPost,  useApiBatch, type UseApiOptions } from "@ametie/vue-muza-use";
+import { MaybeRefOrGetter, toValue } from "vue";
+
 import type {
   TaskResponse,
   AllTasksResponse,
@@ -6,23 +9,24 @@ import type {
   UpdateTaskRequest,
   UpdateTaskResponse,
   Task,
+  TasksDeadlinesResponse,
+  TasksWithWeeklyGoalResponse,
+  ToggleWeeklyGoalResponse,
 } from "@/features/tasks/types/index";
-import type { UseApiOptions } from "@/shared/api/types";
-import { useApiGet, useApiPost, useApiDelete, useApiPatch } from "@/shared/composables";
 
 export default () => {
   const fetchCreateTask = (
-    listId: string | string[],
+    listId: MaybeRefOrGetter<string | string[]>,
     options?: UseApiOptions<CreateTaskResponse, CreateTaskRequest>,
   ) => {
-    return useApiPost(`/tasks/lists/${listId}`, options);
+    return useApiPost(() => `/tasks/lists/${toValue(listId)}`, options);
   };
 
   const fetchAllTasks = (
-    listId: string | string[],
+    listId:  MaybeRefOrGetter<string | string[]>,
     options?: UseApiOptions<AllTasksResponse>,
   ) => {
-    return useApiGet(`/tasks/lists/${listId}`, options);
+    return useApiGet(() => `/tasks/lists/${toValue(listId)}`, options);
   };
 
   const fetchTargetTask = (
@@ -33,27 +37,27 @@ export default () => {
   };
 
   const fetchUpdateTask = (
-    taskId: string | string[],
+    taskId: MaybeRefOrGetter<string>,
     options?: UseApiOptions<UpdateTaskResponse, UpdateTaskRequest>,
   ) => {
-    return useApiPatch(`/tasks/lists/${taskId}`, options);
+    return useApiPatch(() => `/tasks/${toValue(taskId)}`, options);
   };
 
   const fetchDeleteTargetTask = (
-    taskId: string | string[],
+    taskId: MaybeRefOrGetter<string>,
     options?: UseApiOptions<TaskResponse>,
   ) => {
-    return useApiDelete(`/tasks/${taskId}`, options);
+    return useApiDelete(() => `/tasks/${toValue(taskId)}`, options);
   };
   type CompleteRequest = {
     completed: boolean;
   };
 
   const fetchCompleteTask = (
-    taskId: string | string[],
+    taskId: MaybeRefOrGetter<string>,
     options?: UseApiOptions<TaskResponse, CompleteRequest>,
   ) => {
-    return useApiPatch(`/tasks/${taskId}/complete`, options);
+    return useApiPatch(() => `/tasks/${toValue(taskId)}/complete`, options);
   };
 
   const fetchAllStarredTasks = (
@@ -63,28 +67,30 @@ export default () => {
   };
 
   const fetchTaskWithDeadlines = (
-    options?: UseApiOptions<any>, // check response and set type
+    options?: UseApiOptions<TasksDeadlinesResponse>,
   ) => {
     return useApiGet("/tasks/deadlines", options);
   };
 
   const fetchToggleStarTask = (
     taskId: string | string[],
-    options?: UseApiOptions<TaskResponse, Pick<Task, "id">>, // check response and set type
+    options?: UseApiOptions<TaskResponse, Pick<Task, "id">>,
   ) => {
     return useApiPatch(`/tasks/${taskId}/toggle-star`, options);
   };
 
   const fetchWeeklyGoalTasks = (
-    options?: UseApiOptions<TaskResponse[], Pick<Task, "id">>, // check response and set type
+    options?: UseApiOptions<TasksWithWeeklyGoalResponse>,
   ) => {
     return useApiGet("/tasks/weekly-goals", options);
   };
 
   const fetchToggleWeeklyGoalTasks = (
-    options?: UseApiOptions<TaskResponse, Pick<Task, "id">>, // check response and set type
+    taskIds?: MaybeRefOrGetter<string[]>,
+    options?: UseApiOptions<ToggleWeeklyGoalResponse, Pick<Task, "id">>,
   ) => {
-    return useApiGet("/tasks/weekly-goals", options);
+    const ids = () => toValue(taskIds).map((id) => `tasks/${id}/toggle-weekly-goal`);
+    return useApiBatch(ids, options);
   };
 
   return {

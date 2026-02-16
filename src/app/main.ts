@@ -1,28 +1,15 @@
+import { createApi, createApiClient, tokenManager } from "@ametie/vue-muza-use";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-import VueFeather from "vue-feather";
+import { toast } from "vue-sonner";
 
 import App from "./App.vue";
 import router from "./router";
 
 import { i18n } from "@/features/i18n/composables/useI18n";
-import { setupApiClient } from "@/shared/api";
+import { useThemeStore } from "@/features/theme/store/useThemeStore";
 
 import "./main.scss";
-
-// Setup API client interceptors for token management
-setupApiClient({
-  onTokenRefreshFailed: () => {
-    const currentRoute = router.currentRoute.value;
-
-    if (currentRoute.name !== "auth") {
-      router.push({
-        name: "auth",
-        // query: { redirect: currentRoute.fullPath },
-      });
-    }
-  },
-});
 
 // Create Vue app instance
 const app = createApp(App);
@@ -32,8 +19,32 @@ app.use(createPinia());
 app.use(router);
 app.use(i18n);
 
-// Register global component
-app.component("VueFeather", VueFeather);
+const themeStore = useThemeStore();
+themeStore.initTheme();
+
+export const api = createApiClient({
+  baseURL: import.meta.env.VITE_API_URL,
+  authOptions: {
+    refreshUrl: "/auth/refresh",
+    onTokenRefreshed: ({ data }) => tokenManager.setTokens({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    }),
+    refreshPayload: () => ({
+      refreshToken: tokenManager.getRefreshToken(),
+    }),
+    onTokenRefreshFailed: () => {
+      tokenManager.clearTokens();
+      router.push("/auth");
+    },
+  },
+});
+
+// 2. Install Plugin
+app.use(createApi({
+  axios: api,
+  onError: (error) => toast.error(error.message),
+}));
 
 // Mount the app
 app.mount("#app");

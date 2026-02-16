@@ -18,7 +18,7 @@ const selectItem = (color: string) => activeColor.value = color;
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 text-uiLabel">
+  <div class="flex flex-col gap-2 text-uiLabel text-secondary">
     <span>{{ title }}</span>
     <div class="flex gap-3">
       <button
@@ -29,7 +29,7 @@ const selectItem = (color: string) => activeColor.value = color;
         :style="{ backgroundColor: item.color }"
         :class="[
           activeColor === item.color
-            ? 'border-2  border-black hover:border-black'
+            ? 'border-2  border-borderHover hover:borderHover'
             : ''
         ]"
         @click="selectItem(item.color)"

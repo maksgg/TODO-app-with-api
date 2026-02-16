@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import "vue-sonner/style.css";
-import { Toaster } from "vue-sonner";
 
 import AuthLayout from "@/app/layouts/AuthLayout.vue";
 import DefaultLayout from "@/app/layouts/DefaultLayout.vue";
+import { useThemeStore } from "@/features/theme/store/useThemeStore";
+import VToast from "@/shared/ui/common/VToast.vue";
 
 const route = useRoute();
+const themeStore = useThemeStore();
 
 const layouts = {
   auth: AuthLayout,
@@ -28,7 +29,7 @@ const routePath = computed(() => {
                'bg-authBg bg-cover bg-center' : 'bg-background'
     ]"
   >
-    <Toaster />
+    <VToast :theme="themeStore.currentTheme" />
     <component :is="routePath" />
   </div>
 </template>

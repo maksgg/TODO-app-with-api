@@ -1,11 +1,11 @@
+import { useApiPost, type UseApiOptions } from "@ametie/vue-muza-use";
+
 import type {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
 } from "@/features/auth/types/index";
-import type { UseApiOptions } from "@/shared/api/types";
-import { useApiPost } from "@/shared/composables";
 
 export default () => {
   const fetchLoginUser = (options?: UseApiOptions<LoginResponse, LoginRequest>) => {

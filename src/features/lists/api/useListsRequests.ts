@@ -1,3 +1,6 @@
+import { useApiDelete, useApiGet, useApiPatch, useApiPost, type UseApiOptions } from "@ametie/vue-muza-use";
+import { type MaybeRefOrGetter, toValue } from "vue";
+
 import type {
   AllListResponse,
   CreateListRequest,
@@ -7,9 +10,6 @@ import type {
   ListResponse,
 } from "../types";
 
-import type { UseApiOptions } from "@/shared/api/types";
-import { useApiDelete, useApiGet, useApiPatch, useApiPost } from "@/shared/composables";
-
 export default () => {
   const createUserList = (
     options?: UseApiOptions<CreateListResponse, CreateListRequest>,
@@ -17,37 +17,29 @@ export default () => {
     return useApiPost("/lists", options);
   };
 
-  const fetchAllUserLists = (
+  const getAllUserLists = (
     options?: UseApiOptions<AllListResponse>,
   ) => {
     return useApiGet("/lists", options);
   };
 
-  const fetchTargetUserLists = (
-    listId: string | string[],
-    options?: UseApiOptions<ListResponse>,
-  ) => {
-    return useApiGet(`/lists/${listId}`, options);
-  };
-
   const updateUserLists = (
-    listId: string | string[],
+    listId: MaybeRefOrGetter<string>,
     options?: UseApiOptions<UpdateListResponse, UpdateListRequest>,
   ) => {
-    return useApiPatch(`/lists/${listId}`, options);
+    return useApiPatch(() => `/lists/${toValue(listId)}`, options);
   };
 
   const deleteUserList = (
-    listId: string | string[],
+    listId: MaybeRefOrGetter<string>,
     options?: UseApiOptions<ListResponse>,
   ) => {
-    return useApiDelete(`/lists/${listId}`, options);
+    return useApiDelete(() => `/lists/${toValue(listId)}`, options);
   };
 
   return {
     createUserList,
-    fetchAllUserLists,
-    fetchTargetUserLists,
+    getAllUserLists,
     updateUserLists,
     deleteUserList,
   };
