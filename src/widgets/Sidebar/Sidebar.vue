@@ -1,55 +1,25 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
+import SidebarFooter from "./components/SidebarFooter.vue";
+import SidebarHeader from "./components/SidebarHeader.vue";
+import SidebarMain from "./components/SidebarMain.vue";
+
+import { useModal } from "@/shared/composables/useModal";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
+import { SidebarLink } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
 const userStore = useAuthStore();
+
+const { links } = defineProps<{ links: SidebarLink[] }>();
+
+const modal = useModal("logout");
 const expanded = ref(false);
-const isOpenModal = ref(false);
-
 const expandSidebar = () => expanded.value = !expanded.value;
-const openLogoutModal = () => isOpenModal.value = true;
-const closeLogoutModal = () => isOpenModal.value = false;
 
-const sidebarLinks = [
-  {
-    text: "Dashboard",
-    icon: "home",
-    to: "/",
-    tooltip: "Dashboard",
-  },
-  {
-    text: "Lists",
-    icon: "list",
-    to: "/list",
-    tooltip: "Lists of Tasks",
-  },
-  {
-    text: "Analytics",
-    icon: "analytics",
-    to: "/analytics",
-    tooltip: "Analytics",
-  },
-  {
-    text: "Profile",
-    icon: "user",
-    to: "/profile",
-    tooltip: "Own Profile",
-  },
-  {
-    text: "Admin Panel",
-    icon: "tool",
-    to: "/users",
-    tooltip: "Admin Panel",
-    isAdmin: true,
-  },
-];
-
-const filteredLinks = computed(() => {
-  return sidebarLinks.filter(link => !link.isAdmin || userStore.userData?.role === "admin");
-});
+const openModal = () => modal.open();
 </script>
 
 <template>
@@ -57,59 +27,50 @@ const filteredLinks = computed(() => {
     :class="[
       `flex flex-col justify-between items-start gap-5 border-sidebarBorder rounded-r-lg sidebar-bg
       p-6 text-sm transition-all sidebar-custom-bg border shadow-sidebarBgShadow`,
-      expanded ? 'w-[16rem]': 'w-[5rem]'
+      expanded ? 'w-[20rem]': 'w-[5rem]'
     ]"
   >
-    <div class="flex flex-col gap-5 w-full">
-      <VButton
-        :icon="expanded ? 'chevronLeft' : 'chevronRight'"
-        variant="ghost"
-        :is-open="expanded"
-        class="self-end pr-1"
-        @click="expandSidebar"
+    <div class="flex flex-col gap-6 w-full">
+      <SidebarHeader
+        :is-expanded="expanded"
+        @is-expanded="expandSidebar"
       />
-      <VButton
-        v-for="link in filteredLinks"
-        :key="link.to"
-        :text="link.text"
-        :icon="link.icon"
-        :to="link.to"
-        :tooltip="link.tooltip"
-        :show-text="expanded"
-        size="full"
-        variant="sidebar"
+      <SidebarMain
+        :links="links"
+        :is-expanded="expanded"
       />
     </div>
-    <div class="flex flex-col gap-5 w-full">
-      <VButton
-        text="Log out"
-        :show-text="expanded"
-        icon="logOut"
-        size="full"
-        variant="sidebar"
-        tooltip="Log out"
-        @click="openLogoutModal"
-      />
-    </div>
-    <VModal
-      v-model="isOpenModal"
-      title="Log out"
-      btn-title="Log out"
-      btn-variant="dangerous"
-      :is-close-btn="false"
-      @submit="userStore.logOutUser"
-      @close="closeLogoutModal"
-    >
-      <template #main>
-        <h4 class="font-bold">
-          Are you sure you want to log out?
-        </h4>
-        <p class="text-sm">
-          You’ll need to sign in again to access your account
-        </p>
-      </template>
-    </VModal>
+    <SidebarFooter
+      :is-expanded="expanded"
+      @open-modal="openModal"
+    />
   </aside>
+  <VModal
+    id="logout"
+    title="Log out"
+  >
+    <div class="flex flex-col justify-center items-center gap-2">
+      <h4 class="text-uiHead text-txtPrimary">
+        Are you sure you want to log out?
+      </h4>
+      <p class="text-bodyM text-secondary">
+        You’ll need to sign in again to access your account
+      </p>
+    </div>
+    <template #footer>
+      <div class="flex justify-center items-center gap-4">
+        <VButton
+          text="Cancel"
+          @click="modal.close"
+        />
+        <VButton
+          text="Log out"
+          variant="dangerous"
+          @click="userStore.logOutUser"
+        />
+      </div>
+    </template>
+  </VModal>
 </template>
 
 <style scoped>
