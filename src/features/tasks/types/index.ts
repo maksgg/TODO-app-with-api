@@ -32,8 +32,8 @@ type Task = {
   tags: string[];
   isStarred: boolean;
   isWeeklyGoal: boolean;
-  dueDate: Date | string;
-  deadline: Date | string;
+  dueDate: string;
+  deadline: string;
   completedAt?: string;
   deletedAt?: null;
   createdAt: string;
