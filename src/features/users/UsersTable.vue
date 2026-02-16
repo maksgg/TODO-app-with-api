@@ -7,35 +7,14 @@ import useUsersRequests from "./api/useUsersRequests";
 import UsersTableSkeleton from "./components/UsersTableSkeleton.vue";
 
 import { useModal } from "@/shared/composables/useModal";
-import { FilterConfig, TableParams } from "@/shared/types";
+import { usePermissions } from "@/shared/composables/usePermissions";
+import { FilterConfig, TableParams, UserInfo } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 import VTable from "@/shared/ui/table/VTable.vue";
 import { firstLetterUp, formatDate } from "@/shared/utils/index";
-
-const usersHeader = [
-  { key: "member", label: "Member", width: "45%" },
-  { key: "role", label: "Role" },
-  { key: "createdAt", label: "Registered" },
-  { key: "actions", label: "Actions", textAlign: "text-end", width: "30%" },
-];
-const toolbarConfig: FilterConfig = [
-  {
-    key: "role",
-    label: "Role",
-    options: [
-      { name: "All roles", value: "all" },
-      { name: "User", value: "user" },
-      { name: "Admin", value: "admin" },
-    ],
-  },
-];
-const tableActions = [
-  { value: "user", label: "User Profile" },
-  { value: "delete", label: "Remove user", dangerous: true },
-];
 
 const targetUser = ref({ id: "", name: "" });
 const router = useRouter();
@@ -48,6 +27,7 @@ const tablePayloadParams = ref({
   role: { name: "All roles", value: "all" }, //toolbarConfig[0].options[0].name
 });
 
+const { isAllowed } = usePermissions();
 const { fetchAllUsers, deleteTargetUser } = useUsersRequests();
 
 const {
@@ -84,7 +64,7 @@ const {
 },
 );
 
-const usersActions = (value: string, user: { id: string, name: string }) => {
+const usersActions = (value: string, user: UserInfo) => {
   switch (value) {
     case "user": targetUserInfo(user.id); break;
     case "delete": openModal(user); break;
@@ -101,6 +81,28 @@ const requestSortTable = (params: TableParams) => {
     order: params?.order || "desc",
   };
 };
+
+const usersHeader = [
+  { key: "member", label: "Member", width: "45%" },
+  { key: "role", label: "Role" },
+  { key: "createdAt", label: "Registered" },
+  { key: "actions", label: "Actions", textAlign: "text-end", width: "30%" },
+];
+const toolbarConfig: FilterConfig = [
+  {
+    key: "role",
+    label: "Role",
+    options: [
+      { name: "All roles", value: "all" },
+      { name: "User", value: "user" },
+      { name: "Admin", value: "admin" },
+    ],
+  },
+];
+const tableActions = [
+  { value: "user", label: "User Profile" },
+  { value: "delete", label: "Remove user", disabled: !isAllowed("delete:user"), dangerous: true },
+];
 </script>
 
 <template>
@@ -114,6 +116,7 @@ const requestSortTable = (params: TableParams) => {
     :rows="usersData?.data"
     :loader="usersLoader"
     :searchable="true"
+    :show-filters="true"
     :pagination="usersData?.pagination"
     @request="requestSortTable"
   >
@@ -148,9 +151,9 @@ const requestSortTable = (params: TableParams) => {
         <VDropDown
           :options="tableActions"
           trigger="icon"
+          icon-type="horizontalDots"
           :placement="index >= usersData?.data.length - 1 ? 'topRight' : 'bottomRight'"
-          class="text-primary"
-          @action="(val) => usersActions(val, row as { id: string; name: string; })"
+          @action="(val) => usersActions(val, row as UserInfo)"
         />
       </div>
     </template>

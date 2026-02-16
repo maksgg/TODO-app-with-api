@@ -4,6 +4,7 @@ import { watch, ref, computed } from "vue";
 import UserInfoPermissionsListSkeleton from "./UserInfoPermissionsListSkeleton.vue";
 import { formatPermissionsByGroups } from "../utils/formatPermissionsByGroups";
 
+import { usePermissions } from "@/shared/composables/usePermissions";
 import { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
@@ -32,12 +33,14 @@ const emit = defineEmits<{ "updated": [payload: UserPayload] }>();
 
 const checkboxMap = ref<Record<string, boolean>>({});
 const changedRole = ref<Roles | null>(null);
+const { isAllowed } = usePermissions();
 
 const selectedPermissions = computed(() => {
   return Object.keys(checkboxMap.value).filter((key) => checkboxMap.value[key]);
 });
 const formattedPermissions = computed(() => formatPermissionsByGroups(permissionsData));
-const isDisabled = computed(() => changedRole.value?.value === "admin");
+const isDisabled = computed(
+  () => changedRole.value?.value === "admin" || !isAllowed("manage:permissions"));
 const isChanged = computed(() => {
   if (!user) return false;
 
@@ -102,6 +105,7 @@ watch(
       <VMultiselect
         v-model:model="changedRole"
         :options="userRoles"
+        :disabled="!isAllowed('manage:roles')"
         title="Role"
         class="w-[11rem]"
         @update:model="roleChange"
