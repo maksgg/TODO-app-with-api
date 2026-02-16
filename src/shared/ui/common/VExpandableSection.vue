@@ -19,9 +19,7 @@ const toggle = () => activeId.value = isExpanded.value ? null : sectionId;
 </script>
 
 <template>
-  <div
-    class="flex flex-col gap-4"
-  >
+  <div class="flex flex-col">
     <VSkeleton
       v-if="loader"
       width="120"

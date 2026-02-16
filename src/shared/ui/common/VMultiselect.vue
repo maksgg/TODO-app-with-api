@@ -9,11 +9,13 @@ const {
   label = "",
   options = [],
   placeholder = "",
+  disabled = false,
 } = defineProps<{
   title?: string;
   label?: string;
   options: { name: string, value: string }[];
   placeholder?: string;
+  disabled?: boolean;
 }>();
 
 const model = defineModel<{ name: string; value: string; } | null | undefined>("model");
@@ -22,9 +24,15 @@ const isOpen = ref(false);
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
+  <div
+    class="flex items-center gap-2"
+    :class="{ 'is-disabled': disabled }"
+  >
     <span
-      v-if="title || label"
+      v-if="
+        title
+          ||
+          label"
       :class="['whitespace-nowrap',
                title ? 'text-bodyL text-txtPrimary' : 'text-uiLabel text-secondary']"
     >
@@ -32,6 +40,7 @@ const isOpen = ref(false);
     </span>
     <Multiselect
       v-model="model"
+      :disabled="disabled"
       :options="options"
       :searchable="false"
       :clear-on-select="true"
@@ -63,10 +72,13 @@ const isOpen = ref(false);
 <style scoped>
   /* Основне поле */
 :deep(.multiselect) {
-  @apply relative h-10 cursor-pointer ;
+  @apply relative h-10 cursor-pointer;
 }
 :deep(.multiselect--active) {
   @apply rounded-none;
+}
+:deep(.multiselect--disabled) {
+  @apply rounded-lg;
 }
 :deep(.multiselect__single) {
   @apply truncate bg-secondaryBg;
@@ -74,7 +86,6 @@ const isOpen = ref(false);
 
 /* Випадаючий список */
 :deep(.multiselect__content-wrapper) {
-  /* Додаємо top: 100%, щоб mt-2 відштовхувався від низу інпуту коректно */
   @apply absolute left-0 bg-secondaryBg mt-2 rounded-lg text-txtPrimary
   border-2 border-borderDefault hover:border-borderHover
   shadow-selectShadow z-[100] overflow-y-auto max-h-[500px];
@@ -84,7 +95,7 @@ const isOpen = ref(false);
 
 /* Підсвітка при наведенні */
 :deep(.multiselect__option--highlight) {
-  @apply bg-transparent text-txtPrimary hover:bg-primaryBg;
+  @apply bg-transparent text-txtPrimary rounded-lg hover:text-primary hover:bg-primaryBg;
 }
 :deep(.multiselect__tags) {
   @apply pr-10 rounded-lg border-2 bg-secondaryBg text-txtPrimary
@@ -101,6 +112,10 @@ const isOpen = ref(false);
 :deep(.multiselect__option::after),
 :deep(.multiselect__option::before) {
   display: none;
+}
+
+.is-disabled :deep(.multiselect__tags) {
+  @apply border-disabledBorder pointer-events-none;
 }
 
 .caret-click-zone {

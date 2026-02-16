@@ -6,10 +6,16 @@ import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 type ToolbarProps = {
   filterConfigs?: FilterConfig;
   isSearchable?: boolean;
+  disabled?: boolean;
   selectWidth?: "sm" | "md" | "lg";
 };
 
-const { filterConfigs = [], isSearchable = true, selectWidth = "sm" } = defineProps<ToolbarProps>();
+const {
+  filterConfigs = [],
+  isSearchable = true,
+  disabled = false,
+  selectWidth = "sm",
+} = defineProps<ToolbarProps>();
 
 const search = defineModel<string>("search");
 
@@ -31,6 +37,7 @@ const size: Record<ToolbarProps["selectWidth"], string> = {
       <VInput
         v-model="search"
         variant="toolbar"
+        :disabled="disabled"
         placeholder="Search..."
         icon="magnifyingGlass"
       />
@@ -40,6 +47,7 @@ const size: Record<ToolbarProps["selectWidth"], string> = {
       :key="config.key"
       v-model:model="filters[config.key]"
       :options="config.options"
+      :disabled="disabled"
       :title="config.label"
       :class="size[selectWidth]"
     />

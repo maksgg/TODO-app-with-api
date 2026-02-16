@@ -45,7 +45,7 @@ const {
   localLoader = "",
   isHeaderVisible = true,
   sortAble = true,
-  showFilters = true,
+  showFilters = false,
   searchable = false,
   toolbarConfig = [],
   pagination = { hasMore: false, limit: 20 },
@@ -121,9 +121,11 @@ const loadMore = () => {
                 bg-primaryBg text-text-color`
       ]"
     >
-      <div class="sticky top-0 z-20 bg-primaryBg">
+      <div
+        v-if="searchable || showFilters"
+        class="sticky top-0 z-20 bg-primaryBg"
+      >
         <div
-          v-if="searchable || showFilters"
           :class="['grid border-line-color bg-primaryBg pb-6', gridFrames]"
           :style="gridFrames.style"
         >

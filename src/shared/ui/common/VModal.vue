@@ -71,7 +71,7 @@ const handleKeydown = (event: KeyboardEvent) => {
         @keydown="handleKeydown"
       >
         <div
-          class="modal-container bg-secondaryBg"
+          class="modal-container bg-secondaryBg border border-borderDefault"
           :class="maxWidthClass"
           @click.stop
         >

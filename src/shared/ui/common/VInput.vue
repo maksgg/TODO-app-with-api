@@ -70,15 +70,31 @@ const inputType = computed((): string => {
 
 const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPassword.value;
 
-const inputStylesVariant: Record<VariantStyles, string> = {
+const baseInputStyles: string = `
+  text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover 
+   disabled:border-disabledBorder disabled:cursor-not-allowed
+`;
+const colorStylesVariant: Record<VariantStyles, string> = {
   main: `
-    py-3 pl-4 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover 
-    rounded-lg placeholder-muted placeholder:disabled:text-disabledBorder disabled:text-disabledBorder
-    disabled:border-disabledBorder disabled:cursor-not-allowed focus:shadow-innerOutline
+    focus:text-disabledBorder active:text-disabledBorder
   `,
   toolbar: `
-   max-w-[30rem] py-3 pl-10 pr-10 text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover rounded-2xl 
-    placeholder-muted disabled:border-disabledBorder disabled:cursor-not-allowed focus:shadow-innerOutline
+   text-borderDefault hover:text-borderHover disabled:text-disabledBorder
+  `,
+};
+
+const inputStylesVariant: Record<VariantStyles, string> = {
+  main: `
+  ${baseInputStyles}
+    py-3 pl-4 pr-10 rounded-lg placeholder-muted 
+    placeholder:disabled:text-disabledBorder disabled:text-disabledBorder focus:shadow-innerOutline
+
+  `,
+  toolbar: `
+  ${baseInputStyles}
+   max-w-[30rem] py-3 pl-10 pr-10 rounded-2xl placeholder-muted 
+   placeholder:text-borderDefault hover:placeholder:text-borderHover 
+   disabled:placeholder:text-disabledBorder focus:border-primary
   `,
 };
 </script>
@@ -97,10 +113,13 @@ const inputStylesVariant: Record<VariantStyles, string> = {
         {{ props.label }}
       </slot>
     </label>
-    <div class="flex relative">
+    <div
+      aria-disabled="true"
+      :class="['flex relative', colorStylesVariant[props.variant]]"
+    >
       <div
         v-if="$slots['icon-left'] || props.icon || props.loader"
-        class="absolute left-4 bottom-4 flex justify-center items-center text-muted"
+        class="absolute left-4 bottom-4 flex justify-center items-center"
       >
         <slot name="icon-left">
           <VLoader v-if="props.loader" />

@@ -67,12 +67,12 @@ const selectedLabel = computed((): string => {
 });
 
 const triggerStyle: Record<DropDown["variant"], string> = {
-  primary: "border bg-secondary p-1 rounded-lg shadow-selectShadow",
+  primary: "text-primary hover:drop-shadow-primary",
   custom: "border rounded-t-md p-1 bg-red-500 text-white",
   languages: "bg-primary p-1 text-text-color",
 };
 const menuStyle: Record<DropDown["variant"], string> = {
-  primary: "border rounded-lg bg-secondaryBg border-borderDefault",
+  primary: "border rounded-lg bg-primaryBg border-borderDefault",
   custom: "border rounded-b-md p-1 bg-red-500 text-white",
   languages: "bg-primary p-1 text-text-color",
 };
@@ -94,7 +94,7 @@ const placementStyle: Record<DropDown["placement"], string> = {
       :class="[
         'flex items-center gap-2 transition-all',
         disabled ? 'cursor-not-allowed opacity-50' : '',
-        props.trigger === 'icon' ? 'p-1' : triggerStyle[props.variant]
+        props.trigger === 'icon' ? triggerStyle[props.variant] : 'p-1'
       ]"
       :disabled="props.disabled"
       @click="toggle"
@@ -105,7 +105,6 @@ const placementStyle: Record<DropDown["placement"], string> = {
         :toggle="toggle"
         :label="selectedLabel"
       />
-
       <template v-else>
         <VIcon
           v-if="props.trigger === 'icon'"
@@ -141,8 +140,11 @@ const placementStyle: Record<DropDown["placement"], string> = {
         v-for="item in props.options"
         :key="item.value"
         :class="[
-          'px-2 py-1.5 text-bodyL hover:opacity-75',
+          'px-2 py-2 text-bodyL disabled:cursor-none rounded-md',
           item.dangerous ? 'text-dangerous' : 'text-txtPrimary',
+          item.disabled
+            ? 'opacity-50 cursor-not-allowed pointer-events-none'
+            : 'hover:bg-borderDefault cursor-pointer',
         ]"
         @click="selectedValue(item)"
       >

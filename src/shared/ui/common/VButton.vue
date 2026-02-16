@@ -71,8 +71,9 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     enabled:hover:border-text-primary 
   `,
   ghost: `
-    flex items-center gap-2 border-none text-bodyL text-start truncate
-    transition-all duration-300
+    group flex items-center gap-2 border-none text-bodyL text-start truncate
+    transition-all duration-300 disabled:text-txtMutedLight 
+    disabled:drop-shadow-none disabled:cursor-not-allowed disabled:pointer-events-none
   `,
   sidebar: `group relative flex items-center gap-2 px-4 py-3 w-full border-none 
     whitespace-nowrap text-txtSecondaryDark text-uiBtn hover:rounded-lg leading-none
