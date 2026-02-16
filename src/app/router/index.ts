@@ -1,34 +1,30 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 import { authGuard } from "./authGuards";
+import { permissionGuard } from "./permissionsGuard";
 
-const routes: RouteRecordRaw[] = [
+import { useAuthStore } from "@/shared/stores/useAuthStore";
+
+export const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "Dashboard",
     component: () => import("@/pages/Dashboard/index.vue"),
     meta: {
-      requiredAuth: true,
       title: "Dashboard",
-      layout: "default",
-    },
-  },
-  {
-    path: "/list/:id",
-    name: "list-tasks",
-    component: () => import("@/pages/List/Tasks.vue"),
-    meta: {
-      requiredAuth: true,
-      title: "Lists of tasks",
+      icon: "home",
+      permission: "read:dashboard",
     },
   },
   {
     path: "/list",
-    name: "list",
+    name: "List",
     component: () => import("@/pages/List/index.vue"),
     meta: {
-      requiredAuth: true,
-      title: "Lists of tasks",
+      title: "Lists",
+      headerTitle: "Manage all your task groups in one place",
+      icon: "list",
+      permission: "read:list",
     },
   },
   {
@@ -36,9 +32,10 @@ const routes: RouteRecordRaw[] = [
     name: "Analytics",
     component: () => import("@/pages/Analytics/index.vue"),
     meta: {
-      requiredAuth: true,
       title: "Analytics",
-      layout: "default",
+      headerTitle: "See how your tasks are progressing over time",
+      icon: "analytics",
+      permission: "read:analytics",
     },
   },
   {
@@ -46,28 +43,19 @@ const routes: RouteRecordRaw[] = [
     name: "profile",
     component: () => import("@/pages/Profile/index.vue"),
     meta: {
-      requiredAuth: true,
-      title: "Own Profile",
-    },
-  },
-  {
-    path: "/users/:id",
-    name: "user",
-    component: () => import("@/pages/Users/UserInfo.vue"),
-    meta: {
-      requiredAuth: true,
-      title: "UserInfo",
-      role: "admin",
+      title: "Profile",
+      icon: "user",
     },
   },
   {
     path: "/users",
-    name: "admin",
+    name: "Users",
     component: () => import("@/pages/Users/index.vue"),
     meta: {
-      requiredAuth: true,
       title: "AdminPanel",
       role: "admin",
+      icon: "tool",
+      permission: "read:users",
     },
   },
   {
@@ -95,8 +83,18 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(authGuard);
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  await authStore.setUser();
 
+  const authRes = authGuard(to);
+  if (authRes) return next(authRes);
+
+  const permRes = permissionGuard(to);
+  if (permRes) return next(permRes);
+
+  next();
+});
 router.afterEach((to) => document.title = (to.meta.title as string) || "Task manager");
 
 export default router;
