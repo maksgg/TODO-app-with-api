@@ -1,19 +1,25 @@
 <script setup lang="ts">
+import ProfileOverviewSkeleton from "./ProfileOverviewSkeleton.vue";
+
 import { UserInfo } from "@/shared/types";
+import VTitle from "@/shared/ui/common/VTitle.vue";
 import { formatDate } from "@/shared/utils/index";
 
-const { userData, title } = defineProps<{
+const { userData, title, loader = false } = defineProps<{
   userData: UserInfo | null;
   title?: string;
+  loader: boolean;
 }>();
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
+  <ProfileOverviewSkeleton v-if="loader" />
+  <div
+    v-else
+    class="flex flex-col gap-6"
+  >
     <slot>
-      <h2 class="text-headPrimary text-txtPrimary">
-        {{ title }}
-      </h2>
+      <VTitle :title="title" />
     </slot>
     <div
       class="flex items-center gap-5 border border-borderDefault

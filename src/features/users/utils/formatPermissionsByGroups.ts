@@ -35,6 +35,5 @@ export const formatPermissionsByGroups = (permissions: Permissions[] | null): Pe
     }
   });
 
-  // Фільтруємо групи, які залишилися порожніми (опціонально, але корисно для UX)
   return groups.filter((g) => g.items.length > 0);
 };

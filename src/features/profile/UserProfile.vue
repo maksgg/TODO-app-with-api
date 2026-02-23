@@ -3,7 +3,6 @@ import { toast } from "vue-sonner";
 
 import useProfileRequests from "./api/useProfileRequests";
 import ProfileDetails from "./components/ProfileDetails.vue";
-import ProfileOverviewSkeleton from "./components/ProfileOverviewSkeleton.vue";
 
 import ProfileOverview from "@/features/profile/components/ProfileOverview.vue";
 import { usePermissions } from "@/shared/composables/usePermissions";
@@ -27,11 +26,10 @@ const updateProfile = async (payload: Partial<UserInfo>) => await execute({ data
 </script>
 
 <template>
-  <ProfileOverviewSkeleton v-if="loading" />
   <ProfileOverview
-    v-else
     :user-data="authStore.userData"
     title=" Profile Overview"
+    :loader="loading"
   />
   <ProfileDetails
     v-if="isAllowed('update:user')"
@@ -39,7 +37,4 @@ const updateProfile = async (payload: Partial<UserInfo>) => await execute({ data
     :loader="loading"
     @update-user-data="updateProfile"
   />
-  <h2 class="text-3xl text-txtPrimary">
-    Change password is coming soon...
-  </h2>
 </template>

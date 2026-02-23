@@ -12,6 +12,7 @@ import { FilterConfig, TableParams, UserInfo } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
+import VTitle from "@/shared/ui/common/VTitle.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 import VTable from "@/shared/ui/table/VTable.vue";
 import { firstLetterUp, formatDate } from "@/shared/utils/index";
@@ -106,9 +107,7 @@ const tableActions = [
 </script>
 
 <template>
-  <h1 class="text-headPrimary text-txtPrimary">
-    User Management
-  </h1>
+  <VTitle title="User Management" />
   <UsersTableSkeleton v-if="usersLoader && !usersData?.data?.length" />
   <VTable
     v-else

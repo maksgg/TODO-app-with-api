@@ -11,6 +11,7 @@ import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 import VSwitch from "@/shared/ui/common/VSwitch.vue";
+import VTitle from "@/shared/ui/common/VTitle.vue";
 
 const userRoles: Roles[] = [
   { name: "User", value: "user" },
@@ -100,49 +101,55 @@ watch(
 
 <template>
   <UserInfoPermissionsListSkeleton v-if="loader" />
-  <VContainer v-else>
-    <template #header>
-      <VMultiselect
-        v-model:model="changedRole"
-        :options="userRoles"
-        :disabled="!isAllowed('manage:roles')"
-        title="Role"
-        class="w-[11rem]"
-        @update:model="roleChange"
-      />
-      <VCheckbox
-        v-model="isAllSelected"
-        text="Select all permissions"
-        :disabled="isDisabled"
-      />
-    </template>
-    <div class="grid grid-cols-2 gap-8">
-      <div
-        v-for="list in formattedPermissions"
-        :key="list.group"
-        class="flex flex-col gap-4"
-      >
-        <span class="text-headingCard text-txtPrimary">{{ list.group }}</span>
+  <div
+    v-else
+    class="flex flex-col gap-6"
+  >
+    <VTitle title="Permissions&Access" />
+    <VContainer>
+      <template #header>
+        <VMultiselect
+          v-model:model="changedRole"
+          :options="userRoles"
+          :disabled="!isAllowed('manage:roles')"
+          title="Role"
+          class="w-[11rem]"
+          @update:model="roleChange"
+        />
+        <VCheckbox
+          v-model="isAllSelected"
+          text="Select all permissions"
+          :disabled="isDisabled"
+        />
+      </template>
+      <div class="grid grid-cols-2 gap-8">
         <div
-          v-for="el in list.items"
-          :key="el.value"
+          v-for="list in formattedPermissions"
+          :key="list.group"
+          class="flex flex-col gap-4"
         >
-          <VSwitch
-            v-model="checkboxMap[el.value]"
-            :text="el.description"
-            :disabled="isDisabled"
-            variant="primary"
-          />
+          <span class="text-headingCard text-txtPrimary">{{ list.group }}</span>
+          <div
+            v-for="el in list.items"
+            :key="el.value"
+          >
+            <VSwitch
+              v-model="checkboxMap[el.value]"
+              :text="el.description"
+              :disabled="isDisabled"
+              variant="primary"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <template #footer>
-      <VButton
-        text="Save changes"
-        class="ml-auto"
-        :disabled="!isChanged || loader"
-        @click="updateUser"
-      />
-    </template>
-  </VContainer>
+      <template #footer>
+        <VButton
+          text="Save changes"
+          class="ml-auto"
+          :disabled="!isChanged || loader"
+          @click="updateUser"
+        />
+      </template>
+    </VContainer>
+  </div>
 </template>
