@@ -26,7 +26,7 @@ const menuItems = computed(() => getSidebarLinks(routes));
     class="relative flex flex-1 w-full h-screen bg-primaryBg"
   >
     <Sidebar :links="menuItems" />
-    <div class="flex flex-col gap-6 mx-12 my-6 w-full">
+    <div class="flex flex-col gap-6 mx-12 my-6 w-full min-w-0">
       <Header />
       <RouterView />
     </div>

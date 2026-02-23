@@ -7,7 +7,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import { i18n } from "@/features/i18n/composables/useI18n";
-import { useThemeStore } from "@/features/theme/store/useThemeStore";
+import { useThemeStore } from "@/shared/stores/useThemeStore";
 
 import "./main.scss";
 

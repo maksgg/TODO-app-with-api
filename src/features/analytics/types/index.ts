@@ -15,8 +15,26 @@ type AnalyticsResponse = {
   tasks: TaskAnalytics;
 };
 
+type TagsResponse = {
+  tag: string;
+  count: number;
+};
+
+type PriorityResponse = {
+  priority: string;
+  count: number;
+};
+type DailyActivityResponse = {
+  date: string;
+  created: number;
+  completed: number;
+};
+
 export type {
   ListAnalytics,
   TaskAnalytics,
   AnalyticsResponse,
+  TagsResponse,
+  PriorityResponse,
+  DailyActivityResponse,
 };

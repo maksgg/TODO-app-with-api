@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
 
-import { useThemeStore } from "@/features/theme/store/useThemeStore";
+import { useThemeStore } from "@/shared/stores/useThemeStore";
 import VSwitch from "@/shared/ui/common/VSwitch.vue";
 import SwitchSunIcon from "@/shared/ui/icons/SwitchSunIcon.vue";
 import ThemeMoonIcon from "@/shared/ui/icons/ThemeMoonIcon.vue";
