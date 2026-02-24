@@ -4,7 +4,6 @@ import { VueDatePicker } from "@vuepic/vue-datepicker";
 import { computed } from "vue";
 
 import { ModalFields, Task } from "../types";
-import { tagsFormatter } from "../utils/tagsFormatter";
 import TaskTags from "./ui/TaskTags.vue";
 
 import VInput from "@/shared/ui/common/VInput.vue";
@@ -14,16 +13,26 @@ const { targetTask = null } = defineProps<{ targetTask: Partial<Task> | null; }>
 
 const modal = defineModel<ModalFields>();
 const tagsState = computed(() => {
-  const list = tagsFormatter(modal.value.tags);
+  const rawValue = modal.value.tags || "";
+  const completedTags = rawValue.match(/[^ ,;]+(?=[ ,;])/g) || [];
+
   const maxTags = 6;
   return {
-    list: list.slice(0, maxTags),
-    isLimitReached: list.length >= maxTags && /[ ,;]+$/.test(modal.value.tags),
+    list: completedTags.slice(0, maxTags),
+    isLimitReached: completedTags.length >= maxTags,
   };
 });
+
 const removeTag = (index: number) => {
-  const updated = tagsState.value.list.filter((_, i) => i !== index);
-  modal.value.tags = updated.length ? `${updated.join(", ")}, ` : "";
+  const list = [...tagsState.value.list];
+  list.splice(index, 1);
+
+  const currentMatch = modal.value.tags.match(/[^ ,;]+$/);
+  const currentTyping = currentMatch ? currentMatch[0] : "";
+
+  modal.value.tags = list.length
+    ? list.join(", ") + ", " + currentTyping
+    : currentTyping;
 };
 
 const prioritySelect = {
@@ -65,7 +74,7 @@ const prioritySelect = {
       v-model="modal.tags"
       label="Tags"
       :disabled="tagsState.isLimitReached"
-      placeholder="Add up to 6 tags"
+      placeholder="Frontend, Backend, Vue..."
       :support-text="tagsState.isLimitReached ?
         `You've exceeded the limit` :
         'You can add up to 6 tags'"

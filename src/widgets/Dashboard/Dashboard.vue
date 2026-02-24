@@ -26,6 +26,7 @@ const {
   weeklySelectedTaskIds,
   weeklyTasksLoader,
   weeklyToggleLoader,
+  localLoaderId,
   modalMode,
   getWeeklyTasks,
   openModal,
@@ -102,7 +103,7 @@ onMounted(() => loadData());
   >
     <div class="flex gap-6">
       <ThemeToggle />
-      <LanguageSelector />
+      <LanguageSelector variant="select" />
     </div>
   </Teleport>
   <div
@@ -123,7 +124,7 @@ onMounted(() => loadData());
         v-else
         :item="tasks"
         :loader="mainLoader"
-        :local-loader="weeklyToggleLoader"
+        :local-loader="localLoaderId"
         @edit-weekly-goals="openModal"
         @remove-weekly-goal="removeWeeklyTask"
       />

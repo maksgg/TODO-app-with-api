@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
 
 import SidebarFooter from "./components/SidebarFooter.vue";
 import SidebarHeader from "./components/SidebarHeader.vue";
@@ -12,11 +13,12 @@ import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
 const userStore = useAuthStore();
+const route = useRoute();
+const { links } = defineProps<{ links: SidebarLink[]; }>();
 
-const { links } = defineProps<{ links: SidebarLink[] }>();
-
-const modal = useModal("logout");
 const expanded = ref(false);
+const showCustomizers = computed(() => route.name === "Dashboard");
+const modal = useModal("logout");
 const expandSidebar = () => expanded.value = !expanded.value;
 
 const openModal = () => modal.open();
@@ -42,6 +44,7 @@ const openModal = () => modal.open();
     </div>
     <SidebarFooter
       :is-expanded="expanded"
+      :show-customizers="showCustomizers"
       @open-modal="openModal"
     />
   </aside>
@@ -76,15 +79,11 @@ const openModal = () => modal.open();
 <style scoped>
 .sidebar-bg {
   background:
-    /* --- ФОНИ (обрізаємо по padding-box) --- */
     linear-gradient(180deg, rgba(16, 22, 36, 0.9) 0%, rgba(25, 33, 50, 0.9) 100%) padding-box,
     linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(0, 0, 0, 0) 6.88%) padding-box,
     linear-gradient(180deg, rgba(0, 0, 0, 0) 85.25%, rgba(74, 118, 255, 0.0875) 100%) padding-box,
     linear-gradient(180deg, rgba(255, 255, 255, 0.015) 51.81%, rgba(0, 0, 0, 0) 68.99%) padding-box,
     linear-gradient(180deg, rgba(0, 0, 0, 0) 86.96%, rgba(74, 118, 255, 0.0525) 100%) padding-box,
-
-    /* --- ГРАДІЄНТ РАМКИ (обрізаємо по border-box) --- */
-    /* Цей шар лежить найнижче і видимий лише там, де прозора рамка */
     linear-gradient(
       180deg, rgba(108, 163, 255, 0.3) 0%,
       rgba(181, 139, 255, 0.3) 50%,

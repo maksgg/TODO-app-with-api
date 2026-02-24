@@ -5,7 +5,6 @@ import { onUnmounted, onMounted, computed, ref, watch } from "vue";
 import ListCardsWrapper from "./components/ListCardsWrapper.vue";
 import { useListsStore } from "./store/useListsStore";
 
-import { usePermissions } from "@/shared/composables/usePermissions";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import { FilterConfig } from "@/shared/types";
 import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
@@ -20,7 +19,6 @@ const toolBarPayload = ref({
   sort: { name: "Recently created", value: "createdAt:desc" },
   order: "",
 });
-const { isAllowed } = usePermissions();
 const listStore = useListsStore();
 const authStore = useAuthStore();
 
@@ -71,7 +69,7 @@ onUnmounted(() => currentTab.value = "myLists");
 <template>
   <div class="flex flex-col flex-1 gap-6">
     <VToggleTabs
-      v-if="authStore.userData?.isAdmin || isAllowed('read:all-lists')"
+      v-if="authStore.userData?.isAdmin || authStore.isAllowed('read:all-lists')"
       v-model="currentTab"
       :options="listTabs"
     />
@@ -79,7 +77,7 @@ onUnmounted(() => currentTab.value = "myLists");
       v-model:search="searchQuery"
       v-model:filters="toolBarPayload"
       :filter-configs="filterConfig"
-      :disabled="listStore.allListsLoader || !isAllowed('read:list')"
+      :disabled="listStore.allListsLoader || !authStore.isAllowed('read:list')"
       select-width="md"
     />
     <div class="relative w-full h-full">

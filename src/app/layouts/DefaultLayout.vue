@@ -2,16 +2,13 @@
 import { computed } from "vue";
 
 import { routes } from "@/app/router/index";
-import { usePermissions } from "@/shared/composables/usePermissions";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VLoader from "@/shared/ui/common/VLoader.vue";
 import Header from "@/widgets/Header/Header.vue";
 import Sidebar from "@/widgets/Sidebar/Sidebar.vue";
 
 const authStore = useAuthStore();
-const { getSidebarLinks } = usePermissions();
-
-const menuItems = computed(() => getSidebarLinks(routes));
+const menuItems = computed(() => authStore.getSidebarLinks(routes));
 </script>
 
 <template>

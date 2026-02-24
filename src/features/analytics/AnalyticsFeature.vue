@@ -104,18 +104,18 @@ onMounted(() => loadData());
       :options="analitycstTabs"
     />
   </Teleport>
-  <div class="grid grid-cols-4 gap-6 pb-2 min-h-0 w-full overflow-auto no-scrollbar">
+  <div class="grid grid-cols-5 gap-6 pb-2 min-h-0 w-full overflow-auto no-scrollbar">
     <SummaryAnalitycs
       :data="summaryAnalytics"
       :loader="summaryAnalyticsLoader"
-      class="col-span-4"
+      class="col-span-5"
     />
     <DailyActivityAnalitycs
       :data="dailyActivityAnalytics"
       :loader="dailyActivityAnalyticsLoader"
       :theme="themeStore.currentTheme"
       :current-tab="activeTab"
-      class="col-span-4"
+      class="col-span-5"
     />
     <TagsAnalytics
       v-model="tagsLimit"
@@ -129,7 +129,7 @@ onMounted(() => loadData());
       :data="priorityAnalytics"
       :loader="priorityAnalyticsLoader"
       :theme="themeStore.currentTheme"
-      class="col-span-1"
+      class="col-span-2"
     />
   </div>
 </template>

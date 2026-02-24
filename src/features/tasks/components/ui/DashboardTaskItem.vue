@@ -7,7 +7,7 @@ const { item } = defineProps<{ item: Task; }>();
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 border-t border-borderDefault py-2">
+  <div class="flex flex-col gap-2 border-t border-borderDefault py-1">
     <slot>
       <div class="flex justify-between">
         <h3 class="text-bodyL text-txtPrimary">

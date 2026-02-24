@@ -51,7 +51,7 @@ const trackSize: Record<ToggleSize, string> = {
 <template>
   <label
     :for="id"
-    class="flex items-center gap-2 relative w-full"
+    class="flex items-center gap-2 relative"
   >
     <input
       :id="id"

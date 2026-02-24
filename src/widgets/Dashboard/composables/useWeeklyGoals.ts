@@ -9,6 +9,7 @@ export function useWeeklyGoals() {
   const weeklySelectedTaskIds = ref<string[]>([]);
   const initialWeeklyIds = ref<string[]>([]);
   const modalMode = ref<"add" | "edit">("add");
+  const localLoaderId = ref<string | null>(null);
 
   const listsStore = useListsStore();
   const { fetchWeeklyGoalTasks, fetchToggleWeeklyGoalTasks } = useTasksRequests();
@@ -44,6 +45,7 @@ export function useWeeklyGoals() {
     onFinish: () => {
       weeklySelectedTaskIds.value = [];
       initialWeeklyIds.value = [];
+      localLoaderId.value = null;
     },
   });
 
@@ -87,12 +89,14 @@ export function useWeeklyGoals() {
   };
 
   const removeWeeklyTask = async (taskId: string) => {
+    localLoaderId.value = taskId;
     weeklySelectedTaskIds.value = [taskId];
     await toggleWeeklyTask();
   };
 
   return {
     listsWithTasks,
+    localLoaderId,
     weeklyTasks,
     weeklySelectedTaskIds,
     weeklyTasksLoader,

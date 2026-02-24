@@ -80,11 +80,14 @@ onClickOutside(target, () => {
               variant="ghost"
               icon-size="sm"
               :disabled="disabled"
-              class="group-hover:text-activePrimary transition-colors"
+              :class="[disabled ? '' : 'group-hover:text-activePrimary transition-colors']"
               @click="openList(list.listId)"
             />
             <span
-              class="text-muted text-uiCaption transition-colors group-hover:text-activePrimary"
+              :class="[
+                'text-muted text-uiCaption',
+                disabled ? '' : 'group-hover:text-activePrimary transition-colors'
+              ]"
             >
               ({{ list.totalTasks }})
             </span>

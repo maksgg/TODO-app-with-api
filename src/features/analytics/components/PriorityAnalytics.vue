@@ -78,13 +78,14 @@ const priorityOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle title="Tasks by priority" />
-    <VContainer class="shadow-customShadow">
+    <VContainer class="shadow-customShadow h-full">
       <VSkeleton
         v-if="!data && loader"
-        width="250"
-        height="250"
+        width="300"
+        height="300"
         variant="circle"
       />
+
       <VChart
         v-if="data"
         :option="priorityOption"

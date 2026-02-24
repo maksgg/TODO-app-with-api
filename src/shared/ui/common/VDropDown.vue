@@ -68,12 +68,12 @@ const selectedLabel = computed((): string => {
 
 const triggerStyle: Record<DropDown["variant"], string> = {
   primary: "text-primary hover:drop-shadow-primary",
-  custom: "border rounded-t-md p-1 bg-red-500 text-white",
+  custom: "text-bodyL text-txtPrimary",
   languages: "bg-primary p-1 text-text-color",
 };
 const menuStyle: Record<DropDown["variant"], string> = {
   primary: "border rounded-lg bg-primaryBg border-borderDefault",
-  custom: "border rounded-b-md p-1 bg-red-500 text-white",
+  custom: "text-bodyL text-txtPrimary bg-primaryBg",
   languages: "bg-primary p-1 text-text-color",
 };
 const placementStyle: Record<DropDown["placement"], string> = {
@@ -130,8 +130,9 @@ const placementStyle: Record<DropDown["placement"], string> = {
     <ul
       v-if="isOpened"
       :class="[
-        'absolute flex flex-col shadow-md z-20 w-max min-w-full text-start px-3 py-2',
+        'absolute flex flex-col shadow-md z-20 w-max text-start',
         menuStyle[props.variant], placementStyle[props.placement],
+        variant === 'custom' ? '' : 'px-3 py-2',
         disabled ? 'cursor-not-allowed' : ''
       ]"
       @mousedown.prevent
@@ -152,7 +153,7 @@ const placementStyle: Record<DropDown["placement"], string> = {
           name="options"
           :item="item"
         >
-          {{ item.label }}
+          {{ item.label || item.value }}
         </slot>
       </li>
     </ul>

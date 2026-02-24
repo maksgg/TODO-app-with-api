@@ -11,7 +11,7 @@ import { useTasksStore } from "./store/useTasksStore";
 import { Task, TasksModals } from "./types";
 import { groupTasksByStatus } from "./utils/groupTasksByStatus";
 
-import { usePermissions } from "@/shared/composables/usePermissions";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import { FilterConfig } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
@@ -26,7 +26,7 @@ const toolBarPayload = ref({
   order: "",
 });
 
-const { isAllowed } = usePermissions();
+const authStore = useAuthStore();
 const tasksStore = useTasksStore();
 const {
   modalLoader,
@@ -136,8 +136,8 @@ const completedTasksHeader = [
   { key: "tags", label: "Tags", width: "30%" },
 ];
 const listsActions = [
-  { value: "edit", label: "Edit task", disabled: !isAllowed("update:task") },
-  { value: "delete", label: "Delete task", disabled: !isAllowed("delete:task"), dangerous: true },
+  { value: "edit", label: "Edit task", disabled: !authStore.isAllowed("update:task") },
+  { value: "delete", label: "Delete task", disabled: !authStore.isAllowed("delete:task"), dangerous: true },
 ];
 
 watch(
@@ -155,7 +155,7 @@ onMounted(() => loadData());
       v-model:filters="toolBarPayload"
       :filter-configs="toolbarConfig"
       :is-searchable="false"
-      :disabled="tasksStore.loading || !isAllowed('read:task')"
+      :disabled="tasksStore.loading || !authStore.isAllowed('read:task')"
       select-width="md"
       class="col-span-1"
     />
@@ -164,7 +164,7 @@ onMounted(() => loadData());
       title="No tasks yet"
       sub-title="Create your first task to start organizing your work"
     />
-    <template v-if="isAllowed('read:task')">
+    <template v-if="authStore.isAllowed('read:task')">
       <VExpandableSection
         v-for="group in groupTasks"
         :key="group.title"
@@ -201,7 +201,7 @@ onMounted(() => loadData());
     <VButton
       text="Add task"
       icon="plus"
-      :disabled="!isAllowed('create:task')"
+      :disabled="!authStore.isAllowed('create:task')"
       @click="openModal('create')"
     />
   </Teleport>

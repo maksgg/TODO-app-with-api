@@ -1,4 +1,4 @@
-import { computed, shallowRef, ref/* , inject  */ } from "vue";
+import { computed, shallowRef, ref } from "vue";
 import { toast } from "vue-sonner";
 
 import useListsRequests from "../api/useListsRequests";
@@ -16,7 +16,6 @@ export const useListModal = (
   const listPayload = ref({ title: "", hexColor: "#3B82F6" });
   const targetList = shallowRef<List | null>(null);
 
-  // const params = inject(ListParamsKey);
   const listStore = useListsStore();
   const {
     createUserList,
@@ -49,7 +48,7 @@ export const useListModal = (
     if (isModalType.value === "edit") {
       return (
         listPayload.value.title !== targetList.value.title ||
-      listPayload.value.hexColor !== targetList.value.hexColor
+        listPayload.value.hexColor !== targetList.value.hexColor
       );
     }
 

@@ -48,7 +48,7 @@ export const filterDeadlineTasks = (tasks: TasksDeadlinesResponse["data"] | unde
   }
 
   return {
-    today: today.slice(0, 5),
-    upcoming: upcoming.slice(0, 5),
+    today: today.slice(0, 4),
+    upcoming: upcoming.slice(0, 4),
   };
 };

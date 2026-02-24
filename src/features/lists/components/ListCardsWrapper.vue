@@ -11,7 +11,7 @@ import { useListModal } from "../composables/useListModal";
 import { groupListsByUser } from "../utils/groupListsByUser";
 
 import { useListsStore } from "@/features/lists/store/useListsStore";
-import { usePermissions } from "@/shared/composables/usePermissions";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
@@ -19,8 +19,9 @@ const { currentTab, params } = defineProps<{
   currentTab: "myLists" | "usersLists";
   params: RequestParams;
 }>();
-const { isAllowed } = usePermissions();
+
 const listStore = useListsStore();
+const authStore = useAuthStore();
 const router = useRouter();
 const {
   openModal,
@@ -42,8 +43,8 @@ const openTargetList = (id: string) => {
 };
 
 const listActions = [
-  { value: "edit", label: "Edit list", disabled: !isAllowed("update:list") },
-  { value: "delete", label: "Delete list", disabled: !isAllowed("delete:list"), dangerous: true },
+  { value: "edit", label: "Edit list", disabled: !authStore.isAllowed("update:list") },
+  { value: "delete", label: "Delete list", disabled: !authStore.isAllowed("delete:list"), dangerous: true },
 ];
 const activeModalType = computed(() => {
   if (isModalType.value === "edit") {
@@ -69,12 +70,12 @@ const activeModalType = computed(() => {
       <VButton
         text="Create new list"
         icon="plus"
-        :disabled="!isAllowed('create:list')"
+        :disabled="!authStore.isAllowed('create:list')"
         @click="openModal('create')"
       />
     </Teleport>
     <div
-      v-if="isAllowed('read:list')"
+      v-if="authStore.isAllowed('read:list')"
       class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6"
     >
       <template v-if="currentTab === 'myLists'">
@@ -93,7 +94,7 @@ const activeModalType = computed(() => {
           :key="list.userListsInfo.ownerId"
           :user-lists-info="list.userListsInfo"
           :total-lists="list.totalLists"
-          :disabled="!isAllowed('read:all-tasks')"
+          :disabled="!authStore.isAllowed('read:all-tasks')"
           :is-expanded="isExpanded === list.userListsInfo.ownerId"
           @expand-list="expandList"
           @open-list="openTargetList"

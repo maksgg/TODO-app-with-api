@@ -1,4 +1,4 @@
-import { ref, computed, shallowRef } from "vue";
+import { ref, computed, shallowRef, toRaw } from "vue";
 import { useRoute } from "vue-router";
 import { toast } from "vue-sonner";
 
@@ -19,7 +19,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     deadline: null,
     priority: { name: "High", value: "high" },
   });
-  const originFormState = shallowRef(""); // snapshot todo (do i need it)
+  const originFormState = shallowRef();
 
   const taskPayload = computed(() => {
     return {
@@ -36,7 +36,9 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     deleteLoading.value,
   );
 
-  const isChanged = computed(() => JSON.stringify(modalFields.value) !== originFormState.value);
+  const isChanged = computed(
+    () => JSON.stringify(modalFields.value) !== JSON.stringify(originFormState.value),
+  );
 
   const modal = {
     create: useModal("createAndEdit-task"),
@@ -60,7 +62,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
           value: task.priority,
         },
       };
-      originFormState.value = JSON.stringify(modalFields.value);
+      originFormState.value = structuredClone(toRaw(modalFields.value));
     }
     modal[modalType].open();
   };

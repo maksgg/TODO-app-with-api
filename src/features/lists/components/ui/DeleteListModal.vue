@@ -4,7 +4,7 @@ import { List } from "../../types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
-const { list, loader } = defineProps<{ list: List | null; loader?: boolean; }>();
+const { list = null, loader } = defineProps<{ list: List | null; loader?: boolean; }>();
 
 const emit = defineEmits<{ "close": [void], "request": [void] }>();
 const closeModal = () => emit("close");

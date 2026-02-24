@@ -7,7 +7,7 @@ import useUsersRequests from "./api/useUsersRequests";
 import UsersTableSkeleton from "./components/UsersTableSkeleton.vue";
 
 import { useModal } from "@/shared/composables/useModal";
-import { usePermissions } from "@/shared/composables/usePermissions";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import { FilterConfig, TableParams, UserInfo } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
@@ -28,7 +28,7 @@ const tablePayloadParams = ref({
   role: { name: "All roles", value: "all" }, //toolbarConfig[0].options[0].name
 });
 
-const { isAllowed } = usePermissions();
+const authStore = useAuthStore();
 const { fetchAllUsers, deleteTargetUser } = useUsersRequests();
 
 const {
@@ -102,7 +102,7 @@ const toolbarConfig: FilterConfig = [
 ];
 const tableActions = [
   { value: "user", label: "User Profile" },
-  { value: "delete", label: "Remove user", disabled: !isAllowed("delete:user"), dangerous: true },
+  { value: "delete", label: "Remove user", disabled: !authStore.isAllowed("delete:user"), dangerous: true },
 ];
 </script>
 
