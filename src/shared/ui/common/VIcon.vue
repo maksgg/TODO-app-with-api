@@ -4,6 +4,7 @@ import { type Component } from "vue";
 import Checked from "../icons/Checked.vue";
 import UaFlag from "../icons/UaFlag.vue";
 import UkFlag from "../icons/UkFlag.vue";
+import Users from "../icons/Users.vue";
 
 import Analytic from "@/shared/ui/icons/Analytic.vue";
 import ChevronDown from "@/shared/ui/icons/ChevronDown.vue";
@@ -49,6 +50,7 @@ const icons: Record<string, Component> = {
   checked: Checked,
   uaFlag: UaFlag,
   enFlag: UkFlag,
+  users: Users,
 };
 
 const sizeStyle: Record<IconProps["size"], string> = {

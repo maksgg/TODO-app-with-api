@@ -59,6 +59,15 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/credentials",
+    name: "Credentials",
+    component: () => import("@/pages/Credentials/invex.vue"),
+    meta: {
+      title: "About",
+      icon: "users",
+    },
+  },
+  {
     path: "/auth",
     name: "auth",
     component: () => import("@/pages/Auth/index.vue"),
