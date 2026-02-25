@@ -48,22 +48,20 @@ const icons: Record<string, Component> = {
   horizontalDots: HorizontalDots,
   checked: Checked,
   uaFlag: UaFlag,
-  ukFlag: UkFlag,
+  enFlag: UkFlag,
 };
 
 const sizeStyle: Record<IconProps["size"], string> = {
   sm: "w-2.5 h-1.5",
   md: "w-4 h-4",
-  lg: "w-6 h-6",
+  lg: "w-12 h-12",
 };
 </script>
 
 <template>
-  <!-- <div :class="['flex justify-center items-center', sizeStyle[size]]"> -->
   <component
     :is="icons[type]"
     :class="['flex justify-center items-center', sizeStyle[size]]"
   />
-  <!-- </div> -->
 </template>
 

@@ -37,7 +37,7 @@ const expandedList = ref<string | null>(null);
         :mode="mode"
       />
     </template>
-    <div class="h-[20rem] overflow-auto custom-scrollbar">
+    <div class="h-[25rem] overflow-auto custom-scrollbar">
       <VExpandableSection
         v-for="list in lists"
         :key="list._id"
@@ -49,7 +49,7 @@ const expandedList = ref<string | null>(null);
           <div class="flex gap-2 items-center cursor-pointer">
             <VButton
               icon="chevronUp"
-              icon-size="sm"
+              icon-size="md"
               variant="ghost"
               :show-text="false"
               :class="[
@@ -63,7 +63,7 @@ const expandedList = ref<string | null>(null);
             />
           </div>
         </template>
-        <div class="flex flex-col gap-4 pl-8 py-4 shadow-innerCustomShadow">
+        <div class="flex flex-col gap-4 pl-8 pb-2">
           <VCheckbox
             v-for="task in list.tasks"
             :id="task.id"
@@ -72,6 +72,7 @@ const expandedList = ref<string | null>(null);
             :model-value="selectedIds.includes(task.id)"
             @update:model-value="toggleTask(task.id)"
           />
+          <div class="h-[1px] rounded bg-primary w-[calc(100%-20px)]" />
         </div>
       </VExpandableSection>
     </div>
@@ -99,7 +100,7 @@ const expandedList = ref<string | null>(null);
   width: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #3B82F6;
+  background: var(--color-primary);
   border-radius: 10px;
 }
  </style>

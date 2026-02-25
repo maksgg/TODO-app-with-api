@@ -5,37 +5,44 @@ import { Theme } from "@/features/theme/types/index";
 
 export const useThemeStore = defineStore("theme", () => {
   const currentTheme = ref<Theme>("light");
-  const label = ref<string>("");
 
-  const theme = computed<boolean>(() => currentTheme.value === "dark");
+  const isDark = computed(() => currentTheme.value === "dark");
+  const isLight = computed(() => currentTheme.value === "light");
 
-  const initTheme = (): void => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-
-    return setTheme(savedTheme || "light");
-  };
-
-  const setTheme = (theme: Theme): void => {
+  const setTheme = (theme: Theme) => {
     currentTheme.value = theme;
-
     updateDocumentTheme(theme);
     localStorage.setItem("theme", theme);
   };
 
-  const updateDocumentTheme = (theme: Theme): void => {
-    const el = document.documentElement;
+  const toggleTheme = () => {
+    const newTheme = currentTheme.value === "light" ? "dark" : "light";
+    setTheme(newTheme);
+  };
 
+  const initTheme = () => {
+    // Check for saved theme preference or default to light
+    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    const theme = savedTheme || (prefersDark ? "dark" : "light");
+    setTheme(theme);
+  };
+
+  const updateDocumentTheme = (theme: Theme) => {
     if (theme === "dark") {
-      el.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-theme", "dark");
     } else {
-      el.setAttribute("data-theme", "light");
+      document.documentElement.removeAttribute("data-theme");
     }
   };
+
   return {
-    initTheme,
-    setTheme,
-    theme,
     currentTheme,
-    label,
+    isDark,
+    isLight,
+    setTheme,
+    toggleTheme,
+    initTheme,
   };
 });

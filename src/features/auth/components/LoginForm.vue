@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { tokenManager } from "@ametie/vue-muza-use";
 import { useI18n } from "vue-i18n";
-import { toast } from "vue-sonner";
 
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useLoginFormValidation } from "@/features/auth/composables/useAuthValidation";
@@ -17,7 +16,6 @@ const useStore = useAuthStore();
 const { loading, error, execute: request } = fetchLoginUser({
   authMode: "public",
   onSuccess: async ({ data }) => {
-    toast.success(t("auth.login.success"));
     tokenManager.setTokens({
       accessToken: data.accessToken,
       refreshToken: data.refreshToken,

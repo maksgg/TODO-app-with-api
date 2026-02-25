@@ -37,9 +37,9 @@ const { item } = defineProps<{ item: Task; }>();
       v-if="item.tags.length > 0"
       :tags="item.tags"
     />
-    <div
+    <span
       v-else
-      class="h-[22px]"
-    />
+      class="text-uiCaption text-muted"
+    >No tags</span>
   </div>
 </template>

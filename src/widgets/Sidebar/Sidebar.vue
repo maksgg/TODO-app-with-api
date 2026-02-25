@@ -64,6 +64,7 @@ const openModal = () => modal.open();
       <div class="flex justify-center items-center gap-4">
         <VButton
           text="Cancel"
+          class="!bg-transparent text-primary"
           @click="modal.close"
         />
         <VButton

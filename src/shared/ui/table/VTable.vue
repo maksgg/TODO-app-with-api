@@ -118,7 +118,7 @@ const loadMore = () => {
   <div class="relative w-full overflow-auto no-scrollbar">
     <div
       :class="[`relative self-center flex flex-col w-full
-                bg-primaryBg text-text-color`
+               text-text-color`
       ]"
     >
       <div

@@ -106,7 +106,7 @@ watch(
     v-else
     class="flex flex-col gap-6"
   >
-    <VTitle title="Permissions&Access" />
+    <VTitle title="Permissions & Access" />
     <VContainer>
       <template #header>
         <VMultiselect

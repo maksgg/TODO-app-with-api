@@ -27,9 +27,10 @@ const limit = defineModel<{ id: string; label: string; }>();
 
 const { chartTheme, loadingOptions } = useChartTheme(() => theme);
 const tagsOption = computed<EChartsOption>(() => {
-  const { muted, font, primary, border, secondaryBgLight } = chartTheme.value;
+  const { muted, font, primary, border, bg } = chartTheme.value;
 
   return {
+    animation: false,
     backgroundColor: "transparent",
     grid: {
       left: "0",
@@ -39,7 +40,7 @@ const tagsOption = computed<EChartsOption>(() => {
     },
     tooltip: {
       trigger: "axis",
-      backgroundColor: secondaryBgLight,
+      backgroundColor: bg,
       borderWidth: 0,
     },
     dataset: { source: [...(data || [])].sort((a, b) => a.count - b.count) },

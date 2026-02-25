@@ -3,3 +3,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  html {
+    background-color: theme('colors.secondaryBg'); 
+  }
+
+  body {
+    background-color: theme('colors.secondaryBg');
+    min-height: 100vh;
+  }
+}

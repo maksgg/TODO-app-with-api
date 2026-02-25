@@ -24,7 +24,7 @@ const {
 
 const { chartTheme, loadingOptions } = useChartTheme(() => theme);
 const dailyOption = computed<EChartsOption>(() => {
-  const { primary, success, muted, border, font, secondaryBgLight } = chartTheme.value;
+  const { primary, success, muted, border, font, bg } = chartTheme.value;
 
   return {
     animation: false,
@@ -37,7 +37,7 @@ const dailyOption = computed<EChartsOption>(() => {
     },
     tooltip: {
       trigger: "axis",
-      backgroundColor: secondaryBgLight,
+      backgroundColor: bg,
       borderWidth: 0,
     },
     legend: { data: ["Created", "Completed"], top: 0, left: "left" },

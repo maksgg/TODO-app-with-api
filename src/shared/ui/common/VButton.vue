@@ -55,7 +55,6 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
   primary: `
     ${baseButtonStyles}
     border border-primary
-    hover:drop-shadow-primary
     active:bg-activePrimary
     active:drop-shadow-none
     gap-2 px-4 py-3 rounded-xl bg-primary
@@ -64,7 +63,6 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
   dangerous: `
     ${baseButtonStyles}
     border border-dangerous
-    hover:drop-shadow-dangerous
     active:bg-activeDangerous
     active:drop-shadow-none
     gap-2 px-4 py-3 rounded-xl bg-dangerous

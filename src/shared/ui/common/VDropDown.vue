@@ -141,7 +141,7 @@ const placementStyle: Record<DropDown["placement"], string> = {
         v-for="item in props.options"
         :key="item.value"
         :class="[
-          'px-2 py-2 text-bodyL disabled:cursor-none rounded-md',
+          'flex gap-2 px-2 py-2 text-bodyL disabled:cursor-none rounded-md',
           item.dangerous ? 'text-dangerous' : 'text-txtPrimary',
           item.disabled
             ? 'opacity-50 cursor-not-allowed pointer-events-none'
@@ -152,9 +152,8 @@ const placementStyle: Record<DropDown["placement"], string> = {
         <slot
           name="options"
           :item="item"
-        >
-          {{ item.label || item.value }}
-        </slot>
+        />
+        {{ item.label || item.value }}
       </li>
     </ul>
   </div>

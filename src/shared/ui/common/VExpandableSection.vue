@@ -47,7 +47,7 @@ const toggle = () => activeId.value = isExpanded.value ? null : sectionId;
       </slot>
     </div>
     <div
-      class="grid transition-[grid-template-rows] overflow-auto no-scrollbar max-h-[32vh]"
+      class="grid transition-[grid-template-rows] overflow-auto no-scrollbar max-h-[28vh]"
       :class="isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
     >
       <div class="overflow-auto no-scrollbar">

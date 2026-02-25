@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import "@vuepic/vue-datepicker/dist/main.css";
 import { VueDatePicker } from "@vuepic/vue-datepicker";
-import { computed } from "vue";
+import { computed, watch } from "vue";
+import { toast } from "vue-sonner";
 
 import { ModalFields, Task } from "../types";
 import TaskTags from "./ui/TaskTags.vue";
@@ -43,6 +44,23 @@ const prioritySelect = {
     { name: "Low", value: "low" },
   ],
 };
+watch(
+  () => tagsState.value.list,
+  (newList) => {
+    const hasDuplicates = new Set(newList).size !== newList.length;
+    if (hasDuplicates) {
+      toast.error("Duplicate tags are not allowed");
+
+      const uniqueTags = Array.from(new Set(newList));
+      const currentTyping = modal.value.tags.match(/[^ ,;]*$/)?.[0] || "";
+
+      modal.value.tags = uniqueTags.length
+        ? uniqueTags.join(", ") + ", " + currentTyping
+        : currentTyping;
+    }
+  },
+  { deep: true },
+);
 </script>
 
 <template>

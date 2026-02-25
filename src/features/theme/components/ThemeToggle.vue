@@ -10,7 +10,7 @@ const themeStore = useThemeStore();
 const { variant = "switch" } = defineProps<{ variant?: "switch" | "button" }>();
 
 const theme = computed<boolean>({
-  get: () => themeStore.currentTheme === "dark",
+  get: () => themeStore.isDark,
   set: (newValue: boolean) => themeStore.setTheme(newValue ? "dark" : "light"),
 });
 onMounted(themeStore.initTheme);
@@ -27,7 +27,7 @@ onMounted(themeStore.initTheme);
         :class="[
           `relative h-[32px] rounded-2xl transition-all ease-in-out overflow-hidden`,
           variant === 'switch'
-            ? 'w-[60px] bg-themeSwitchGradient border border-themeSwitchB'
+            ? 'w-[60px] bg-themeSwitchGradient border border-themeSwitchBorder'
             : 'w-[32px] bg-transparent border-transparent'
         ]"
       >

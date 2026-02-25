@@ -6,7 +6,6 @@ import { useRoute, useRouter } from "vue-router";
 import LoginForm from "@/features/auth/components/LoginForm.vue";
 import RegisterForm from "@/features/auth/components/RegisterForm.vue";
 import type { AuthFormType } from "@/features/auth/types/index";
-// import { Tabs } from "@/shared/types";
 import VTabs from "@/shared/ui/common/VTabs.vue";
 
 const { t } = useI18n();

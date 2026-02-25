@@ -5,12 +5,10 @@ import WeeklyGoalsModals from "./components/WeeklyGoalsModals.vue";
 import { useWeeklyGoals } from "./composables/useWeeklyGoals";
 import { filterDeadlineTasks } from "./utils/filterDateByDeadlines";
 
-import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import useTasksRequests from "@/features/tasks/api/useTasksRequests";
 import DashboardTasksGroup from "@/features/tasks/components/DashboardTasksGroup.vue";
 import EmptyDashboardTasks from "@/features/tasks/components/ui/EmptyDashboardTasks.vue";
-import ThemeToggle from "@/features/theme/components/ThemeToggle.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 
 const taskPayloadParams = ref({
@@ -97,15 +95,6 @@ onMounted(() => loadData());
 </script>
 
 <template>
-  <Teleport
-    to="#header-action"
-    defer
-  >
-    <div class="flex gap-6">
-      <ThemeToggle />
-      <LanguageSelector variant="select" />
-    </div>
-  </Teleport>
   <div
     class="relative grid grid-cols-1 lg:grid-cols-2 gap-6 w-full pb-2
     rounded-lg overflow-auto no-scrollbar min-h-[5rem]"

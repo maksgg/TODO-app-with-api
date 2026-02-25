@@ -2,7 +2,9 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
+import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
 import { useTasksStore } from "@/features/tasks/store/useTasksStore";
+import ThemeToggle from "@/features/theme/components/ThemeToggle.vue";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
@@ -56,7 +58,11 @@ const header = computed(() => {
       </h2>
     </div>
 
-    <div id="header-action" />
+    <div class="flex gap-6">
+      <div id="header-action" />
+      <ThemeToggle />
+      <LanguageSelector variant="select" />
+    </div>
   </div>
 </template>
 

@@ -23,37 +23,28 @@ const selectedLangObject = computed({
       v-if="variant === 'select'"
       v-model:model="selectedLangObject"
       :options="languages.options"
-      :title="languages.label"
       class="w-[5rem]"
     />
     <VDropDown
       v-if="variant === 'button'"
       v-model="locale"
       :options="languages.options"
-      variant="custom"
       placement="topLeft"
     >
       <template #trigger>
-        <VIcon
-          v-if="locale === 'ua'"
-          type="uaFlag"
-          class="w-6 h-6"
-        />
-        <VIcon
-          v-if="locale === 'en'"
-          type="ukFlag"
-          class="w-6 h-6"
-        />
+        <div
+          class="overflow-hidden flex justify-center items-center
+         w-[26px] h-[26px] shadow-sm border border-themeSwitchBorder rounded-full"
+        >
+          <VIcon
+            :type="`${locale}Flag`"
+            class="w-[26px] h-[26px] scale-[1.5]"
+          />
+        </div>
       </template>
       <template #options="{ item }">
         <VIcon
-          v-if="item.value === 'ua'"
-          type="uaFlag"
-          class="w-6 h-6"
-        />
-        <VIcon
-          v-if="item.value === 'en'"
-          type="ukFlag"
+          :type="`${item.value}Flag`"
           class="w-6 h-6"
         />
       </template>

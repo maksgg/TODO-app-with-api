@@ -17,8 +17,7 @@ export const i18n = createI18n({
 export const useLanguages = () => {
   const { locale } = useI18n();
   const languages = {
-    label: "",
-    options: [{ name: "EN", value: "en" }, { name: "UA", value: "ua" }],
+    options: [{ name: "EN", value: "en", label: "English" }, { name: "UA", value: "ua", label: "Ukrainian" }],
   };
 
   return {

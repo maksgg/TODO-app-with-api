@@ -14,6 +14,7 @@ import { groupTasksByStatus } from "./utils/groupTasksByStatus";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import { FilterConfig } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
+import VContainer from "@/shared/ui/common/VContainer.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
 import VExpandableSection from "@/shared/ui/common/VExpandableSection.vue";
@@ -165,33 +166,37 @@ onMounted(() => loadData());
       sub-title="Create your first task to start organizing your work"
     />
     <template v-if="authStore.isAllowed('read:task')">
-      <VExpandableSection
+      <VContainer
         v-for="group in groupTasks"
         :key="group.title"
-        :title="`${group.title} (${group?.tasks?.length})`"
-        :loader="tasksStore.loading && !tasksStore.targetTaskLoader"
+        class="shadow-customShadow"
       >
-        <TasksTable
-          :header="group?.header"
-          :tasks="group?.tasks"
-          :loader-id="tasksStore.targetTaskLoader"
-          :loader="tasksStore.loading"
-          @toggle="toggleTaskStatus"
+        <VExpandableSection
+          :title="`${group.title} (${group?.tasks?.length})`"
+          :loader="tasksStore.loading && !tasksStore.targetTaskLoader"
         >
-          <template
-            v-if="group.title === 'Pending'"
-            #actions="{ row, index }"
+          <TasksTable
+            :header="group?.header"
+            :tasks="group?.tasks"
+            :loader-id="tasksStore.targetTaskLoader"
+            :loader="tasksStore.loading"
+            @toggle="toggleTaskStatus"
           >
-            <VDropDown
-              :options="listsActions"
-              trigger="icon"
-              icon-type="horizontalDots"
-              :placement="index >= group.tasks.length - 2 ? 'topRight' : 'bottomRight'"
-              @action="(val: TasksModals) => openModal(val, row as Task)"
-            />
-          </template>
-        </TasksTable>
-      </VExpandableSection>
+            <template
+              v-if="group.title === 'Pending'"
+              #actions="{ row, index }"
+            >
+              <VDropDown
+                :options="listsActions"
+                trigger="icon"
+                icon-type="horizontalDots"
+                :placement="index >= group.tasks.length - 2 ? 'topRight' : 'bottomRight'"
+                @action="(val: TasksModals) => openModal(val, row as Task)"
+              />
+            </template>
+          </TasksTable>
+        </VExpandableSection>
+      </VContainer>
     </template>
   </div>
   <Teleport

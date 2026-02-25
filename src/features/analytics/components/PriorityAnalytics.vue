@@ -23,20 +23,20 @@ const {
 
 const { chartTheme } = useChartTheme(() => theme);
 const priorityOption = computed<EChartsOption>(() => {
-  const { muted, font, secondaryBgLight } = chartTheme.value;
+  const { muted, font, secondaryBgLight, bg } = chartTheme.value;
 
   return {
-    animationDuration: 500,
+    animation: false,
     backgroundColor: "transparent",
     color: mapPriorityColors(data || [], chartTheme.value),
     tooltip: {
       trigger: "item",
-      backgroundColor: secondaryBgLight,
+      backgroundColor: bg,
       borderWidth: 0,
     },
     legend: {
       orient: "horizontal",
-      bottom: "0",
+      top: "0",
       textStyle: {
         color: muted,
         fontFamily: font,
@@ -48,7 +48,7 @@ const priorityOption = computed<EChartsOption>(() => {
     series: [
       {
         type: "pie",
-        radius: ["40%", "70%"],
+        radius: ["60%", "80%"],
         avoidLabelOverlap: false,
         padAngle: 5,
         itemStyle: {
@@ -79,13 +79,25 @@ const priorityOption = computed<EChartsOption>(() => {
   <div class="flex flex-col gap-6">
     <VTitle title="Tasks by priority" />
     <VContainer class="shadow-customShadow h-full">
-      <VSkeleton
-        v-if="!data && loader"
-        width="300"
-        height="300"
-        variant="circle"
-      />
-
+      <div class="flex flex-col justify-center items-center gap-8 flex-1">
+        <VSkeleton
+          v-if="!data && loader"
+          width="300"
+          height="300"
+          variant="circle"
+        />
+        <div
+          v-if="!data && loader"
+          class="flex gap-3"
+        >
+          <VSkeleton
+            v-for="priority in 3"
+            :key="`${priority}-priority`"
+            width="80"
+            height="20"
+          />
+        </div>
+      </div>
       <VChart
         v-if="data"
         :option="priorityOption"
