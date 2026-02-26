@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import useProfileRequests from "./api/useProfileRequests";
@@ -9,13 +10,14 @@ import { useAuthStore } from "@/shared/stores/useAuthStore";
 import { UserInfo } from "@/shared/types";
 
 const authStore = useAuthStore();
+const { t } = useI18n();
 
 const { updateOwnProfile } = useProfileRequests();
 
 const { loading, execute } = updateOwnProfile({
   onSuccess: ({ data }) => {
     authStore.userData = data;
-    toast.success("Profile is successful updated");
+    toast.success(t("profile.toasts.profile_is_successful_updated"));
   },
 });
 
@@ -25,7 +27,7 @@ const updateProfile = async (payload: Partial<UserInfo>) => await execute({ data
 <template>
   <ProfileOverview
     :user-data="authStore.userData"
-    title=" Profile Overview"
+    :title="$t('profile.profile_overview')"
     :loader="loading"
   />
   <ProfileDetails

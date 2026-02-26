@@ -23,7 +23,11 @@ const { item } = defineProps<{ item: Task; }>();
           v-if="!item.deadlineWord"
           class="text-uiCaption text-secondary"
         >
-          {{ item?.status === "done" ? "Completed" : "Pending" }}
+          {{
+            item?.status === "done" ?
+              $t("dashboard.taskItem.completed") :
+              $t("dashboard.taskItem.pending")
+          }}
         </span>
       </div>
     </slot>
@@ -40,6 +44,8 @@ const { item } = defineProps<{ item: Task; }>();
     <span
       v-else
       class="text-uiCaption text-muted"
-    >No tags</span>
+    >
+      {{ $t("dashboard.taskItem.no_tags") }}
+    </span>
   </div>
 </template>

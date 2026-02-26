@@ -9,7 +9,7 @@ export default {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
             },
             fontSize: {
-              authTitle: ['48px', { lineHeight: '110%', fontWeight: '600' }],
+              authTitle: ['40px', { lineHeight: '110%', fontWeight: '600' }],
               headPrimary: ['32px', { lineHeight: '120%', fontWeight: '600' }],
               dataMetric: ['28px', { lineHeight: '120%', fontWeight: '600' }],
               modalHead: ['24px', { lineHeight: '120%', fontWeight: '600' }],
@@ -46,8 +46,7 @@ export default {
                 selectShadow: '0 2px 6px 0 rgba(124, 131, 190, 0.16)',
                 weeklyGoalModal: 'inset 0 0 4px 1px rgba(124, 131, 190, 0.26)',
                 selectOption: 'inset 13px 0 0px -10px rgba(62, 79, 255, 1)',
-            },
-            
+            },  
             dropShadow: {
                 themeSvgShadow: [
                     '0 0 1.26px rgba(255, 255, 255, 1)',
@@ -60,9 +59,10 @@ export default {
             backgroundImage: {
               themeSwitchGradient: 'linear-gradient(to bottom, var(--color-gradientFrom), var(--color-gradientTo))',
               headerBorder: 'linear-gradient(90deg, rgba(62, 13, 168, 1) 0%, rgba(95, 134, 239, 1) 100%)',
+              logoGradient: 'linear-gradient(90deg, #4B5BFF 0%, #7592FF 100%)',
               authBg: 'url(@/shared/assets/images/auth-bg.png)',
               authForm: 'linear-gradient(180deg, rgba(30, 0, 76, 0.4) 0%, rgba(0, 12, 240, 0.4) 100%)',
-            }
+            },
         },
     },
     plugins: [

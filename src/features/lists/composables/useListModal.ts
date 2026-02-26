@@ -1,4 +1,5 @@
 import { computed, shallowRef, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import useListsRequests from "../api/useListsRequests";
@@ -17,6 +18,7 @@ export const useListModal = (
   const targetList = shallowRef<List | null>(null);
 
   const listStore = useListsStore();
+  const { t } = useI18n();
   const {
     createUserList,
     updateUserLists,
@@ -76,7 +78,7 @@ export const useListModal = (
   const { execute: createList, loading: createLoader } = createUserList({
     data: listPayload,
     onSuccess: () => {
-      toast.success("List created successfully");
+      toast.success(t("lists.toasts.list_created_successfully"));
       closeModal();
       listStore.getAllLists({ params: params });
     },
@@ -87,7 +89,7 @@ export const useListModal = (
     {
       data: listPayload,
       onSuccess: () => {
-        toast.success("List updated successfully");
+        toast.success(t("lists.toasts.list_updated_successfully"));
         closeModal();
         listStore.getAllLists({ params: params });
       },
@@ -97,7 +99,7 @@ export const useListModal = (
     () => targetList.value._id,
     {
       onSuccess: () => {
-        toast.success("List deleted successfully");
+        toast.success(t("lists.toasts.list_deleted_successfully"));
         closeModal();
         listStore.getAllLists({ params: params });
       },

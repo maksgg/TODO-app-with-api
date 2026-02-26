@@ -1,43 +1,45 @@
 <script setup lang="ts">
 import { debouncedRef } from "@vueuse/core";
 import { onUnmounted, onMounted, computed, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 import ListCardsWrapper from "./components/ListCardsWrapper.vue";
 import { useListsStore } from "./store/useListsStore";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import { FilterConfig } from "@/shared/types";
 import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
 import VLoader from "@/shared/ui/common/VLoader.vue";
 import VToggleTabs from "@/shared/ui/common/VToggleTabs.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 
+const { t } = useI18n();
+const filterConfig = computed(() => [
+  {
+    key: "sort",
+    label: t("lists.toolbar.sort_by"),
+    options: [
+      { name: t("lists.toolbar.recently_created"), value: "createdAt:desc" },
+      { name: t("lists.toolbar.recently_updated"), value: "updatedAt:desc" },
+      { name: t("lists.toolbar.A_->_Z"), value: "title:asc" },
+      { name: t("lists.toolbar.Z_->_A"), value: "title:desc" },
+    ],
+  },
+]);
+
 const currentTab = ref<"myLists" | "usersLists">("myLists");
 const searchQuery = ref("");
 const debounceSearch = debouncedRef<string>(searchQuery, 700);
 const toolBarPayload = ref({
-  sort: { name: "Recently created", value: "createdAt:desc" },
+  sort: { name: computed(() => t("lists.toolbar.recently_created")), value: "createdAt:desc" },
   order: "",
 });
 const listStore = useListsStore();
 const authStore = useAuthStore();
 
-const listTabs = [
-  { id: "myLists", label: "My lists" },
-  { id: "usersLists", label: "Users lists" },
-];
-const filterConfig: FilterConfig = [
-  {
-    key: "sort",
-    label: "Sort by",
-    options: [
-      { name: "Recently created", value: "createdAt:desc" },
-      { name: "Recently updated", value: "updatedAt:desc" },
-      { name: "A -> Z", value: "title:asc" },
-      { name: "Z -> A", value: "title:desc" },
-    ],
-  },
-];
+const listTabs = computed(() => [
+  { id: "myLists", label: t("lists.tabs.my_lists") },
+  { id: "usersLists", label: t("lists.tabs.users_lists") },
+]);
 
 const requestParams = computed(() => {
   const rawSort = toolBarPayload.value.sort?.value || "createdAt:desc";
@@ -61,7 +63,6 @@ watch(
   () => listStore.getAllLists({ params: requestParams.value }),
   { deep: true },
 );
-
 onMounted(() => listStore.getAllLists({ params: requestParams.value }));
 onUnmounted(() => currentTab.value = "myLists");
 </script>
@@ -78,6 +79,7 @@ onUnmounted(() => currentTab.value = "myLists");
       v-model:filters="toolBarPayload"
       :filter-configs="filterConfig"
       :disabled="listStore.allListsLoader || !authStore.isAllowed('read:list')"
+      :placeholder="$t('lists.toolbar.search')"
       select-width="md"
     />
     <div class="relative w-full h-full">
@@ -87,8 +89,8 @@ onUnmounted(() => currentTab.value = "myLists");
       />
       <VEmptyState
         v-if="!listStore.allListsLoader && !hasLists"
-        title="No lists yet"
-        sub-title="Create your first list to start organizing your tasks"
+        :title="$t('lists.emptyState.no_lists_yet')"
+        :sub-title="$t('lists.emptyState.create_your_first_list_to_start_organizing_your_tasks')"
       />
       <ListCardsWrapper
         v-show="!listStore.allListsLoader && hasLists"

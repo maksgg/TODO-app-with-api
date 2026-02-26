@@ -10,13 +10,19 @@ const expandSidebar = () => emit("is-expanded");
 </script>
 
 <template>
-  <VButton
-    :icon="isExpanded ? 'chevronLeft' : 'chevronRight'"
-    variant="ghost"
-    :is-open="isExpanded"
-    class="self-end pr-1 text-secondary"
-    :show-text="false"
-    @click="expandSidebar"
-  />
+  <div class="flex justify-between">
+    <span
+      v-if="isExpanded"
+      class="text-bodyEmphasis bg-logoGradient bg-clip-text text-transparent text-nowrap"
+    >TASK MANAGER</span>
+    <VButton
+      :icon="isExpanded ? 'chevronLeft' : 'chevronRight'"
+      variant="ghost"
+      :is-open="isExpanded"
+      class="ml-2.5 text-secondary"
+      :show-text="false"
+      @click="expandSidebar"
+    />
+  </div>
 </template>
 

@@ -32,7 +32,7 @@ const openModal = () => modal.open();
       expanded ? 'w-[20rem]': 'w-[5rem]'
     ]"
   >
-    <div class="flex flex-col gap-6 w-full">
+    <div class="flex flex-col gap-9 w-full">
       <SidebarHeader
         :is-expanded="expanded"
         @is-expanded="expandSidebar"

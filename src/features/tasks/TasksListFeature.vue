@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted , ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import useTasksRequests from "./api/useTasksRequests";
@@ -12,7 +13,6 @@ import { Task, TasksModals } from "./types";
 import { groupTasksByStatus } from "./utils/groupTasksByStatus";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import { FilterConfig } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
@@ -21,9 +21,11 @@ import VExpandableSection from "@/shared/ui/common/VExpandableSection.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 
+const { t } = useI18n();
+
 const toolBarPayload = ref({
-  priority: { name: "All priorities", value: "all" },
-  sort: { name: "Recently created", value: "createdAt:desc" },
+  priority: { name: computed(() => t("tasks.toolbar.all_priorities")), value: "all" },
+  sort: { name: computed(() => t("tasks.toolbar.recently_created")), value: "createdAt:desc" },
   order: "",
 });
 
@@ -43,7 +45,7 @@ const { fetchCompleteTask } = useTasksRequests();
 
 const { execute: completeTask } = fetchCompleteTask(() => tasksStore.targetTask.id, {
   onSuccess: () => {
-    toast.success("Status updated");
+    toast.success(t("tasks.toasts.status_updated"));
     tasksStore.getAllTasks();
   },
   onFinish: () => tasksStore.targetTask = null,
@@ -68,14 +70,14 @@ const requestParams = computed(() => {
 const activeModalType = computed(() => {
   if (isModalType.value === "edit") {
     return {
-      title: "Edit task",
-      btnText: "Save changes",
+      title: t("tasks.modal.edit_task"),
+      btnText: t("tasks.modalBtn.save_changes"),
     };
   }
 
   return {
-    title: "Add new task",
-    btnText: "Add task",
+    title: t("tasks.modal.add_new_task"),
+    btnText: t("tasks.modalBtn.add_task"),
   };
 });
 const groupTasks = computed(() => {
@@ -83,12 +85,12 @@ const groupTasks = computed(() => {
 
   return [
     {
-      title: "Pending",
+      title: t("tasks.tableHead.pending"),
       header: pendingTasksHeader,
       tasks: grouped.pending,
     },
     {
-      title: "Completed",
+      title: t("tasks.tableHead.completed"),
       header: completedTasksHeader,
       tasks: grouped.completed,
     },
@@ -102,44 +104,44 @@ const toggleTaskStatus = async (id: string, status: boolean) => {
 };
 const loadData = () => tasksStore.getAllTasks({ params: requestParams.value });
 
-const toolbarConfig: FilterConfig= [
+const toolbarConfig = computed(() => [
   {
     key: "priority",
-    label: "Priority",
+    label: t("tasks.toolbar.priority"),
     options: [
-      { name: "All priorities", value: "all" },
-      { name: "High priority", value: "high" },
-      { name: "Medium priority", value: "medium" },
-      { name: "Low priority", value: "low" },
+      { name: t("tasks.toolbar.all_priorities"), value: "all" },
+      { name: t("tasks.toolbar.high_priority"), value: "high" },
+      { name: t("tasks.toolbar.medium_priority"), value: "medium" },
+      { name: t("tasks.toolbar.low_priority"), value: "low" },
     ],
   },
   {
     key: "sort",
-    label: "Sort by",
+    label: t("tasks.toolbar.sort_by"),
     options: [
-      { name: "Recently created", value: "createdAt:desc" },
-      { name: "Recently updated", value: "updatedAt:desc" },
-      { name: "A -> Z", value: "title:asc" },
-      { name: "Z -> A", value: "title:desc" },
+      { name: t("tasks.toolbar.recently_created"), value: "createdAt:desc" },
+      { name: t("tasks.toolbar.recently_updated"), value: "updatedAt:desc" },
+      { name: t("tasks.toolbar.A_->_Z"), value: "title:asc" },
+      { name: t("tasks.toolbar.Z_->_A"), value: "title:desc" },
     ],
   },
-];
-const pendingTasksHeader = [
-  { key: "title", label: "Title", width: "42%" },
-  { key: "priority", label: "Priority" },
-  { key: "deadline", label: "Deadline" },
-  { key: "tags", label: "Tags", width: "25%" },
-  { key: "actions", label: "Actions", textAlign: "text-end", width: "3%" },
-];
-const completedTasksHeader = [
-  { key: "title", label: "Title", width: "48%" },
-  { key: "priority", label: "Priority" },
-  { key: "tags", label: "Tags", width: "30%" },
-];
-const listsActions = [
-  { value: "edit", label: "Edit task", disabled: !authStore.isAllowed("update:task") },
-  { value: "delete", label: "Delete task", disabled: !authStore.isAllowed("delete:task"), dangerous: true },
-];
+]);
+const pendingTasksHeader = computed(() => [
+  { key: "title", label: t("tasks.pendingTableHead.title"), width: "42%" },
+  { key: "priority", label: t("tasks.pendingTableHead.priority") },
+  { key: "deadline", label: t("tasks.pendingTableHead.deadline") },
+  { key: "tags", label: t("tasks.pendingTableHead.tags"), width: "25%" },
+  { key: "actions", label: t("tasks.pendingTableHead.actions"), textAlign: "text-end", width: "3%" },
+]);
+const completedTasksHeader = computed(() => [
+  { key: "title", label: t("tasks.completedTableHead.title"), width: "48%" },
+  { key: "priority", label: t("tasks.completedTableHead.priority") },
+  { key: "tags", label: t("tasks.completedTableHead.tags"), width: "30%" },
+]);
+const listsActions = computed(() => [
+  { value: "edit", label: t("tasks.actions.edit_task"), disabled: !authStore.isAllowed("update:task") },
+  { value: "delete", label: t("tasks.actions.delete_task"), disabled: !authStore.isAllowed("delete:task"), dangerous: true },
+]);
 
 watch(
   () => toolBarPayload.value,
@@ -157,13 +159,14 @@ onMounted(() => loadData());
       :filter-configs="toolbarConfig"
       :is-searchable="false"
       :disabled="tasksStore.loading || !authStore.isAllowed('read:task')"
+      :placeholder="$t('tasks.toolbar.search')"
       select-width="md"
       class="col-span-1"
     />
     <VEmptyState
       v-if="emptyPageState"
-      title="No tasks yet"
-      sub-title="Create your first task to start organizing your work"
+      :title="$t('tasks.emptyState.no_tasks_yet')"
+      :sub-title="$t('tasks.emptyState.create_your_first_task_to_start_organizing_your_work')"
     />
     <template v-if="authStore.isAllowed('read:task')">
       <VContainer
@@ -176,7 +179,7 @@ onMounted(() => loadData());
           :loader="tasksStore.loading && !tasksStore.targetTaskLoader"
         >
           <TasksTable
-            :header="group?.header"
+            :header="group?.header.value"
             :tasks="group?.tasks"
             :loader-id="tasksStore.targetTaskLoader"
             :loader="tasksStore.loading"
@@ -204,7 +207,7 @@ onMounted(() => loadData());
     defer
   >
     <VButton
-      text="Add task"
+      :text="$t('tasks.btn.add_task')"
       icon="plus"
       :disabled="!authStore.isAllowed('create:task')"
       @click="openModal('create')"
@@ -221,7 +224,7 @@ onMounted(() => loadData());
     <template #footer>
       <div class="flex gap-5 w-full justify-end">
         <VButton
-          text="Cancel"
+          :text="$t('tasks.modalBtn.cancel')"
           class="!bg-transparent text-primary"
           @click="closeModal"
         />

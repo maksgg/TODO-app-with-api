@@ -1,7 +1,7 @@
 import { createI18n, useI18n } from "vue-i18n";
 
 import en from "@/features/i18n/locales/en.json";
-import ua from "@/features/i18n/locales/ua.json";
+import ua from "@/features/i18n/locales/uk.json";
 
 export const i18n = createI18n({
   legacy: false,
@@ -21,7 +21,7 @@ export const useLanguages = () => {
   };
 
   return {
-    locale,
     languages,
+    locale,
   };
 };

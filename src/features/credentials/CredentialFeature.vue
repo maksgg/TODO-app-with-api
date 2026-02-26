@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VTitle from "@/shared/ui/common/VTitle.vue";
 
+const { t } =  useI18n();
 const developersInfo = [
   {
-    jobTitle: "Designer",
-    name: "Anastasiia Orieshyna",
+    jobTitle: t("credentials.designer"),
+    name: t("credentials.anastasiia_orieshyna"),
     techStack: "UX/UI Designer",
     email: "anastasiiaorieshyna@gmail.com",
     linkedIn: "https://www.linkedin.com/in/anastasiia-orieshyna/",
@@ -13,8 +16,8 @@ const developersInfo = [
     worksLink: "https://www.behance.net/orieshynaanastasiia",
   },
   {
-    jobTitle: "Developer",
-    name: "Maksym Zhovmir",
+    jobTitle: t("credentials.developer"),
+    name: t("credentials.maksym_zhovmir"),
     techStack: "Front-end (JS, TS, Vue.js, Pinia)",
     email: "maks.zhovmir.97@gmail.com",
     linkedIn: "https://www.linkedin.com/in/maks-zhovmir-82864b27b/",
@@ -27,7 +30,7 @@ const developersInfo = [
 <template>
   <VTitle title="Project Credits" />
   <h3 class="text-intro text-txtIntro">
-    Design & development contributors
+    {{ $t('credentials.design_&_development_contributors') }}
   </h3>
   <div class="flex justify-between gap-4">
     <VContainer

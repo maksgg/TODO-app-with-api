@@ -26,7 +26,7 @@ const openList = () => emit("openList", listId);
     />
     <span
       v-else
-      class="text-bodyL capitalize text-txtPrimary"
+      class="text-uiHead capitalize text-txtPrimary"
     >
       {{ title }}
     </span>

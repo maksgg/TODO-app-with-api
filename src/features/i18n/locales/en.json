@@ -48,5 +48,173 @@
       "sign_in": "Sign in",
       "sign_up": "Sign up"
     }
+  },
+  "credentials": {
+    "designer": "Designer",
+    "anastasiia_orieshyna": "Anastasiia orieshyna",
+    "developer": "Developer",
+    "maksym_zhovmir": "Maksym zhovmir",
+    "design_&_development_contributors": "Design & development contributors"
+  },
+  "lists": {
+    "actions": {
+      "edit_list": "Edit list",
+      "delete_list": "Delete list"
+    },
+    "modal": {
+      "edit_list": "Edit list",
+      "create_list": "Create list",
+      "delete_list": "Delete list",
+      "are_you_sure_you_want_to_delete": "Are you sure you want to delete",
+      "list?": "List?",
+      "this_action_can’t_be_undone": "This action can’t be undone",
+      "list_name": "List name",
+      "enter_list_name": "Enter list name",
+      "list_color": "List color"
+    },
+    "modalBtn": {
+      "save_changes": "Save changes",
+      "create_list": "Create list",
+      "cancel": "Cancel",
+      "delete_list": "Delete list"
+    },
+    "btn": {
+      "create_new_list": "Create new list"
+    },
+    "card": {
+      "tasks": "Tasks",
+      "completed": "Completed",
+      "role:": "Role:"
+    },
+    "lists": "Lists",
+    "toasts": {
+      "list_created_successfully": "List created successfully",
+      "list_updated_successfully": "List updated successfully",
+      "list_deleted_successfully": "List deleted successfully"
+    },
+    "toolbar": {
+      "recently_created": "Recently created",
+      "recently_updated": "Recently updated",
+      "A_->_Z": "A -> Z",
+      "Z_->_A": "Z -> A",
+      "sort_by": "Sort by",
+      "search": "Search"
+    },
+    "tabs": {
+      "my_lists": "My lists",
+      "users_lists": "Users lists"
+    },
+    "emptyState": {
+      "no_lists_yet": "No lists yet",
+      "create_your_first_list_to_start_organizing_your_tasks": "Create your first list to start organizing your tasks"
+    },
+    "toolbarRef": {
+      "recently_created": "Recently created"
+    },
+    "toolbarasd": {
+      "recently_created": "Recently created"
+    }
+  },
+  "profile": {
+    "account_details": "Account details",
+    "full_name": "Full name",
+    "save_changes": "Save changes",
+    "member_since": "Member since",
+    "toasts": {
+      "profile_is_successful_updated": "Profile is successful updated"
+    },
+    "profile_overview": "Profile overview"
+  },
+  "tasks": {
+    "modalPriority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "priority": "Priority"
+    },
+    "toasts": {
+      "duplicate_tags_are_not_allowed": "Duplicate tags are not allowed",
+      "task_updated_successfully": "Task updated successfully",
+      "task_created_successfully": "Task created successfully",
+      "task_deleted_successfully": "Task deleted successfully",
+      "status_updated": "Status updated"
+    },
+    "modal": {
+      "task_name": "Task name",
+      "enter_task_name": "Enter task name",
+      "due": "Due",
+      "pick_date": "Pick date",
+      "tags": "Tags",
+      "frontend,_Backend,_Vue": "Frontend, Backend, Vue",
+      "you_have_exceeded_the_limit": "You have exceeded the limit",
+      "you_can_add_up_to_6_tags": "You can add up to 6 tags",
+      "delete_task": "Delete task",
+      "are_you_sure_you_want_to_delete": "Are you sure you want to delete",
+      "task?": "Task?",
+      "this_action_can’t_be_undone": "This action can’t be undone",
+      "edit_task": "Edit task",
+      "add_new_task": "Add new task"
+    },
+    "modalBtn": {
+      "cancel": "Cancel",
+      "delete list": "Delete list",
+      "save_changes": "Save changes",
+      "add_task": "Add task"
+    },
+    "toolbar": {
+      "all_priorities": "All priorities",
+      "recently_created": "Recently created",
+      "priority": "Priority",
+      "high_priority": "High priority",
+      "medium_priority": "Medium priority",
+      "low_priority": "Low priority",
+      "sort_by": "Sort by",
+      "recently_updated": "Recently updated",
+      "A_->_Z": "A -> Z",
+      "Z_->_A": "Z -> A",
+      "search": "Search"
+    },
+    "tableHead": {
+      "pending": "Pending",
+      "completed": "Completed"
+    },
+    "pendingTableHead": {
+      "title": "Title",
+      "priority": "Priority",
+      "deadline": "Deadline",
+      "tags": "Tags",
+      "actions": "Actions"
+    },
+    "completedTableHead": {
+      "title": "Title",
+      "priority": "Priority",
+      "tags": "Tags"
+    },
+    "actions": {
+      "edit_task": "Edit task",
+      "delete_task": "Delete task"
+    },
+    "emptyState": {
+      "no_tasks_yet": "No tasks yet",
+      "create_your_first_task_to_start_organizing_your_work": "Create your first task to start organizing your work"
+    },
+    "btn": {
+      "add_task": "Add task"
+    },
+    "dates": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "this_week": "This week",
+      "next_week": "Next week",
+      "later": "Later"
+    }
+  },
+  "dashboard": {
+    "taskItem": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "no_tags": "No tags"
+    }
   }
 }

@@ -13,10 +13,7 @@ const { item } = defineProps<{
 }>();
 
 const emit = defineEmits<{ "addWeeklyGoals": [ModalType] }>();
-const addWeeklyGoals = () => {
-  console.log("Button clicked, emitting addWeeklyGoals");
-  emit("addWeeklyGoals", "add");
-};
+const addWeeklyGoals = () => emit("addWeeklyGoals", "add");
 </script>
 
 <template>

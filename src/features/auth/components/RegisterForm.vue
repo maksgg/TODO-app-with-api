@@ -37,8 +37,8 @@ const submitForm = async () => {
     rounded-xl w-full text-authTitle text-txtPrimaryDark"
     @submit.prevent="submitForm"
   >
-    <h1 class="text-login text-center leading-none">
-      {{ $t("auth.register.create_your_account") }}
+    <h1>
+      {{ $t("auth.register.create_account") }}
     </h1>
     <VInput
       v-model="state.name"

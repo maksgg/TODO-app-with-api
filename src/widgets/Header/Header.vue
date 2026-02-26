@@ -57,7 +57,6 @@ const header = computed(() => {
         {{ header?.title }}
       </h2>
     </div>
-
     <div class="flex gap-6">
       <div id="header-action" />
       <ThemeToggle />

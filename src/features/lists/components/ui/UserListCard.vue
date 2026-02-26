@@ -38,12 +38,13 @@ onClickOutside(target, () => {
         {{ userListsInfo.email }}
       </h4>
       <h4 class="text-bodyEmphasis text-txtPrimary border-b border-borderDefault pb-2">
-        Role: <span class="text-bodyM text-secondary">{{ userListsInfo.role }}</span>
+        {{ $t("lists.card.role:") }}
+        <span class="text-bodyM text-secondary">{{ userListsInfo.role }}</span>
       </h4>
     </div>
     <div class="relative w-full">
       <VButton
-        :text="`Lists (${totalLists})`"
+        :text="`${$t('lists.lists')} (${totalLists})`"
         variant="ghost"
         icon-size="sm"
         class="text-txtPrimary"

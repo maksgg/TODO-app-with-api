@@ -23,12 +23,12 @@ const hexColors = [
   <div class="flex flex-col gap-2 text-left">
     <VInput
       v-model="model.title"
-      label="List name"
-      placeholder="Enter list name"
+      :label="$t('lists.modal.list_name')"
+      :placeholder="$t('lists.modal.enter_list_name')"
     />
     <VColorPicker
       v-model="model.hexColor"
-      title="List color"
+      :title="$t('lists.modal.list_color')"
       :items="hexColors"
     />
   </div>

@@ -1,4 +1,5 @@
 import { ref, computed, shallowRef, toRaw } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { toast } from "vue-sonner";
 
@@ -17,9 +18,11 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     tags: "",
     dueDate: null,
     deadline: null,
-    priority: { name: "High", value: "high" },
+    priority: { name: computed(() => t("tasks.modalPriority.high")), value: "high" },
   });
   const originFormState = shallowRef();
+
+  const { t } = useI18n();
 
   const taskPayload = computed(() => {
     return {
@@ -76,7 +79,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
       tags: "",
       deadline: null,
       dueDate: null,
-      priority: { name: "High", value: "high" },
+      priority: { name: computed(() => t("tasks.modalPriority.high")), value: "high" },
     };
   };
 
@@ -93,7 +96,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     {
       data: taskPayload,
       onSuccess: () => {
-        toast.success("Task updated successfully");
+        toast.success(t("tasks.toasts.task_updated_successfully"));
         closeModal();
         tasksStore.getAllTasks({ params: params });
       },
@@ -101,7 +104,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
   const { execute: createTask, loading: createLoading } = fetchCreateTask(() => route.query.id, {
     data: taskPayload,
     onSuccess: () => {
-      toast.success("Task created successfully");
+      toast.success(t("tasks.toasts.task_created_successfully"));
       closeModal();
       tasksStore.getAllTasks({ params: params });
     },
@@ -110,7 +113,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     () => tasksStore.targetTask.id,
     {
       onSuccess: () => {
-        toast.success("Task deleted successfully");
+        toast.success(t("tasks.toasts.task_deleted_successfully"));
         closeModal();
         tasksStore.getAllTasks({ params: params });
       },

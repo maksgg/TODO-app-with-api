@@ -104,6 +104,6 @@ router.beforeEach(async (to, from, next) => {
 
   next();
 });
-router.afterEach((to) => document.title = (to.meta.title as string) || "Task manager");
+router.afterEach((to) => document.title = `Task manager - ${to.meta.title as string}`);
 
 export default router;

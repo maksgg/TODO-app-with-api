@@ -14,25 +14,27 @@ const request = () => emit("request");
 <template>
   <VModal
     id="delete-list"
-    title="Delete list"
+    :title="$t('lists.modal.delete_list')"
   >
     <div class="flex flex-col gap-2 text-center">
       <h4 class="text-uiHead text-txtPrimary">
-        Are you sure you want to delete <span>"{{ list?.title }}"</span> list?
+        {{ $t("lists.modal.are_you_sure_you_want_to_delete") }}
+        <span>"{{ list?.title }}"</span>
+        {{ $t("lists.modal.list?") }}
       </h4>
       <p class="text-bodyM text-secondary">
-        This action can’t be undone
+        {{ $t("lists.modal.this_action_can’t_be_undone") }}
       </p>
     </div>
     <template #footer>
       <div class="flex gap-5 w-full justify-center">
         <VButton
-          text="Cancel"
+          :text="$t('lists.modalBtn.cancel')"
           class="!bg-transparent text-primary"
           @click="closeModal"
         />
         <VButton
-          text="Delete list"
+          :text="$t('lists.modalBtn.delete_list')"
           variant="dangerous"
           :loader="loader"
           :disabled="loader"

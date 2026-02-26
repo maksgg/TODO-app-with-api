@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
 import { RequestParams } from "../types";
@@ -22,6 +23,7 @@ const { currentTab, params } = defineProps<{
 
 const listStore = useListsStore();
 const authStore = useAuthStore();
+const { t } = useI18n();
 const router = useRouter();
 const {
   openModal,
@@ -42,21 +44,21 @@ const openTargetList = (id: string) => {
   router.replace({ name: "List", query: { id } });
 };
 
-const listActions = [
-  { value: "edit", label: "Edit list", disabled: !authStore.isAllowed("update:list") },
-  { value: "delete", label: "Delete list", disabled: !authStore.isAllowed("delete:list"), dangerous: true },
-];
+const listActions = computed(() =>[
+  { value: "edit", label: t("lists.actions.edit_list"), disabled: !authStore.isAllowed("update:list") },
+  { value: "delete", label: t("lists.actions.delete_list"), disabled: !authStore.isAllowed("delete:list"), dangerous: true },
+]);
 const activeModalType = computed(() => {
   if (isModalType.value === "edit") {
     return {
-      title: "Edit list",
-      btnText: "Save changes",
+      title: t("lists.modal.edit_list"),
+      btnText: t("lists.modalBtn.save_changes"),
     };
   }
 
   return {
-    title: "Create list",
-    btnText: "Create list",
+    title: t("lists.modal.create_list"),
+    btnText: t("lists.modalBtn.create_list"),
   };
 });
 </script>
@@ -68,7 +70,7 @@ const activeModalType = computed(() => {
       defer
     >
       <VButton
-        text="Create new list"
+        :text="$t('lists.btn.create_new_list')"
         icon="plus"
         :disabled="!authStore.isAllowed('create:list')"
         @click="openModal('create')"
@@ -109,7 +111,7 @@ const activeModalType = computed(() => {
       <template #footer>
         <div class="flex gap-5 w-full justify-end">
           <VButton
-            text="Cancel"
+            :text="$t('lists.modalBtn.cancel')"
             class="!bg-transparent text-primary"
             @click="closeModal"
           />

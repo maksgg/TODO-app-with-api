@@ -23,7 +23,7 @@ const updateUser = () => emit("updateUserData", formField.value);
 </script>
 
 <template>
-  <VTitle title="Account Details" />
+  <VTitle :title="$t('profile.account_details')" />
   <div class="border border-borderDefault bg-secondaryBg rounded-lg p-6">
     <form
       class="flex flex-col gap-5 max-w-[30rem]"
@@ -31,10 +31,10 @@ const updateUser = () => emit("updateUserData", formField.value);
     >
       <VInput
         v-model="formField.name"
-        label="Full Name"
+        :label="$t('profile.full_name')"
       />
       <VButton
-        text="Save Changes"
+        :text="$t('profile.save_changes')"
         :loader="loader"
         :disabled="!isChanged"
         type="submit"
