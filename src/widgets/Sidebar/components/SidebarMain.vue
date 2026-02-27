@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 
-import { SidebarLink } from "@/shared/types";
+import type { SidebarLink } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 
 const route = useRoute();

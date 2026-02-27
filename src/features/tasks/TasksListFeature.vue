@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted , ref, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
@@ -9,7 +9,7 @@ import DeleteTaskModal from "./components/ui/DeleteTaskModal.vue";
 import TasksTable from "./components/ui/TasksTable.vue";
 import { useTasksModals } from "./composables/useTasksModals";
 import { useTasksStore } from "./store/useTasksStore";
-import { Task, TasksModals } from "./types";
+import type { Task, TasksModals } from "./types";
 import { groupTasksByStatus } from "./utils/groupTasksByStatus";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
@@ -22,13 +22,6 @@ import VModal from "@/shared/ui/common/VModal.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 
 const { t } = useI18n();
-
-const toolBarPayload = ref({
-  priority: { name: computed(() => t("tasks.toolbar.all_priorities")), value: "all" },
-  sort: { name: computed(() => t("tasks.toolbar.recently_created")), value: "createdAt:desc" },
-  order: "",
-});
-
 const authStore = useAuthStore();
 const tasksStore = useTasksStore();
 const {
@@ -85,11 +78,13 @@ const groupTasks = computed(() => {
 
   return [
     {
+      key: "pending",
       title: t("tasks.tableHead.pending"),
       header: pendingTasksHeader,
       tasks: grouped.pending,
     },
     {
+      key: "completed",
       title: t("tasks.tableHead.completed"),
       header: completedTasksHeader,
       tasks: grouped.completed,
@@ -126,6 +121,14 @@ const toolbarConfig = computed(() => [
     ],
   },
 ]);
+
+const toolBarPayload = computed({
+  get: () => ({
+    priority: toolbarConfig.value[0].options[0],
+    sort: toolbarConfig.value[1].options[0],
+  }),
+  set: (option) => option,
+});
 const pendingTasksHeader = computed(() => [
   { key: "title", label: t("tasks.pendingTableHead.title"), width: "42%" },
   { key: "priority", label: t("tasks.pendingTableHead.priority") },
@@ -171,7 +174,7 @@ onMounted(() => loadData());
     <template v-if="authStore.isAllowed('read:task')">
       <VContainer
         v-for="group in groupTasks"
-        :key="group.title"
+        :key="group.key"
         class="shadow-customShadow"
       >
         <VExpandableSection
@@ -186,7 +189,7 @@ onMounted(() => loadData());
             @toggle="toggleTaskStatus"
           >
             <template
-              v-if="group.title === 'Pending'"
+              v-if="group.key === 'pending'"
               #actions="{ row, index }"
             >
               <VDropDown

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ModalType } from "@/shared/types";
+import type { ModalType } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 
 const { item } = defineProps<{

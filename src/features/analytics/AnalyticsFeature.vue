@@ -11,6 +11,7 @@ import { use } from "echarts/core";
 import { SVGRenderer } from "echarts/renderers";
 import { computed, onMounted, provide, ref } from "vue";
 import { THEME_KEY } from "vue-echarts";
+import { useI18n } from "vue-i18n";
 
 import useAnalyticsRequests from "@/features/analytics/api/useAnalyticsRequests";
 import DailyActivityAnalitycs from "@/features/analytics/components/DailyActivityAnalitycs.vue";
@@ -24,15 +25,17 @@ import VToggleTabs from "@/shared/ui/common/VToggleTabs.vue";
 const activeTab = ref<"week" | "month">("week");
 const tagsLimit = ref({ id: "5", label: "Top 5" });
 
-const analitycstTabs = computed(() => ([
-  { id: "week", label: "Week" },
-  { id: "month", label: "Month" },
-]));
-const limitOptions = [
-  { id: "5", label: "Top 5" },
-  { id: "10", label: "Top 10" },
-  { id: "15", label: "Top 15" },
-];
+const { t } = useI18n();
+
+const analitycstTabs = computed(() => [
+  { id: "week", label:  t("analitycs.tabs.week") },
+  { id: "month", label: t("analitycs.tabs.month") },
+]);
+const limitOptions = computed(() => [
+  { id: "5", label: t("analitycs.tabs.top_5") },
+  { id: "10", label: t("analitycs.tabs.top_10") },
+  { id: "15", label: t("analitycs.tabs.top_15") },
+]);
 
 const themeStore = useThemeStore();
 const {

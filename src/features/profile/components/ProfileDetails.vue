@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-import { UserInfo } from "@/shared/types";
+import type { UserInfo } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 import VTitle from "@/shared/ui/common/VTitle.vue";

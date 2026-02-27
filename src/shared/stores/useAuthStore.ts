@@ -1,5 +1,6 @@
 import { tokenManager, type UseApiOptions, useApiGet } from "@ametie/vue-muza-use";
 import { defineStore } from "pinia";
+import { toValue } from "vue";
 import { RouteRecordRaw, useRouter } from "vue-router";
 
 import type { SidebarLink, UserInfo } from "@/shared/types/index";
@@ -32,7 +33,7 @@ export const useAuthStore = defineStore("user", () => {
         return isNavigable && hasAccess;
       })
       .map((route) => ({
-        title: route.meta?.title as string,
+        title: toValue(route.meta?.title) as string,
         icon: route.meta?.icon as string,
         to: route.path,
         tooltip: route.meta?.title as string,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Task } from "../../types/index";
+import type { Task } from "../../types/index";
 
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
@@ -34,7 +34,7 @@ const request = () => emit("request");
           @click="closeModal"
         />
         <VButton
-          :text="$t('tasks.modalBtn.delete list')"
+          :text="$t('tasks.modalBtn.delete_task')"
           variant="dangerous"
           :loader="loader"
           :disabled="loader"

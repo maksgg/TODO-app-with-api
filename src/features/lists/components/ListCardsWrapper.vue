@@ -3,7 +3,7 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-import { RequestParams } from "../types";
+import type { RequestParams } from "../types";
 import DeleteListModal from "./ui/DeleteListModal.vue";
 import ListCard from "./ui/ListCard.vue";
 import ListsModalFormFields from "./ui/ListsModalFormFields.vue";

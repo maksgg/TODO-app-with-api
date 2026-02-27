@@ -159,7 +159,8 @@
       "cancel": "Cancel",
       "delete list": "Delete list",
       "save_changes": "Save changes",
-      "add_task": "Add task"
+      "add_task": "Add task",
+      "delete_task": "Delete task"
     },
     "toolbar": {
       "all_priorities": "All priorities",
@@ -215,6 +216,202 @@
       "completed": "Completed",
       "pending": "Pending",
       "no_tags": "No tags"
+    },
+    "modalBtn": {
+      "cancel": "Cancel",
+      "save_changes": "Save changes",
+      "add_goals": "Add goals"
+    },
+    "title": {
+      "today's_tasks": "Today's tasks",
+      "upcoming_deadlines": "Upcoming deadlines",
+      "weekly_focus_goals": "Weekly focus goals",
+      "today_tasks": "Today tasks"
+    },
+    "subTitle": {
+      "you’ve": "You’ve",
+      "tasks_for_today": "Tasks for today",
+      "tasks_that_need_your_attention_soon": "Tasks that need your attention soon",
+      "your_top_priorities_for_this_week": "Your top priorities for this week"
+    },
+    "btn": {
+      "view_all": "View all",
+      "edit": "Edit"
+    },
+    "emptyState": {
+      "no_tasks_for_today_yet": "No tasks for today yet",
+      "create_your_first_task_to_get_started": "Create your first task to get started",
+      "add_task": "Add task",
+      "no_upcoming_deadlines": "No upcoming deadlines",
+      "tasks_with_due_dates_will_appear_here": "Tasks with due dates will appear here",
+      "no_weekly_goals_yet": "No weekly goals yet",
+      "add_your_top_priorities_to_stay_focused": "Add your top priorities to stay focused",
+      "add_weekly_goal": "Add weekly goal"
+    },
+    "date": {
+      "tomorrow": "Tomorrow",
+      "day_after_tomorrow": "Day after tomorrow",
+      "this_week": "This week",
+      "later": "Later"
+    }
+  },
+  "header": {
+    "title": {
+      "manage_all_your_task_groups_in_one_place": "Manage all your task groups in one place",
+      "see_how_your_tasks_are_progressing_over_time": "See how your tasks are progressing over time",
+      "good_to_see_you_again": "Good to see you again"
+    }
+  },
+  "sidebar": {
+    "links": {
+      "dashboard": "Dashboard",
+      "lists": "Lists",
+      "analytics": "Analytics",
+      "profile": "Profile",
+      "admin_panel": "Admin panel",
+      "about_us": "About us"
+    },
+    "btn": {
+      "log_out": "Log out"
+    },
+    "modalTitle": {
+      "log_out": "Log out"
+    },
+    "modal": {
+      "are_you_sure_you_want_to_log_out?": "Are you sure you want to log out?",
+      "you_will_need_to_sign_in_again_to_access_your_account": "You will need to sign in again to access your account"
+    },
+    "modalBtn": {
+      "cancel": "Cancel",
+      "log_out": "Log out"
+    }
+  },
+  "usersTable": {
+    "tableHead": {
+      "member": "Member",
+      "role": "Role",
+      "registered": "Registered",
+      "actions": "Actions"
+    },
+    "btn": {
+      "load_more": "Load more"
+    },
+    "toolbar": {
+      "all_roles": "All roles",
+      "user": "User",
+      "admin": "Admin",
+      "search": "Search"
+    },
+    "actions": {
+      "user_profile": "User profile",
+      "remove_user": "Remove user"
+    }
+  },
+  "users": {
+    "title": {
+      "user_management": "User management"
+    }
+  },
+  "usersModal": {
+    "remove_user": "Remove user",
+    "are_you_sure_you_want_to_remove": "Are you sure you want to remove",
+    "user?": "User?",
+    "this_action_can’t_be_undone": "This action can’t be undone",
+    "btn": {
+      "cancel": "Cancel"
+    }
+  },
+  "userInfo": {
+    "title": {
+      "profile_overview": "Profile overview"
+    }
+  },
+  "usersInfo": {
+    "role": {
+      "user": "User",
+      "administrator": "Administrator"
+    },
+    "title": {
+      "permissions_&_Access": "Permissions & Access",
+      "role": "Role"
+    },
+    "text": {
+      "select_all_permissions": "Select all permissions"
+    },
+    "btn": {
+      "save_changes": "Save changes"
+    },
+    "permissions": {
+      "lists_permissions": "Lists permissions",
+      "tasks_permissions": "Tasks permissions",
+      "user_management": "User management",
+      "analytics_&_dashboard": "Analytics & dashboard"
+    },
+    "permissionsList": {
+      "create_list": "Create new lists",
+      "read_list": "View own lists",
+      "update_list": "Update own lists",
+      "delete_list": "Delete own lists",
+      "read_all-lists": "View all users lists (admin)",
+
+      "create_task": "Create new tasks",
+      "read_task": "View own tasks",
+      "update_task": "Update own tasks",
+      "delete_task": "Delete own tasks",
+      "read_all-tasks": "View all users tasks (admin)",
+
+      "read_users": "View users list",
+      "update_user": "Update user profiles",
+      "delete_user": "Delete users",
+      "manage_roles": "Manage user roles",
+      "manage_permissions": "Manage user permissions",
+
+      "read_dashboard": "Access dashboard",
+      "read_analytics": "View analytics data"
+    }
+  },
+  "analitycs": {
+    "tabs": {
+      "week": "Week",
+      "month": "Month",
+      "top_5": "Top 5",
+      "top_10": "Top 10",
+      "top_15": "Top 15"
+    }
+  },
+  "analytics": {
+    "chart": {
+      "created": "Created",
+      "completed": "Completed"
+    },
+    "date": {
+      "en_GB": "En GB",
+      "en-GB": "En-GB"
+    },
+    "daily": {
+      "created": "Created",
+      "completed": "Completed"
+    },
+    "title": {
+      "task_completion": "Task completion",
+      "tasks_by_priority": "Tasks by priority",
+      "status_overview": "Status overview",
+      "tags_popularity": "Tags popularity"
+    },
+    "completed": "Completed",
+    "active": "Active",
+    "overdue": "Overdue"
+  },
+  "dasboard": {
+    "modalTitle": {
+      "edit_weekly_focus_goals": "Edit weekly focus goals",
+      "add-weekly_goals": "Add-weekly goals",
+      "selected": "Selected",
+      "choose_up_to_3_tasks_to_focus_on_this_week": "Choose up to 3 tasks to focus on this week"
+    },
+    "toasts": {
+      "you_can_select_up_to_3_weekly_goals": "You can select up to 3 weekly goals",
+      "updated_successfully": "Updated successfully"
     }
   }
 }

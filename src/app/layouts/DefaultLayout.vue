@@ -13,7 +13,7 @@ const menuItems = computed(() => authStore.getSidebarLinks(routes));
 
 <template>
   <div
-    v-if="false && (authStore.loading || !authStore.userData)"
+    v-if="authStore.loading"
     class="flex flex-1 items-center justify-center min-h-screen"
   >
     <VLoader size="lg" />

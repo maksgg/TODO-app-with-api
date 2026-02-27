@@ -3,7 +3,7 @@ import type { TasksDeadlinesResponse } from "../types";
 import DashboardTaskItemSkeleton from "./skeletons/DashboardTaskItemSkeleton.vue";
 import DashboardTaskItem from "./ui/DashboardTaskItem.vue";
 
-import { ModalType } from "@/shared/types";
+import type { ModalType } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VLoader from "@/shared/ui/common/VLoader.vue";
@@ -17,6 +17,7 @@ const { item, loader = false, localLoader = null } = defineProps<{
     title: string;
     subtitle: string;
     btnTitle: string;
+    btnKey?: string;
     fetchedData: TasksDeadlinesResponse["data"] | null;
     emptySubtitle: string;
     emptyText: string;
@@ -52,8 +53,8 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
       :text="item.btnTitle"
       variant="ghost"
       class="self-start text-uiBtn text-primary hover:scale-110"
-      :to="item?.btnTitle !== 'Edit' ? '/list' : undefined"
-      @click="item?.btnTitle === 'Edit' ? openEditModal() : null"
+      :to="item?.btnKey !== 'edit' ? '/list' : undefined"
+      @click="item?.btnKey === 'edit' ? openEditModal() : null"
     />
   </div>
   <div class="flex flex-col gap-1.5">

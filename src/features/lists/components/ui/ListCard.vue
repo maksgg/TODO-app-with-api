@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ListName from "./ListName.vue";
-import { List } from "../../types";
+import type { List } from "../../types";
 
-import { ModalType } from "@/shared/types";
+import type { ModalType } from "@/shared/types";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 

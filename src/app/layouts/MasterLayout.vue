@@ -23,12 +23,7 @@ const routePath = computed(() => {
 </script>
 
 <template>
-  <div
-    :class="['relative flex flex-col w-full h-screen overflow-hidden',
-             routePath === AuthLayout ?
-               'bg-authBg bg-cover bg-center' : 'bg-background'
-    ]"
-  >
+  <div class="relative flex flex-col w-full h-screen overflow-hidden">
     <VToast :theme="themeStore.currentTheme" />
     <component :is="routePath" />
   </div>

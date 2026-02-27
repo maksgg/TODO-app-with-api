@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, toValue } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
 import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
@@ -11,7 +12,7 @@ import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 
 const authStore = useAuthStore();
 const tasksStore = useTasksStore();
-
+const { t } = useI18n();
 const route = useRoute();
 
 const headerLoader = computed(() => tasksStore.loading || authStore.loading);
@@ -20,10 +21,10 @@ const header = computed(() => {
     return { title: tasksStore.allTasks?.listInfo?.title, path: "/list" };
   }
   if (route.name === "Dashboard") {
-    return { title: `Good to see you again, ${authStore.userData?.name}` };
+    return { title: `${t("header.title.good_to_see_you_again")}, ${authStore.userData?.name}` };
   }
   if (route.meta.headerTitle) {
-    return { title: route.meta.headerTitle };
+    return { title: toValue(route.meta.headerTitle) };
   }
 
   return { title: "" };

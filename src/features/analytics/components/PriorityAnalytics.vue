@@ -2,9 +2,10 @@
 import { EChartsOption } from "echarts";
 import { computed } from "vue";
 import VChart from "vue-echarts";
+import { useI18n } from "vue-i18n";
 
 import { useChartTheme } from "../composables/useChartTheme";
-import { PriorityResponse } from "../types";
+import type { PriorityResponse } from "../types";
 import { mapPriorityColors } from "../utils/priorityDataByColor";
 
 import VContainer from "@/shared/ui/common/VContainer.vue";
@@ -21,10 +22,15 @@ const {
   theme: "light" | "dark";
 }>();
 
+const { t } = useI18n();
 const { chartTheme } = useChartTheme(() => theme);
 const priorityOption = computed<EChartsOption>(() => {
   const { muted, font, secondaryBgLight, bg } = chartTheme.value;
 
+  const localizedData = (data || []).map(item => ({
+    ...item,
+    priorityLabel: t(`tasks.modalPriority.${item.priority.toLowerCase()}`),
+  }));
   return {
     animation: false,
     backgroundColor: "transparent",
@@ -43,7 +49,7 @@ const priorityOption = computed<EChartsOption>(() => {
       },
     },
     dataset: {
-      source: data || [],
+      source: localizedData,
     },
     series: [
       {
@@ -66,7 +72,7 @@ const priorityOption = computed<EChartsOption>(() => {
           verticalAlign: "middle",
         },
         encode: {
-          itemName: "priority",
+          itemName: "priorityLabel",
           value: "count",
         },
       },
@@ -77,7 +83,7 @@ const priorityOption = computed<EChartsOption>(() => {
 
 <template>
   <div class="flex flex-col gap-6">
-    <VTitle title="Tasks by priority" />
+    <VTitle :title="$t('analytics.title.tasks_by_priority')" />
     <VContainer class="shadow-customShadow h-full">
       <div class="flex flex-col justify-center items-center gap-8 flex-1">
         <VSkeleton

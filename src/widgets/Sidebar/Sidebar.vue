@@ -8,7 +8,7 @@ import SidebarMain from "./components/SidebarMain.vue";
 
 import { useModal } from "@/shared/composables/useModal";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import { SidebarLink } from "@/shared/types";
+import type { SidebarLink } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
@@ -50,25 +50,25 @@ const openModal = () => modal.open();
   </aside>
   <VModal
     id="logout"
-    title="Log out"
+    :title="$t('sidebar.modalTitle.log_out')"
   >
     <div class="flex flex-col justify-center items-center gap-2">
       <h4 class="text-uiHead text-txtPrimary">
-        Are you sure you want to log out?
+        {{ $t("sidebar.modal.are_you_sure_you_want_to_log_out?") }}
       </h4>
       <p class="text-bodyM text-secondary">
-        You’ll need to sign in again to access your account
+        {{ $t("sidebar.modal.you_will_need_to_sign_in_again_to_access_your_account") }}
       </p>
     </div>
     <template #footer>
       <div class="flex justify-center items-center gap-4">
         <VButton
-          text="Cancel"
+          :text="$t('sidebar.modalBtn.cancel')"
           class="!bg-transparent text-primary"
           @click="modal.close"
         />
         <VButton
-          text="Log out"
+          :text="$t('sidebar.modalBtn.log_out')"
           variant="dangerous"
           @click="userStore.logOutUser"
         />

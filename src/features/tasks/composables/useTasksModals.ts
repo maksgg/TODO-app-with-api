@@ -5,7 +5,7 @@ import { toast } from "vue-sonner";
 
 import useTasksRequests from "../api/useTasksRequests";
 import { useTasksStore } from "../store/useTasksStore";
-import { Task, TaskRequestParams, TasksModals } from "../types";
+import type { Task, TaskRequestParams, TasksModals } from "../types";
 import { tagsFormatter } from "../utils/tagsFormatter";
 
 import { useModal } from "@/shared/composables/useModal";

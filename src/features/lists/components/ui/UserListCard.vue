@@ -2,7 +2,7 @@
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 
-import { UserGroupInfo } from "../../types";
+import type { UserGroupInfo } from "../../types";
 
 import VButton from "@/shared/ui/common/VButton.vue";
 import VIcon from "@/shared/ui/common/VIcon.vue";
@@ -39,7 +39,9 @@ onClickOutside(target, () => {
       </h4>
       <h4 class="text-bodyEmphasis text-txtPrimary border-b border-borderDefault pb-2">
         {{ $t("lists.card.role:") }}
-        <span class="text-bodyM text-secondary">{{ userListsInfo.role }}</span>
+        <span class="text-bodyM text-secondary">
+          {{ $t(`usersTable.toolbar.${userListsInfo.role}`).toLowerCase() }}
+        </span>
       </h4>
     </div>
     <div class="relative w-full">

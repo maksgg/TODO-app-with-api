@@ -4,7 +4,7 @@ import { computed } from "vue";
 import VChart from "vue-echarts";
 
 import { useChartTheme } from "../composables/useChartTheme";
-import { TagsResponse } from "../types";
+import type { TagsResponse } from "../types";
 
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
@@ -71,7 +71,7 @@ const tagsOption = computed<EChartsOption>(() => {
 
 <template>
   <div class="flex flex-col gap-6">
-    <VTitle title="Tags popularity" />
+    <VTitle :title="$t('analytics.title.tags_popularity')" />
     <VContainer class="shadow-customShadow">
       <VTabs
         v-model="limit.id"

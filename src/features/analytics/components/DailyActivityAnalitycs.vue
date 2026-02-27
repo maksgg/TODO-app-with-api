@@ -2,6 +2,7 @@
 import { EChartsOption } from "echarts";
 import { computed } from "vue";
 import VChart from "vue-echarts";
+import { useI18n } from "vue-i18n";
 
 import { useChartTheme } from "../composables/useChartTheme";
 import { DailyActivityResponse } from "../types";
@@ -9,6 +10,7 @@ import { DailyActivityResponse } from "../types";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 import VTitle from "@/shared/ui/common/VTitle.vue";
+import { firstLetterUp } from "@/shared/utils";
 
 const {
   data = [],
@@ -22,10 +24,13 @@ const {
   currentTab: "week" | "month"
 }>();
 
+const { t, locale } = useI18n();
 const { chartTheme, loadingOptions } = useChartTheme(() => theme);
 const dailyOption = computed<EChartsOption>(() => {
   const { primary, success, muted, border, font, bg } = chartTheme.value;
 
+  const created = t("analytics.chart.created");
+  const completed = t("analytics.chart.completed");
   return {
     animation: false,
     backgroundColor: "transparent",
@@ -40,7 +45,7 @@ const dailyOption = computed<EChartsOption>(() => {
       backgroundColor: bg,
       borderWidth: 0,
     },
-    legend: { data: ["Created", "Completed"], top: 0, left: "left" },
+    legend: { data: [created, completed], top: 0, left: "left" },
     dataset: {
       source: data || [],
     },
@@ -51,7 +56,7 @@ const dailyOption = computed<EChartsOption>(() => {
         fontFamily: font,
         interval: currentTab === "month" ? 4 : 0,
         formatter: (value: string) => currentTab === "week" ?
-          new Date(value).toLocaleDateString("en-GB", { weekday: "short" }) :
+          firstLetterUp(new Date(value).toLocaleDateString(locale.value, { weekday: "short" })) :
           value.split("-").slice(1).join("/"),
       },
       axisLine: { lineStyle: { color: border } },
@@ -62,7 +67,7 @@ const dailyOption = computed<EChartsOption>(() => {
     },
     series: [
       {
-        name: "Created",
+        name: created,
         type: "line",
         smooth: true,
         lineStyle: { width: 3, color: primary },
@@ -70,7 +75,7 @@ const dailyOption = computed<EChartsOption>(() => {
         itemStyle: { color: primary },
       },
       {
-        name: "Completed",
+        name: completed,
         type: "line",
         smooth: true,
         lineStyle: { width: 3, color: success },
@@ -84,7 +89,7 @@ const dailyOption = computed<EChartsOption>(() => {
 
 <template>
   <div class="flex flex-col gap-6">
-    <VTitle title="Task Completion" />
+    <VTitle :title="$t('analytics.title.task_completion')" />
     <VContainer class="shadow-customShadow">
       <div
         v-if="!data && loader"

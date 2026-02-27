@@ -79,12 +79,14 @@ const expandedList = ref<string | null>(null);
     <template #footer>
       <div class="flex gap-5 w-full justify-end">
         <VButton
-          text="Cancel"
+          :text="$t('dashboard.modalBtn.cancel')"
           class="!bg-transparent text-primary"
           @click="close"
         />
         <VButton
-          :text="mode === 'edit' ? 'Save changes' : 'Add goals'"
+          :text="mode === 'edit' ?
+            $t('dashboard.modalBtn.save_changes') :
+            $t('dashboard.modalBtn.add_goals')"
           variant="primary"
           :loader="loading"
           :disabled="loading"

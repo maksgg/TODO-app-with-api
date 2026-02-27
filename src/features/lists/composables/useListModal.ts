@@ -4,7 +4,7 @@ import { toast } from "vue-sonner";
 
 import useListsRequests from "../api/useListsRequests";
 import { useListsStore } from "../store/useListsStore";
-import {
+import type {
   List, ListModal,
   RequestParams,
 } from "../types";

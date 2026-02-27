@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-import { AnalyticsResponse } from "../types";
+import type { AnalyticsResponse } from "../types";
 
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
@@ -13,20 +14,24 @@ type TaskInfo = {
 };
 const { data = null, loader = false } = defineProps<TaskInfo>();
 
+const { t } = useI18n();
 const tasksInfo = computed(() => {
   return [
     {
-      taskStatus: "Completed",
+      key: "completed",
+      taskStatus:  t("analytics.completed"),
       tasksCount: data?.tasks.completed,
       tasksCountColor: "text-success",
     },
     {
-      taskStatus: "Active",
+      key: "active",
+      taskStatus: t("analytics.active"),
       tasksCount: data?.tasks.todo,
       tasksCountColor: "text-muted",
     },
     {
-      taskStatus: "Overdue",
+      key: "overdue",
+      taskStatus: t("analytics.overdue"),
       tasksCount: data?.tasks.archived,
       tasksCountColor: "text-dangerous",
     },
@@ -36,11 +41,11 @@ const tasksInfo = computed(() => {
 
 <template>
   <div class="flex flex-col gap-6">
-    <VTitle title="Status Overview" />
+    <VTitle :title="$t('analytics.title.status_overview')" />
     <div class="flex gap-4">
       <VContainer
         v-for="taskInfo in tasksInfo"
-        :key="taskInfo.taskStatus"
+        :key="taskInfo.key"
         class="w-[20%] shadow-customShadow"
       >
         <template #header>

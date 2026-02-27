@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TaskPriority from "./TaskPriority.vue";
 import TaskTags from "./TaskTags.vue";
-import { Task } from "../../types";
+import type { Task } from "../../types";
 
 const { item } = defineProps<{ item: Task; }>();
 </script>

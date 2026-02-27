@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TaskPriority from "./TaskPriority.vue";
 import TaskTags from "./TaskTags.vue";
-import { Task } from "../../types";
+import type { Task } from "../../types";
 import TaskTableSkeleton from "../skeletons/TaskTableSkeleton.vue";
 
 import VCheckbox from "@/shared/ui/common/VCheckbox.vue";

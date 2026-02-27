@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProfileOverviewSkeleton from "./ProfileOverviewSkeleton.vue";
 
-import { UserInfo } from "@/shared/types";
+import type { UserInfo } from "@/shared/types";
 import VTitle from "@/shared/ui/common/VTitle.vue";
 import { formatDate } from "@/shared/utils/index";
 
@@ -30,7 +30,12 @@ const { userData, title, loader = false } = defineProps<{
         <span class="text-bodyM text-secondary">{{ userData?.email }}</span>
       </div>
       <div class="self-start ml-auto text-uiCaption text-secondary">
-        <span>Member Since {{ formatDate(userData?.createdAt, "short") }}</span>
+        <span>
+          {{
+            `${$t('profile.member_since')}
+            ${formatDate(userData?.createdAt, "short", $i18n.locale)}`
+          }}
+        </span>
       </div>
     </div>
   </div>

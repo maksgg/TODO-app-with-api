@@ -5,7 +5,7 @@ import { computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
-import { ModalFields, Task } from "../types";
+import type { ModalFields, Task } from "../types";
 import TaskTags from "./ui/TaskTags.vue";
 
 import VInput from "@/shared/ui/common/VInput.vue";
@@ -80,7 +80,7 @@ watch(
       class="max-w-[50%]"
     />
     <div class="flex items-center gap-4 max-w-[70%]">
-      <span class="text-uiLabel text-secondary">{{ $t("tasks.modal.due") }}</span>
+      <span class="text-uiLabel text-secondary whitespace-nowrap">{{ $t("tasks.modal.due") }}</span>
       <VueDatePicker
         v-model="modal.deadline"
         :enable-time-picker="false"

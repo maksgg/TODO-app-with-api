@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { watch, ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import UserInfoPermissionsListSkeleton from "./UserInfoPermissionsListSkeleton.vue";
 import { formatPermissionsByGroups } from "../utils/formatPermissionsByGroups";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
+import type { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
@@ -14,11 +15,11 @@ import VSwitch from "@/shared/ui/common/VSwitch.vue";
 import VTitle from "@/shared/ui/common/VTitle.vue";
 
 const authStore = useAuthStore();
-
-const userRoles: Roles[] = [
-  { name: "User", value: "user" },
-  { name: "Administrator", value: "admin"  },
-];
+const { t } = useI18n();
+const userRoles = computed<Roles[]>(() => [
+  { name: t("usersInfo.role.user"), value: "user" },
+  { name: t("usersInfo.role.administrator"), value: "admin"  },
+]);
 
 const {
   loader,
@@ -89,7 +90,7 @@ watch(
   () => loader,
   (newValue) => {
     if (!newValue && user) {
-      changedRole.value = userRoles.find(el => el.value === user.role);
+      changedRole.value = userRoles.value.find(el => el.value === user.role);
 
       if (user.permissions) {
         setupPermissions(user.permissions);
@@ -106,20 +107,20 @@ watch(
     v-else
     class="flex flex-col gap-6"
   >
-    <VTitle title="Permissions & Access" />
+    <VTitle :title="$t('usersInfo.title.permissions_&_Access')" />
     <VContainer>
       <template #header>
         <VMultiselect
           v-model:model="changedRole"
           :options="userRoles"
           :disabled="!authStore.isAllowed('manage:roles')"
-          title="Role"
+          :title="$t('usersInfo.title.role')"
           class="w-[11rem]"
           @update:model="roleChange"
         />
         <VCheckbox
           v-model="isAllSelected"
-          text="Select all permissions"
+          :text="$t('usersInfo.text.select_all_permissions')"
           :disabled="isDisabled"
         />
       </template>
@@ -136,7 +137,7 @@ watch(
           >
             <VSwitch
               v-model="checkboxMap[el.value]"
-              :text="el.description"
+              :text="$t(`usersInfo.permissionsList.${el.value.replace(/:/g, '_')}`)"
               :disabled="isDisabled"
               variant="primary"
             />
@@ -145,7 +146,7 @@ watch(
       </div>
       <template #footer>
         <VButton
-          text="Save changes"
+          :text="$t('usersInfo.btn.save_changes')"
           class="ml-auto"
           :disabled="!isChanged || loader"
           @click="updateUser"

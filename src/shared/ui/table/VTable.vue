@@ -217,7 +217,7 @@ const loadMore = () => {
         </div>
         <VButton
           v-if="pagination.hasMore"
-          text="Load more"
+          :text="$t('usersTable.btn.load_more')"
           class="my-5 self-center"
           :disabled="loader"
           @click="loadMore"

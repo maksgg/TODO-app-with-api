@@ -29,9 +29,9 @@ const filterConfig = computed(() => [
 const currentTab = ref<"myLists" | "usersLists">("myLists");
 const searchQuery = ref("");
 const debounceSearch = debouncedRef<string>(searchQuery, 700);
-const toolBarPayload = ref({
-  sort: { name: computed(() => t("lists.toolbar.recently_created")), value: "createdAt:desc" },
-  order: "",
+const toolBarPayload = computed({
+  get: () => ({ sort: filterConfig.value[0].options[0] }),
+  set: (option) => option,
 });
 const listStore = useListsStore();
 const authStore = useAuthStore();

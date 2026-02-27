@@ -7,7 +7,7 @@ import ProfileDetails from "./components/ProfileDetails.vue";
 
 import ProfileOverview from "@/features/profile/components/ProfileOverview.vue";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import { UserInfo } from "@/shared/types";
+import type { UserInfo } from "@/shared/types";
 
 const authStore = useAuthStore();
 const { t } = useI18n();

@@ -12,7 +12,7 @@ const openModal = () => emit("open-modal");
 <template>
   <div class="flex flex-col gap-5 w-full">
     <VButton
-      text="Log out"
+      :text="$t('sidebar.btn.log_out')"
       :show-text="isExpanded"
       icon="logOut"
       size="full"

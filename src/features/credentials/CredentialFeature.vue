@@ -7,15 +7,6 @@ import VTitle from "@/shared/ui/common/VTitle.vue";
 const { t } =  useI18n();
 const developersInfo = [
   {
-    jobTitle: t("credentials.designer"),
-    name: t("credentials.anastasiia_orieshyna"),
-    techStack: "UX/UI Designer",
-    email: "anastasiiaorieshyna@gmail.com",
-    linkedIn: "https://www.linkedin.com/in/anastasiia-orieshyna/",
-    worksLabel: "Behance",
-    worksLink: "https://www.behance.net/orieshynaanastasiia",
-  },
-  {
     jobTitle: t("credentials.developer"),
     name: t("credentials.maksym_zhovmir"),
     techStack: "Front-end (JS, TS, Vue.js, Pinia)",
@@ -24,14 +15,20 @@ const developersInfo = [
     worksLabel: "GitHub",
     worksLink: "https://github.com/maksgg",
   },
+  {
+    jobTitle: t("credentials.designer"),
+    name: t("credentials.anastasiia_orieshyna"),
+    techStack: `UX/UI ${t("credentials.designer")}`,
+    email: "anastasiiaorieshyna@gmail.com",
+    linkedIn: "https://www.linkedin.com/in/anastasiia-orieshyna/",
+    worksLabel: "Behance",
+    worksLink: "https://www.behance.net/orieshynaanastasiia",
+  },
 ];
 </script>
 
 <template>
-  <VTitle title="Project Credits" />
-  <h3 class="text-intro text-txtIntro">
-    {{ $t('credentials.design_&_development_contributors') }}
-  </h3>
+  <VTitle :title="$t('credentials.design_&_development_contributors')" />
   <div class="flex justify-between gap-4">
     <VContainer
       v-for="info in developersInfo"

@@ -1,4 +1,4 @@
-import { PriorityResponse } from "../types";
+import type { PriorityResponse } from "../types";
 
 /**
  * Мапить пріоритети на кольори теми

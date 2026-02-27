@@ -1,4 +1,6 @@
 import { Task, TasksDeadlinesResponse } from "@/features/tasks/types";
+import { i18n } from "@/shared/composables/useI18n";
+
 
 export const filterDeadlineTasks = (tasks: TasksDeadlinesResponse["data"] | undefined) => {
   const today: Task[] = [];
@@ -32,13 +34,13 @@ export const filterDeadlineTasks = (tasks: TasksDeadlinesResponse["data"] | unde
     let deadlineWord = "";
 
     if (diffDays === 1) {
-      deadlineWord = "Tomorrow";
+      deadlineWord = i18n.global.t("dashboard.date.tomorrow");
     } else if (diffDays === 2) {
-      deadlineWord = "Day after tomorrow";
+      deadlineWord = i18n.global.t("dashboard.date.day_after_tomorrow");
     } else if (startOfDate <= endOfWeekTimestamp) {
-      deadlineWord = "This week";
+      deadlineWord = i18n.global.t("dashboard.date.this_week");
     } else {
-      deadlineWord = "Later";
+      deadlineWord = i18n.global.t("dashboard.date.later");
     }
 
     upcoming.push({

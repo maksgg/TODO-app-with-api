@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 
 import WeeklyGoalsModals from "./components/WeeklyGoalsModals.vue";
 import { useWeeklyGoals } from "./composables/useWeeklyGoals";
@@ -16,6 +17,8 @@ const taskPayloadParams = ref({
   startDate: "2026-01-01",
   endDate: "2026-03-15",
 });
+
+const { t } = useI18n();
 
 const listsStore = useListsStore();
 const {
@@ -60,33 +63,34 @@ const tasksGroup = computed(() => {
   return [
     {
       variant: "deadline" as "deadline",
-      title: "Today's Tasks",
-      subtitle: `You’ve ${deadlinesTasks.value?.total} tasks for today`,
-      btnTitle: "View all",
+      title: t("dashboard.title.today_tasks"),
+      subtitle: `${t("dashboard.subTitle.you’ve")} ${deadlinesTasks.value?.total} ${t("dashboard.subTitle.tasks_for_today")}`,
+      btnTitle: t("dashboard.btn.view_all"),
       fetchedData: groupDeadlineTasks.value.today,
-      emptySubtitle: "No tasks for today yet",
-      emptyText: "Create your first task to get started",
-      addBtnText: "Add task",
+      emptySubtitle: t("dashboard.emptyState.no_tasks_for_today_yet"),
+      emptyText: t("dashboard.emptyState.create_your_first_task_to_get_started"),
+      addBtnText: t("dashboard.emptyState.add_task"),
     },
     {
       variant: "deadline" as "deadline",
-      title: "Upcoming Deadlines",
-      subtitle: "Tasks that need your attention soon",
-      btnTitle: "View all",
+      title: t("dashboard.title.upcoming_deadlines"),
+      subtitle: t("dashboard.subTitle.tasks_that_need_your_attention_soon"),
+      btnTitle: t("dashboard.btn.view_all"),
       fetchedData: groupDeadlineTasks.value.upcoming,
-      emptySubtitle: "No upcoming deadlines",
-      emptyText: "Tasks with due dates will appear here",
-      addBtnText: "Add task",
+      emptySubtitle: t("dashboard.emptyState.no_upcoming_deadlines"),
+      emptyText: t("dashboard.emptyState.tasks_with_due_dates_will_appear_here"),
+      addBtnText: t("dashboard.emptyState.add_task"),
     },
     {
       variant: "weekly" as "weekly",
-      title: "Weekly Focus Goals",
-      subtitle: "Your top priorities for this week",
-      btnTitle: "Edit",
+      title: t("dashboard.title.weekly_focus_goals"),
+      subtitle: t("dashboard.subTitle.your_top_priorities_for_this_week"),
+      btnKey: "edit",
+      btnTitle: t("dashboard.btn.edit"),
       fetchedData: weeklyTasks.value?.data,
-      emptySubtitle: "No weekly goals yet",
-      emptyText: "Add your top priorities to stay focused",
-      addBtnText: "Add weekly goal",
+      emptySubtitle: t("dashboard.emptyState.no_weekly_goals_yet"),
+      emptyText: t("dashboard.emptyState.add_your_top_priorities_to_stay_focused"),
+      addBtnText: t("dashboard.emptyState.add_weekly_goal"),
     },
   ];
 });

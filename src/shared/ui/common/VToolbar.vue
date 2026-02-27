@@ -24,9 +24,9 @@ const search = defineModel<string>("search");
 const filters = defineModel<Record<string, any>>("filters");
 
 const size: Record<ToolbarProps["selectWidth"], string> = {
-  sm: "w-[10rem]",
-  md: "w-[15rem]",
-  lg: "w-[20rem]",
+  sm: "w-[12rem]",
+  md: "w-[17rem]",
+  lg: "w-[22rem]",
 };
 </script>
 

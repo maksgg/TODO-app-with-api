@@ -85,7 +85,7 @@ onMounted(async () => {
         to="/users"
         class="text-secondary"
       />
-      <span class="text-bodyM text-muted">Profile Overview</span>
+      <span class="text-bodyM text-muted">{{ $t('userInfo.title.profile_overview') }}</span>
     </div>
   </ProfileOverview>
   <UserInfoPermissionsList
