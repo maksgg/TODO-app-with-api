@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useRoute } from "vue-router";
 
 import { routes } from "@/app/router/index";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
@@ -8,6 +9,7 @@ import Header from "@/widgets/Header/Header.vue";
 import Sidebar from "@/widgets/Sidebar/Sidebar.vue";
 
 const authStore = useAuthStore();
+const route = useRoute();
 const menuItems = computed(() => authStore.getSidebarLinks(routes));
 </script>
 
@@ -22,7 +24,10 @@ const menuItems = computed(() => authStore.getSidebarLinks(routes));
     v-else
     class="relative flex flex-1 w-full h-screen bg-primaryBg"
   >
-    <Sidebar :links="menuItems" />
+    <Sidebar
+      v-if="route.name !== 'NotFound'"
+      :links="menuItems"
+    />
     <div class="flex flex-col gap-6 mx-12 my-6 w-full min-w-0">
       <Header />
       <RouterView />

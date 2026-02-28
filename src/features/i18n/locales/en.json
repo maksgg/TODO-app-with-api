@@ -442,5 +442,10 @@
       "you_can_select_up_to_3_weekly_goals": "You can select up to 3 weekly goals",
       "updated_successfully": "Updated successfully"
     }
+  },
+  "notFound": {
+    "page_not_found": "Oops! This task is missing...",
+    "sub_text": "It seems this page was deleted or never existed. Don't let this throw off your schedule!",
+    "back_to_dashboard": "Go back"
   }
 }
