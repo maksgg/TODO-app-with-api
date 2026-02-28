@@ -47,6 +47,10 @@
     "tabs": {
       "sign_in": "Увійдіть",
       "sign_up": "Зареєструватися"
+    },
+    "regularUser": { 
+      "sign_in_as_regular_user" : "Увійдіть як звичайний користувач",
+      "or": "чи"
     }
   },
   "credentials": {

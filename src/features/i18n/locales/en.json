@@ -47,6 +47,10 @@
     "tabs": {
       "sign_in": "Sign in",
       "sign_up": "Sign up"
+    },
+    "regularUser": { 
+      "sign_in_as_regular_user" : "Sign in as regular user",
+      "or": "or"
     }
   },
   "credentials": {

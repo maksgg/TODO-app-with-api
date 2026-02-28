@@ -8,6 +8,8 @@ import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 
+const { regularUserLoader } = defineProps<{ regularUserLoader: boolean; }>();
+
 const { t } = useI18n();
 const { state, v$ } = useLoginFormValidation();
 const { fetchLoginUser } = useAuthRequests();
@@ -63,8 +65,9 @@ const submitForm = async () => {
       :text="$t('auth.login.sign_in')"
       type="submit"
       size="full"
-      :loader="loading"
+      :loader="loading || regularUserLoader"
       class="mt-3"
     />
+    <slot />
   </form>
 </template>
