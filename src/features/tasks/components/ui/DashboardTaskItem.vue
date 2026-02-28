@@ -9,8 +9,8 @@ const { item } = defineProps<{ item: Task; }>();
 <template>
   <div class="flex flex-col gap-2 border-t border-borderDefault py-1">
     <slot>
-      <div class="flex justify-between">
-        <h3 class="text-bodyL text-txtPrimary">
+      <div class="flex justify-between w-full">
+        <h3 class="text-bodyL text-txtPrimary truncate w-[80%]">
           {{ item?.title }}
         </h3>
         <span

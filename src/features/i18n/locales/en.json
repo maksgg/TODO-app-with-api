@@ -155,6 +155,31 @@
       "edit_task": "Edit task",
       "add_new_task": "Add new task"
     },
+    "calendar": {
+      "days": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      },
+      "months": {
+        "jan": "January",
+        "feb": "February",
+        "mar": "March",
+        "apr": "April",
+        "may": "May",
+        "jun": "June",
+        "jul": "July",
+        "aug": "August",
+        "sep": "September",
+        "oct": "October",
+        "nov": "November",
+        "dec": "December"
+      }
+    },
     "modalBtn": {
       "cancel": "Cancel",
       "delete list": "Delete list",
@@ -241,7 +266,7 @@
     "emptyState": {
       "no_tasks_for_today_yet": "No tasks for today yet",
       "create_your_first_task_to_get_started": "Create your first task to get started",
-      "add_task": "Add task",
+      "create_your_own_list": "Create your own list",
       "no_upcoming_deadlines": "No upcoming deadlines",
       "tasks_with_due_dates_will_appear_here": "Tasks with due dates will appear here",
       "no_weekly_goals_yet": "No weekly goals yet",

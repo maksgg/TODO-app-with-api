@@ -8,13 +8,15 @@ import { toast } from "vue-sonner";
 import type { ModalFields, Task } from "../types";
 import TaskTags from "./ui/TaskTags.vue";
 
+import useDatePickerLocale from "@/shared/composables/useDatePickerLocale";
 import VInput from "@/shared/ui/common/VInput.vue";
 import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 
 const { targetTask = null } = defineProps<{ targetTask: Partial<Task> | null; }>();
 
 const modal = defineModel<ModalFields>();
-const { t } =useI18n();
+const { t, locale } = useI18n();
+const { dayNames, monthNames } = useDatePickerLocale();
 const tagsState = computed(() => {
   const rawValue = modal.value.tags || "";
   const completedTags = rawValue.match(/[^ ,;]+(?=[ ,;])/g) || [];
@@ -84,11 +86,17 @@ watch(
       <VueDatePicker
         v-model="modal.deadline"
         :enable-time-picker="false"
+        :day-names="dayNames"
+        :format-locale="locale"
         :month-picker="false"
         auto-apply
         format="dd.MM.yyyy"
         :placeholder="$t('tasks.modal.pick_date')"
-      />
+      >
+        <template #month-overlay-value="{ value }">
+          {{ monthNames[value] }}
+        </template>
+      </VueDatePicker>
     </div>
     <VInput
       v-model="modal.tags"
@@ -172,5 +180,9 @@ watch(
 /* Іконка годинника */
 :deep(.dp--tp-wrap) {
   @apply hidden;
+}
+/* Місяці */
+:deep(.dp__overlay_cell.dp__overlay_cell_pad) {
+ @apply hover:text-primary
 }
 </style>

@@ -29,7 +29,7 @@ const openModal = () => modal.open();
     :class="[
       `flex flex-col justify-between items-start gap-5 border-sidebarBorder rounded-r-lg sidebar-bg
       p-6 text-sm transition-all sidebar-custom-bg border shadow-sidebarBgShadow`,
-      expanded ? 'w-[20rem]': 'w-[5rem]'
+      expanded ? 'w-[22rem]': 'w-[5rem]'
     ]"
   >
     <div class="flex flex-col gap-9 w-full">

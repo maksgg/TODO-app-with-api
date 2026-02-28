@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
@@ -20,6 +20,7 @@ import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
 import VExpandableSection from "@/shared/ui/common/VExpandableSection.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
+import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
 
 const { t } = useI18n();
 const authStore = useAuthStore();
@@ -49,8 +50,8 @@ const emptyPageState = computed(
   () => !tasksStore.loading && tasksStore.allTasks && !tasksStore.allTasks?.data?.length,
 );
 const requestParams = computed(() => {
-  const rawSort = toolBarPayload.value.sort?.value || "createdAt:desc";
-  const priority = toolBarPayload.value.priority.value;
+  const rawSort = toolbarPayload.value.sort || "createdAt:desc";
+  const priority = toolbarPayload.value.priority;
   const [field, direction] = rawSort.split(":");
 
   return {
@@ -99,6 +100,10 @@ const toggleTaskStatus = async (id: string, status: boolean) => {
 };
 const loadData = () => tasksStore.getAllTasks({ params: requestParams.value });
 
+const toolbarPayload = ref({
+  priority: "all",
+  sort: "createdAt:desc",
+});
 const toolbarConfig = computed(() => [
   {
     key: "priority",
@@ -122,12 +127,12 @@ const toolbarConfig = computed(() => [
   },
 ]);
 
-const toolBarPayload = computed({
-  get: () => ({
-    priority: toolbarConfig.value[0].options[0],
-    sort: toolbarConfig.value[1].options[0],
-  }),
-  set: (option) => option,
+const toolBarPayloadVModel = computed({
+  get: () => getMappedFilters(toolbarConfig.value, toolbarPayload.value),
+  set: (newValues) => {
+    const updated = extractFilterValues(newValues);
+    Object.assign(toolbarPayload.value, updated);
+  },
 });
 const pendingTasksHeader = computed(() => [
   { key: "title", label: t("tasks.pendingTableHead.title"), width: "42%" },
@@ -147,7 +152,7 @@ const listsActions = computed(() => [
 ]);
 
 watch(
-  () => toolBarPayload.value,
+  () => toolbarPayload.value,
   () => loadData(),
   { deep: true },
 );
@@ -158,7 +163,7 @@ onMounted(() => loadData());
 <template>
   <div class="flex flex-col gap-6 h-screen overflow-auto">
     <VToolbar
-      v-model:filters="toolBarPayload"
+      v-model:filters="toolBarPayloadVModel"
       :filter-configs="toolbarConfig"
       :is-searchable="false"
       :disabled="tasksStore.loading || !authStore.isAllowed('read:task')"
@@ -167,11 +172,11 @@ onMounted(() => loadData());
       class="col-span-1"
     />
     <VEmptyState
-      v-if="emptyPageState"
+      v-if="emptyPageState && authStore.isAllowed('read:task')"
       :title="$t('tasks.emptyState.no_tasks_yet')"
       :sub-title="$t('tasks.emptyState.create_your_first_task_to_start_organizing_your_work')"
     />
-    <template v-if="authStore.isAllowed('read:task')">
+    <template v-if="authStore.isAllowed('read:task') && !emptyPageState">
       <VContainer
         v-for="group in groupTasks"
         :key="group.key"

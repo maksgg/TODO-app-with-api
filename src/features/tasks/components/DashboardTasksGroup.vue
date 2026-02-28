@@ -100,8 +100,8 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
             class="relative border-none"
           >
             <VLoader v-if="localLoader === el.id" />
-            <div class="flex justify-between">
-              <span class="text-bodyL text-txtPrimary">{{ el.title }}</span>
+            <div class="flex justify-between w-full">
+              <span class="text-bodyL text-txtPrimary truncate w-[80%]">{{ el.title }}</span>
               <VButton
                 icon="x"
                 variant="ghost"

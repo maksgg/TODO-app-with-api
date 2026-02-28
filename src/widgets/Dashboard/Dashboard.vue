@@ -69,7 +69,7 @@ const tasksGroup = computed(() => {
       fetchedData: groupDeadlineTasks.value.today,
       emptySubtitle: t("dashboard.emptyState.no_tasks_for_today_yet"),
       emptyText: t("dashboard.emptyState.create_your_first_task_to_get_started"),
-      addBtnText: t("dashboard.emptyState.add_task"),
+      addBtnText: t("dashboard.emptyState.create_your_own_list"),
     },
     {
       variant: "deadline" as "deadline",
@@ -79,7 +79,7 @@ const tasksGroup = computed(() => {
       fetchedData: groupDeadlineTasks.value.upcoming,
       emptySubtitle: t("dashboard.emptyState.no_upcoming_deadlines"),
       emptyText: t("dashboard.emptyState.tasks_with_due_dates_will_appear_here"),
-      addBtnText: t("dashboard.emptyState.add_task"),
+      addBtnText: t("dashboard.emptyState.create_your_own_list"),
     },
     {
       variant: "weekly" as "weekly",

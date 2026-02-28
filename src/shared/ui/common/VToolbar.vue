@@ -22,6 +22,12 @@ const {
 const search = defineModel<string>("search");
 
 const filters = defineModel<Record<string, any>>("filters");
+const updateFilter = (key: string, value: any) => {
+  filters.value = {
+    ...filters.value,
+    [key]: value,
+  };
+};
 
 const size: Record<ToolbarProps["selectWidth"], string> = {
   sm: "w-[12rem]",
@@ -52,6 +58,7 @@ const size: Record<ToolbarProps["selectWidth"], string> = {
       :disabled="disabled"
       :title="config.label"
       :class="size[selectWidth]"
+      @update:model="val => updateFilter(config.key, val)"
     />
   </div>
 </template>

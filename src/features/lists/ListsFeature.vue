@@ -11,6 +11,7 @@ import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
 import VLoader from "@/shared/ui/common/VLoader.vue";
 import VToggleTabs from "@/shared/ui/common/VToggleTabs.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
+import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
 
 const { t } = useI18n();
 const filterConfig = computed(() => [
@@ -29,10 +30,16 @@ const filterConfig = computed(() => [
 const currentTab = ref<"myLists" | "usersLists">("myLists");
 const searchQuery = ref("");
 const debounceSearch = debouncedRef<string>(searchQuery, 700);
-const toolBarPayload = computed({
-  get: () => ({ sort: filterConfig.value[0].options[0] }),
-  set: (option) => option,
+const toolbarPayload = ref({ sort: "createdAt:desc" });
+
+const toolbarSelect = computed({
+  get: () => getMappedFilters(filterConfig.value, toolbarPayload.value),
+  set: (newValues) => {
+    const updated = extractFilterValues(newValues);
+    Object.assign(toolbarPayload.value, updated);
+  },
 });
+
 const listStore = useListsStore();
 const authStore = useAuthStore();
 
@@ -42,7 +49,7 @@ const listTabs = computed(() => [
 ]);
 
 const requestParams = computed(() => {
-  const rawSort = toolBarPayload.value.sort?.value || "createdAt:desc";
+  const rawSort = toolbarPayload.value.sort || "createdAt:desc";
   const [field, direction] = rawSort.split(":");
 
   return {
@@ -57,7 +64,7 @@ const hasLists = computed(() => !!listStore.allLists?.data?.length);
 watch(
   () => [
     debounceSearch.value,
-    toolBarPayload.value,
+    toolbarPayload.value,
     currentTab.value,
   ],
   () => listStore.getAllLists({ params: requestParams.value }),
@@ -76,7 +83,7 @@ onUnmounted(() => currentTab.value = "myLists");
     />
     <VToolbar
       v-model:search="searchQuery"
-      v-model:filters="toolBarPayload"
+      v-model:filters="toolbarSelect"
       :filter-configs="filterConfig"
       :disabled="listStore.allListsLoader || !authStore.isAllowed('read:list')"
       :placeholder="$t('lists.toolbar.search')"

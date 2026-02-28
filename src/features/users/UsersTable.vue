@@ -17,6 +17,7 @@ import VTitle from "@/shared/ui/common/VTitle.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 import VTable from "@/shared/ui/table/VTable.vue";
 import { formatDate } from "@/shared/utils/index";
+import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
 
 const { t } = useI18n();
 
@@ -28,7 +29,7 @@ const tablePayloadParams = ref({
   limit: 20,
   sort: "createdAt",
   order: "desc",
-  role: { name: t("usersTable.toolbar.all_roles"), value: "all" },
+  role: "all",
 });
 
 const usersHeader = computed(() => [
@@ -37,6 +38,7 @@ const usersHeader = computed(() => [
   { key: "createdAt", label: t("usersTable.tableHead.registered") },
   { key: "actions", label: t("usersTable.tableHead.actions"), textAlign: "text-end", width: "30%" },
 ]);
+
 const toolbarConfig = computed(() => [
   {
     key: "role",
@@ -49,9 +51,13 @@ const toolbarConfig = computed(() => [
   },
 ]);
 const toolbarSelect = computed({
-  get: () => tablePayloadParams.value,
-  set: (option) => tablePayloadParams.value.role = { ...option.role },
+  get: () => getMappedFilters(toolbarConfig.value, tablePayloadParams.value),
+  set: (newValues) => {
+    const updated = extractFilterValues(newValues);
+    Object.assign(tablePayloadParams.value, updated);
+  },
 });
+
 const tableActions = computed(() => [
   { value: "user", label: t("usersTable.actions.user_profile") },
   { value: "delete", label: t("usersTable.actions.remove_user"), disabled: !authStore.isAllowed("delete:user"), dangerous: true },
@@ -70,8 +76,8 @@ const {
   params: () => ({
     ...tablePayloadParams.value,
     q: debounceSearch.value,
-    role: tablePayloadParams.value.role.value !== "all" ?
-      tablePayloadParams.value.role.value : undefined,
+    role: tablePayloadParams.value.role !== "all" ?
+      tablePayloadParams.value.role : undefined,
   }),
 });
 

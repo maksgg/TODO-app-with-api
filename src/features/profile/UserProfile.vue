@@ -31,9 +31,9 @@ const updateProfile = async (payload: Partial<UserInfo>) => await execute({ data
     :loader="loading"
   />
   <ProfileDetails
-    v-if="authStore.isAllowed('update:user')"
     :user-data="authStore.userData"
     :loader="loading"
     @update-user-data="updateProfile"
   />
+  <!-- v-if="authStore.isAllowed('update:user')" -->
 </template>
