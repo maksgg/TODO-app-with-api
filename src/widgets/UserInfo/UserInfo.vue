@@ -3,7 +3,6 @@ import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 import ProfileOverview from "@/features/profile/components/ProfileOverview.vue";
-import ProfileOverviewSkeleton from "@/features/profile/components/ProfileOverviewSkeleton.vue";
 import useUsersRequests from "@/features/users/api/useUsersRequests";
 import UserInfoPermissionsList from "@/features/users/components/UserInfoPermissionsList.vue";
 import type {  UserPayload } from "@/shared/types";
@@ -75,10 +74,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <ProfileOverviewSkeleton v-if="userLoader" />
   <ProfileOverview
-    v-else
     :user-data="user"
+    :loader="userLoader"
   >
     <div class="flex gap-2">
       <VButton
@@ -87,12 +85,9 @@ onMounted(async () => {
         to="/users"
         class="text-secondary"
       />
-      <span class="text-bodyM text-muted">Profile Overview</span>
+      <span class="text-bodyM text-muted">{{ $t('userInfo.title.profile_overview') }}</span>
     </div>
   </ProfileOverview>
-  <h2 class="text-headPrimary text-txtPrimary">
-    Permissions&Access
-  </h2>
   <UserInfoPermissionsList
     :user="user"
     :loader="mainLoader"

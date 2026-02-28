@@ -1,4 +1,5 @@
-import { Permissions } from "@/shared/types";
+import { i18n } from "@/shared/composables/useI18n";
+import type { Permissions } from "@/shared/types";
 
 export const CATEGORY_MAP: Record<string, number> = {
   list: 0,
@@ -22,10 +23,10 @@ export const formatPermissionsByGroups = (permissions: Permissions[] | null): Pe
   if (!permissions?.length) return [];
 
   const groups: PermissionGroup[] = [
-    { group: "Lists permissions", items: [] },
-    { group: "Tasks permissions", items: [] },
-    { group: "User management", items: [] },
-    { group: "Analytics & dashboard", items: [] },
+    { group: i18n.global.t("usersInfo.permissions.lists_permissions"), items: [] },
+    { group: i18n.global.t("usersInfo.permissions.tasks_permissions"), items: [] },
+    { group: i18n.global.t("usersInfo.permissions.user_management"), items: [] },
+    { group: i18n.global.t("usersInfo.permissions.analytics_&_dashboard"), items: [] },
   ];
 
   permissions.forEach((item) => {
@@ -35,6 +36,5 @@ export const formatPermissionsByGroups = (permissions: Permissions[] | null): Pe
     }
   });
 
-  // Фільтруємо групи, які залишилися порожніми (опціонально, але корисно для UX)
   return groups.filter((g) => g.items.length > 0);
 };

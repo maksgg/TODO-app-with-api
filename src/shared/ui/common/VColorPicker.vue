@@ -25,11 +25,11 @@ const selectItem = (color: string) => activeColor.value = color;
         v-for="item in items"
         :key="item.id"
         type="button"
-        class="w-6 h-6 rounded-full hover:border-2 hover:border-gray-200"
+        class="w-6 h-6 rounded-full hover:border-2 hover:border-toggle"
         :style="{ backgroundColor: item.color }"
         :class="[
           activeColor === item.color
-            ? 'border-2  border-borderHover hover:borderHover'
+            ? 'border-2  border-toggle hover:toggle'
             : ''
         ]"
         @click="selectItem(item.color)"

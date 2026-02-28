@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { authGuard } from "./authGuards";
 import { permissionGuard } from "./permissionsGuard";
 
+import { i18n } from "@/shared/composables/useI18n";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 
 export const routes: RouteRecordRaw[] = [
@@ -11,7 +12,7 @@ export const routes: RouteRecordRaw[] = [
     name: "Dashboard",
     component: () => import("@/pages/Dashboard/index.vue"),
     meta: {
-      title: "Dashboard",
+      title: () => i18n.global.t("sidebar.links.dashboard"),
       icon: "home",
       permission: "read:dashboard",
     },
@@ -21,8 +22,8 @@ export const routes: RouteRecordRaw[] = [
     name: "List",
     component: () => import("@/pages/List/index.vue"),
     meta: {
-      title: "Lists",
-      headerTitle: "Manage all your task groups in one place",
+      title: () => i18n.global.t("sidebar.links.lists"),
+      headerTitle: () => i18n.global.t("header.title.manage_all_your_task_groups_in_one_place"),
       icon: "list",
       permission: "read:list",
     },
@@ -32,8 +33,8 @@ export const routes: RouteRecordRaw[] = [
     name: "Analytics",
     component: () => import("@/pages/Analytics/index.vue"),
     meta: {
-      title: "Analytics",
-      headerTitle: "See how your tasks are progressing over time",
+      title: () => i18n.global.t("sidebar.links.analytics"),
+      headerTitle: () => i18n.global.t("header.title.see_how_your_tasks_are_progressing_over_time"),
       icon: "analytics",
       permission: "read:analytics",
     },
@@ -43,7 +44,7 @@ export const routes: RouteRecordRaw[] = [
     name: "profile",
     component: () => import("@/pages/Profile/index.vue"),
     meta: {
-      title: "Profile",
+      title: () => i18n.global.t("sidebar.links.profile"),
       icon: "user",
     },
   },
@@ -52,10 +53,19 @@ export const routes: RouteRecordRaw[] = [
     name: "Users",
     component: () => import("@/pages/Users/index.vue"),
     meta: {
-      title: "AdminPanel",
+      title: () => i18n.global.t("sidebar.links.admin_panel"),
       role: "admin",
       icon: "tool",
       permission: "read:users",
+    },
+  },
+  {
+    path: "/credentials",
+    name: "Credentials",
+    component: () => import("@/pages/Credentials/invex.vue"),
+    meta: {
+      title: () => i18n.global.t("sidebar.links.about_us"),
+      icon: "users",
     },
   },
   {
@@ -95,6 +105,6 @@ router.beforeEach(async (to, from, next) => {
 
   next();
 });
-router.afterEach((to) => document.title = (to.meta.title as string) || "Task manager");
+router.afterEach((to) => document.title = `Task manager - ${to.name as string}`);
 
 export default router;

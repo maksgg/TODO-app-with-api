@@ -136,7 +136,7 @@ const isOpen = ref(false);
   transform: rotate(0deg);
 }
 
-/* Стан, коли селект відкритий 👇 */
+/* Стан, коли селект відкритий */
 .icon.is-active {
   transform: rotate(180deg);
 }

@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import { watch, ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import UserInfoPermissionsListSkeleton from "./UserInfoPermissionsListSkeleton.vue";
 import { formatPermissionsByGroups } from "../utils/formatPermissionsByGroups";
 
-import { usePermissions } from "@/shared/composables/usePermissions";
-import { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
+import type { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 import VSwitch from "@/shared/ui/common/VSwitch.vue";
+import VTitle from "@/shared/ui/common/VTitle.vue";
 
-const userRoles: Roles[] = [
-  { name: "User", value: "user" },
-  { name: "Administrator", value: "admin"  },
-];
+const authStore = useAuthStore();
+const { t } = useI18n();
+const userRoles = computed<Roles[]>(() => [
+  { name: t("usersInfo.role.user"), value: "user" },
+  { name: t("usersInfo.role.administrator"), value: "admin"  },
+]);
 
 const {
   loader,
@@ -33,14 +37,13 @@ const emit = defineEmits<{ "updated": [payload: UserPayload] }>();
 
 const checkboxMap = ref<Record<string, boolean>>({});
 const changedRole = ref<Roles | null>(null);
-const { isAllowed } = usePermissions();
 
 const selectedPermissions = computed(() => {
   return Object.keys(checkboxMap.value).filter((key) => checkboxMap.value[key]);
 });
 const formattedPermissions = computed(() => formatPermissionsByGroups(permissionsData));
 const isDisabled = computed(
-  () => changedRole.value?.value === "admin" || !isAllowed("manage:permissions"));
+  () => changedRole.value?.value === "admin" || !authStore.isAllowed("manage:permissions"));
 const isChanged = computed(() => {
   if (!user) return false;
 
@@ -87,7 +90,7 @@ watch(
   () => loader,
   (newValue) => {
     if (!newValue && user) {
-      changedRole.value = userRoles.find(el => el.value === user.role);
+      changedRole.value = userRoles.value.find(el => el.value === user.role);
 
       if (user.permissions) {
         setupPermissions(user.permissions);
@@ -100,49 +103,55 @@ watch(
 
 <template>
   <UserInfoPermissionsListSkeleton v-if="loader" />
-  <VContainer v-else>
-    <template #header>
-      <VMultiselect
-        v-model:model="changedRole"
-        :options="userRoles"
-        :disabled="!isAllowed('manage:roles')"
-        title="Role"
-        class="w-[11rem]"
-        @update:model="roleChange"
-      />
-      <VCheckbox
-        v-model="isAllSelected"
-        text="Select all permissions"
-        :disabled="isDisabled"
-      />
-    </template>
-    <div class="grid grid-cols-2 gap-8">
-      <div
-        v-for="list in formattedPermissions"
-        :key="list.group"
-        class="flex flex-col gap-4"
-      >
-        <span class="text-headingCard text-txtPrimary">{{ list.group }}</span>
+  <div
+    v-else
+    class="flex flex-col gap-6"
+  >
+    <VTitle :title="$t('usersInfo.title.permissions_&_Access')" />
+    <VContainer>
+      <template #header>
+        <VMultiselect
+          v-model:model="changedRole"
+          :options="userRoles"
+          :disabled="!authStore.isAllowed('manage:roles')"
+          :title="$t('usersInfo.title.role')"
+          class="w-[11rem]"
+          @update:model="roleChange"
+        />
+        <VCheckbox
+          v-model="isAllSelected"
+          :text="$t('usersInfo.text.select_all_permissions')"
+          :disabled="isDisabled"
+        />
+      </template>
+      <div class="grid grid-cols-2 gap-8">
         <div
-          v-for="el in list.items"
-          :key="el.value"
+          v-for="list in formattedPermissions"
+          :key="list.group"
+          class="flex flex-col gap-4"
         >
-          <VSwitch
-            v-model="checkboxMap[el.value]"
-            :text="el.description"
-            :disabled="isDisabled"
-            variant="primary"
-          />
+          <span class="text-headingCard text-txtPrimary">{{ list.group }}</span>
+          <div
+            v-for="el in list.items"
+            :key="el.value"
+          >
+            <VSwitch
+              v-model="checkboxMap[el.value]"
+              :text="$t(`usersInfo.permissionsList.${el.value.replace(/:/g, '_')}`)"
+              :disabled="isDisabled"
+              variant="primary"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <template #footer>
-      <VButton
-        text="Save changes"
-        class="ml-auto"
-        :disabled="!isChanged || loader"
-        @click="updateUser"
-      />
-    </template>
-  </VContainer>
+      <template #footer>
+        <VButton
+          :text="$t('usersInfo.btn.save_changes')"
+          class="ml-auto"
+          :disabled="!isChanged || loader"
+          @click="updateUser"
+        />
+      </template>
+    </VContainer>
+  </div>
 </template>

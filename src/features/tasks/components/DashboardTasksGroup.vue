@@ -3,19 +3,21 @@ import type { TasksDeadlinesResponse } from "../types";
 import DashboardTaskItemSkeleton from "./skeletons/DashboardTaskItemSkeleton.vue";
 import DashboardTaskItem from "./ui/DashboardTaskItem.vue";
 
-import { ModalType } from "@/shared/types";
+import type { ModalType } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VContainer from "@/shared/ui/common/VContainer.vue";
+import VLoader from "@/shared/ui/common/VLoader.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 
-const { item, loader } = defineProps<{
+const { item, loader = false, localLoader = null } = defineProps<{
   loader: boolean;
-  localLoader?: boolean;
+  localLoader: string | null;
   item: {
     variant?: "weekly" | "deadline",
     title: string;
     subtitle: string;
     btnTitle: string;
+    btnKey?: string;
     fetchedData: TasksDeadlinesResponse["data"] | null;
     emptySubtitle: string;
     emptyText: string;
@@ -51,15 +53,15 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
       :text="item.btnTitle"
       variant="ghost"
       class="self-start text-uiBtn text-primary hover:scale-110"
-      :to="item?.btnTitle !== 'Edit' ? '/list' : undefined"
-      @click="item?.btnTitle === 'Edit' ? openEditModal() : null"
+      :to="item?.btnKey !== 'edit' ? '/list' : undefined"
+      @click="item?.btnKey === 'edit' ? openEditModal() : null"
     />
   </div>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-1.5">
     <template v-if="loader">
       <template v-if="item.variant === 'deadline'">
         <DashboardTaskItemSkeleton
-          v-for="el in 5"
+          v-for="el in 4"
           :key="el"
         />
       </template>
@@ -68,7 +70,7 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
         class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-6"
       >
         <VContainer
-          v-for="el in 3"
+          v-for="el in 4"
           :key="el"
           variant="weekly"
         >
@@ -95,16 +97,17 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
         >
           <DashboardTaskItem
             :item="el"
-            class="border-none"
+            class="relative border-none"
           >
-            <div class="flex flex-col gap-4">
+            <VLoader v-if="localLoader === el.id" />
+            <div class="flex justify-between w-full">
+              <span class="text-bodyL text-txtPrimary truncate w-[80%]">{{ el.title }}</span>
               <VButton
                 icon="x"
                 variant="ghost"
                 class="ml-auto text-txtPrimary hover:text-dangerous active:scale-75"
                 @click="removeWeeklyGoal(el.id)"
               />
-              <span class="text-bodyL text-txtPrimary">{{ el.title }}</span>
             </div>
           </DashboardTaskItem>
         </VContainer>

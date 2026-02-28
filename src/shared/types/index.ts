@@ -115,4 +115,5 @@ export type {
   ModalType,
   SidebarLink,
   FilterConfig,
+  SelectOption,
 };

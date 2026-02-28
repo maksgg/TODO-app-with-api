@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { tokenManager } from "@ametie/vue-muza-use";
 import { computed, type Component } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
+import useAuthRequests from "./api/useAuthRequests";
+import RegularUserLogin from "./components/RegularUserLogin.vue";
+
 import LoginForm from "@/features/auth/components/LoginForm.vue";
 import RegisterForm from "@/features/auth/components/RegisterForm.vue";
 import type { AuthFormType } from "@/features/auth/types/index";
-// import { Tabs } from "@/shared/types";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VTabs from "@/shared/ui/common/VTabs.vue";
 
 const { t } = useI18n();
@@ -40,6 +44,26 @@ const forms: Record<AuthFormType, Component> = {
   login: LoginForm,
   register: RegisterForm,
 };
+
+const useStore = useAuthStore();
+const { fetchLoginUser } = useAuthRequests();
+const { loading, execute } = fetchLoginUser({
+  authMode: "public",
+  onSuccess: async ({ data }) => {
+    tokenManager.setTokens({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
+    await useStore.setUser();
+    useStore.isAdmin();
+  },
+});
+const submitRegularUser = async () => {
+  await execute({ data: () => ({
+    email: "regular.user@gmail.com",
+    password: "regular_user",
+  }) });
+};
 </script>
 
 <template>
@@ -54,7 +78,13 @@ const forms: Record<AuthFormType, Component> = {
     />
     <component
       :is="activeTabComponent"
+      :regular-user-loader="loading"
       @to-login="switchForm"
-    />
+    >
+      <RegularUserLogin
+        :loader="loading"
+        @submit-regular-user="submitRegularUser"
+      />
+    </component>
   </div>
 </template>

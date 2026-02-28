@@ -1,10 +1,11 @@
-import { ref, computed, shallowRef } from "vue";
+import { ref, computed, shallowRef, toRaw } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { toast } from "vue-sonner";
 
 import useTasksRequests from "../api/useTasksRequests";
 import { useTasksStore } from "../store/useTasksStore";
-import { Task, TaskRequestParams, TasksModals } from "../types";
+import type { Task, TaskRequestParams, TasksModals } from "../types";
 import { tagsFormatter } from "../utils/tagsFormatter";
 
 import { useModal } from "@/shared/composables/useModal";
@@ -17,9 +18,11 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     tags: "",
     dueDate: null,
     deadline: null,
-    priority: { name: "High", value: "high" },
+    priority: { name: computed(() => t("tasks.modalPriority.high")), value: "high" },
   });
-  const originFormState = shallowRef(""); // snapshot todo (do i need it)
+  const originFormState = shallowRef();
+
+  const { t } = useI18n();
 
   const taskPayload = computed(() => {
     return {
@@ -36,7 +39,9 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     deleteLoading.value,
   );
 
-  const isChanged = computed(() => JSON.stringify(modalFields.value) !== originFormState.value);
+  const isChanged = computed(
+    () => JSON.stringify(modalFields.value) !== JSON.stringify(originFormState.value),
+  );
 
   const modal = {
     create: useModal("createAndEdit-task"),
@@ -60,7 +65,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
           value: task.priority,
         },
       };
-      originFormState.value = JSON.stringify(modalFields.value);
+      originFormState.value = structuredClone(toRaw(modalFields.value));
     }
     modal[modalType].open();
   };
@@ -74,7 +79,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
       tags: "",
       deadline: null,
       dueDate: null,
-      priority: { name: "High", value: "high" },
+      priority: { name: computed(() => t("tasks.modalPriority.high")), value: "high" },
     };
   };
 
@@ -91,7 +96,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     {
       data: taskPayload,
       onSuccess: () => {
-        toast.success("Task updated successfully");
+        toast.success(t("tasks.toasts.task_updated_successfully"));
         closeModal();
         tasksStore.getAllTasks({ params: params });
       },
@@ -99,7 +104,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
   const { execute: createTask, loading: createLoading } = fetchCreateTask(() => route.query.id, {
     data: taskPayload,
     onSuccess: () => {
-      toast.success("Task created successfully");
+      toast.success(t("tasks.toasts.task_created_successfully"));
       closeModal();
       tasksStore.getAllTasks({ params: params });
     },
@@ -108,7 +113,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
     () => tasksStore.targetTask.id,
     {
       onSuccess: () => {
-        toast.success("Task deleted successfully");
+        toast.success(t("tasks.toasts.task_deleted_successfully"));
         closeModal();
         tasksStore.getAllTasks({ params: params });
       },

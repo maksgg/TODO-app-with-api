@@ -1,20 +1,25 @@
 <script setup lang="ts">
 import { debouncedRef } from "@vueuse/core";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
 import useUsersRequests from "./api/useUsersRequests";
 import UsersTableSkeleton from "./components/UsersTableSkeleton.vue";
 
 import { useModal } from "@/shared/composables/useModal";
-import { usePermissions } from "@/shared/composables/usePermissions";
-import { FilterConfig, TableParams, UserInfo } from "@/shared/types";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
+import type { TableParams, UserInfo } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
+import VTitle from "@/shared/ui/common/VTitle.vue";
 import VToolbar from "@/shared/ui/common/VToolbar.vue";
 import VTable from "@/shared/ui/table/VTable.vue";
-import { firstLetterUp, formatDate } from "@/shared/utils/index";
+import { formatDate } from "@/shared/utils/index";
+import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
+
+const { t } = useI18n();
 
 const targetUser = ref({ id: "", name: "" });
 const router = useRouter();
@@ -24,10 +29,41 @@ const tablePayloadParams = ref({
   limit: 20,
   sort: "createdAt",
   order: "desc",
-  role: { name: "All roles", value: "all" }, //toolbarConfig[0].options[0].name
+  role: "all",
 });
 
-const { isAllowed } = usePermissions();
+const usersHeader = computed(() => [
+  { key: "member", label: t("usersTable.tableHead.member"), width: "45%" },
+  { key: "role", label: t("usersTable.tableHead.role") },
+  { key: "createdAt", label: t("usersTable.tableHead.registered") },
+  { key: "actions", label: t("usersTable.tableHead.actions"), textAlign: "text-end", width: "30%" },
+]);
+
+const toolbarConfig = computed(() => [
+  {
+    key: "role",
+    label: "Role",
+    options: [
+      { name: t("usersTable.toolbar.all_roles"), value: "all" },
+      { name: t("usersTable.toolbar.user"), value: "user" },
+      { name: t("usersTable.toolbar.admin"), value: "admin" },
+    ],
+  },
+]);
+const toolbarSelect = computed({
+  get: () => getMappedFilters(toolbarConfig.value, tablePayloadParams.value),
+  set: (newValues) => {
+    const updated = extractFilterValues(newValues);
+    Object.assign(tablePayloadParams.value, updated);
+  },
+});
+
+const tableActions = computed(() => [
+  { value: "user", label: t("usersTable.actions.user_profile") },
+  { value: "delete", label: t("usersTable.actions.remove_user"), disabled: !authStore.isAllowed("delete:user"), dangerous: true },
+]);
+
+const authStore = useAuthStore();
 const { fetchAllUsers, deleteTargetUser } = useUsersRequests();
 
 const {
@@ -40,8 +76,8 @@ const {
   params: () => ({
     ...tablePayloadParams.value,
     q: debounceSearch.value,
-    role: tablePayloadParams.value.role.value !== "all" ?
-      tablePayloadParams.value.role.value : undefined,
+    role: tablePayloadParams.value.role !== "all" ?
+      tablePayloadParams.value.role : undefined,
   }),
 });
 
@@ -74,41 +110,17 @@ const usersActions = (value: string, user: UserInfo) => {
 const targetUserInfo = (id: string) => router.replace({ name: "profile", query: { id } });
 
 const requestSortTable = (params: TableParams) => {
-  return tablePayloadParams.value = {
+  tablePayloadParams.value = {
     ...tablePayloadParams.value,
     limit: params.limit,
-    sort: params?.sort || "createdAt",
-    order: params?.order || "desc",
+    sort: params?.sort || tablePayloadParams.value.sort,
+    order: params?.order || tablePayloadParams.value.order,
   };
 };
-
-const usersHeader = [
-  { key: "member", label: "Member", width: "45%" },
-  { key: "role", label: "Role" },
-  { key: "createdAt", label: "Registered" },
-  { key: "actions", label: "Actions", textAlign: "text-end", width: "30%" },
-];
-const toolbarConfig: FilterConfig = [
-  {
-    key: "role",
-    label: "Role",
-    options: [
-      { name: "All roles", value: "all" },
-      { name: "User", value: "user" },
-      { name: "Admin", value: "admin" },
-    ],
-  },
-];
-const tableActions = [
-  { value: "user", label: "User Profile" },
-  { value: "delete", label: "Remove user", disabled: !isAllowed("delete:user"), dangerous: true },
-];
 </script>
 
 <template>
-  <h1 class="text-headPrimary text-txtPrimary">
-    User Management
-  </h1>
+  <VTitle :title="$t('users.title.user_management')" />
   <UsersTableSkeleton v-if="usersLoader && !usersData?.data?.length" />
   <VTable
     v-else
@@ -123,8 +135,9 @@ const tableActions = [
     <template #toolBar>
       <VToolbar
         v-model:search="searchQuery"
-        v-model:filters="tablePayloadParams"
+        v-model:filters="toolbarSelect"
         :filter-configs="toolbarConfig"
+        :placeholder="$t('usersTable.toolbar.search')"
         class="col-span-full"
       />
     </template>
@@ -138,12 +151,12 @@ const tableActions = [
       <span
         :class="['truncate text-toggle', row.role === 'admin' ? 'text-uiLabel' : 'text-bodyM']"
       >
-        {{ firstLetterUp(row.role) }}
+        {{ $t(`usersTable.toolbar.${row.role}`) }}
       </span>
     </template>
     <template #col-createdAt="{ row }">
       <span class="truncate text-uiCaption text-secondary">
-        {{ formatDate(row.createdAt, "long") }}
+        {{ formatDate(row.createdAt, "long", $i18n.locale) }}
       </span>
     </template>
     <template #col-actions="{ row, index }">
@@ -160,25 +173,27 @@ const tableActions = [
   </VTable>
   <VModal
     id="delete-user"
-    title="Remove user"
+    :title="$t('usersModal.remove_user')"
   >
     <div class="flex flex-col gap-2 text-center">
       <h4 class="text-uiHead text-txtPrimary">
-        Are you sure you want to remove <span>"{{ targetUser.name }}"</span> user?
+        {{ $t('usersModal.are_you_sure_you_want_to_remove') }}
+        <span>"{{ targetUser.name }}"</span>
+        {{ $t('usersModal.user?') }}
       </h4>
       <p class="text-bodyM text-secondary">
-        This action can’t be undone
+        {{ $t('usersModal.this_action_can’t_be_undone') }}
       </p>
     </div>
     <template #footer>
       <div class="flex justify-center gap-4">
         <VButton
-          text="Cancel"
+          :text="$t('usersModal.btn.cancel')"
           class="!bg-transparent text-primary"
           @click="modal.close()"
         />
         <VButton
-          text="Remove user"
+          :text="$t('usersModal.remove_user')"
           variant="dangerous"
           :loader="deleteUserLoader"
           @click="deleteUser"

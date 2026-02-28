@@ -11,7 +11,6 @@ export const groupListsByUser = (data: AllListResponse["data"] | undefined): Use
     if (!owner || !owner.email) continue;
     const email = owner.email;
 
-    // 1. Створюємо групу
     if (!groupsMap.has(email)) {
       groupsMap.set(email, {
         isExpanded: false,
@@ -25,8 +24,6 @@ export const groupListsByUser = (data: AllListResponse["data"] | undefined): Use
         },
       });
     }
-
-    // 2. Додаємо дані
     const group = groupsMap.get(email)!;
 
     group.userListsInfo.allTitles.push({
@@ -35,7 +32,6 @@ export const groupListsByUser = (data: AllListResponse["data"] | undefined): Use
       totalTasks: list.totalTasks,
     });
 
-    // 3. Оновлюємо лічильник
     group.totalLists = group.userListsInfo.allTitles.length;
   }
 

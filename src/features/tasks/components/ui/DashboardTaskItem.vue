@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import TaskPriority from "./TaskPriority.vue";
 import TaskTags from "./TaskTags.vue";
-import { Task } from "../../types";
+import type { Task } from "../../types";
 
 const { item } = defineProps<{ item: Task; }>();
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 border-t border-borderDefault py-2">
+  <div class="flex flex-col gap-2 border-t border-borderDefault py-1">
     <slot>
-      <div class="flex justify-between">
-        <h3 class="text-bodyL text-txtPrimary">
+      <div class="flex justify-between w-full">
+        <h3 class="text-bodyL text-txtPrimary truncate w-[80%]">
           {{ item?.title }}
         </h3>
         <span
@@ -23,7 +23,11 @@ const { item } = defineProps<{ item: Task; }>();
           v-if="!item.deadlineWord"
           class="text-uiCaption text-secondary"
         >
-          {{ item?.status === "done" ? "Completed" : "Pending" }}
+          {{
+            item?.status === "done" ?
+              $t("dashboard.taskItem.completed") :
+              $t("dashboard.taskItem.pending")
+          }}
         </span>
       </div>
     </slot>
@@ -37,9 +41,11 @@ const { item } = defineProps<{ item: Task; }>();
       v-if="item.tags.length > 0"
       :tags="item.tags"
     />
-    <div
+    <span
       v-else
-      class="h-[22px]"
-    />
+      class="text-uiCaption text-muted"
+    >
+      {{ $t("dashboard.taskItem.no_tags") }}
+    </span>
   </div>
 </template>

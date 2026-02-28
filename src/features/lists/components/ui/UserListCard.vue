@@ -2,7 +2,7 @@
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 
-import { UserGroupInfo } from "../../types";
+import type { UserGroupInfo } from "../../types";
 
 import VButton from "@/shared/ui/common/VButton.vue";
 import VIcon from "@/shared/ui/common/VIcon.vue";
@@ -38,12 +38,15 @@ onClickOutside(target, () => {
         {{ userListsInfo.email }}
       </h4>
       <h4 class="text-bodyEmphasis text-txtPrimary border-b border-borderDefault pb-2">
-        Role: <span class="text-bodyM text-secondary">{{ userListsInfo.role }}</span>
+        {{ $t("lists.card.role:") }}
+        <span class="text-bodyM text-secondary">
+          {{ $t(`usersTable.toolbar.${userListsInfo.role}`).toLowerCase() }}
+        </span>
       </h4>
     </div>
     <div class="relative w-full">
       <VButton
-        :text="`Lists (${totalLists})`"
+        :text="`${$t('lists.lists')} (${totalLists})`"
         variant="ghost"
         icon-size="sm"
         class="text-txtPrimary"
@@ -80,11 +83,14 @@ onClickOutside(target, () => {
               variant="ghost"
               icon-size="sm"
               :disabled="disabled"
-              class="group-hover:text-activePrimary transition-colors"
+              :class="[disabled ? '' : 'group-hover:text-activePrimary transition-colors']"
               @click="openList(list.listId)"
             />
             <span
-              class="text-muted text-uiCaption transition-colors group-hover:text-activePrimary"
+              :class="[
+                'text-muted text-uiCaption',
+                disabled ? '' : 'group-hover:text-activePrimary transition-colors'
+              ]"
             >
               ({{ list.totalTasks }})
             </span>

@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 
 import AuthLayout from "@/app/layouts/AuthLayout.vue";
 import DefaultLayout from "@/app/layouts/DefaultLayout.vue";
-import { useThemeStore } from "@/features/theme/store/useThemeStore";
+import { useThemeStore } from "@/shared/stores/useThemeStore";
 import VToast from "@/shared/ui/common/VToast.vue";
 
 const route = useRoute();
@@ -23,12 +23,7 @@ const routePath = computed(() => {
 </script>
 
 <template>
-  <div
-    :class="['relative flex flex-col w-full h-screen overflow-hidden',
-             routePath === AuthLayout ?
-               'bg-authBg bg-cover bg-center' : 'bg-background'
-    ]"
-  >
+  <div class="relative flex flex-col w-full h-screen overflow-hidden">
     <VToast :theme="themeStore.currentTheme" />
     <component :is="routePath" />
   </div>

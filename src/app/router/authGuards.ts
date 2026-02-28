@@ -7,8 +7,9 @@ export const authGuard = (to: RouteLocationNormalized) => {
   const token = tokenManager.getAccessToken();
   const isAuthorized = !!token;
   const useStore = useAuthStore();
+  const isPublic = to.meta.requiredAuth === false;
 
-  if (to.meta.requiredAuth && !isAuthorized) {
+  if (!isPublic && !isAuthorized) {
     return { name: "auth" };
   }
 

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-import { RequestParams } from "../types";
+import type { RequestParams } from "../types";
 import DeleteListModal from "./ui/DeleteListModal.vue";
 import ListCard from "./ui/ListCard.vue";
 import ListsModalFormFields from "./ui/ListsModalFormFields.vue";
@@ -11,7 +12,7 @@ import { useListModal } from "../composables/useListModal";
 import { groupListsByUser } from "../utils/groupListsByUser";
 
 import { useListsStore } from "@/features/lists/store/useListsStore";
-import { usePermissions } from "@/shared/composables/usePermissions";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
@@ -19,8 +20,10 @@ const { currentTab, params } = defineProps<{
   currentTab: "myLists" | "usersLists";
   params: RequestParams;
 }>();
-const { isAllowed } = usePermissions();
+
 const listStore = useListsStore();
+const authStore = useAuthStore();
+const { t } = useI18n();
 const router = useRouter();
 const {
   openModal,
@@ -41,21 +44,21 @@ const openTargetList = (id: string) => {
   router.replace({ name: "List", query: { id } });
 };
 
-const listActions = [
-  { value: "edit", label: "Edit list", disabled: !isAllowed("update:list") },
-  { value: "delete", label: "Delete list", disabled: !isAllowed("delete:list"), dangerous: true },
-];
+const listActions = computed(() =>[
+  { value: "edit", label: t("lists.actions.edit_list"), disabled: !authStore.isAllowed("update:list") },
+  { value: "delete", label: t("lists.actions.delete_list"), disabled: !authStore.isAllowed("delete:list"), dangerous: true },
+]);
 const activeModalType = computed(() => {
   if (isModalType.value === "edit") {
     return {
-      title: "Edit list",
-      btnText: "Save changes",
+      title: t("lists.modal.edit_list"),
+      btnText: t("lists.modalBtn.save_changes"),
     };
   }
 
   return {
-    title: "Create list",
-    btnText: "Create list",
+    title: t("lists.modal.create_list"),
+    btnText: t("lists.modalBtn.create_list"),
   };
 });
 </script>
@@ -67,14 +70,14 @@ const activeModalType = computed(() => {
       defer
     >
       <VButton
-        text="Create new list"
+        :text="$t('lists.btn.create_new_list')"
         icon="plus"
-        :disabled="!isAllowed('create:list')"
+        :disabled="!authStore.isAllowed('create:list')"
         @click="openModal('create')"
       />
     </Teleport>
     <div
-      v-if="isAllowed('read:list')"
+      v-if="authStore.isAllowed('read:list')"
       class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6"
     >
       <template v-if="currentTab === 'myLists'">
@@ -93,7 +96,7 @@ const activeModalType = computed(() => {
           :key="list.userListsInfo.ownerId"
           :user-lists-info="list.userListsInfo"
           :total-lists="list.totalLists"
-          :disabled="!isAllowed('read:all-tasks')"
+          :disabled="!authStore.isAllowed('read:all-tasks')"
           :is-expanded="isExpanded === list.userListsInfo.ownerId"
           @expand-list="expandList"
           @open-list="openTargetList"
@@ -108,7 +111,7 @@ const activeModalType = computed(() => {
       <template #footer>
         <div class="flex gap-5 w-full justify-end">
           <VButton
-            text="Cancel"
+            :text="$t('lists.modalBtn.cancel')"
             class="!bg-transparent text-primary"
             @click="closeModal"
           />
