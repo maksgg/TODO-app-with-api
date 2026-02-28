@@ -8,6 +8,8 @@ import type { AuthFormType } from "@/features/auth/types/index";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 
+const { regularUserLoader } = defineProps<{ regularUserLoader: boolean; }>();
+
 const { state, v$ } = useRegisterFormValidation();
 const { t } = useI18n();
 const { fetchRegisterUser } = useAuthRequests();
@@ -37,8 +39,8 @@ const submitForm = async () => {
     rounded-xl w-full text-authTitle text-txtPrimaryDark"
     @submit.prevent="submitForm"
   >
-    <h1 class="text-login text-center leading-none">
-      {{ $t("auth.register.create_your_account") }}
+    <h1>
+      {{ $t("auth.register.create_account") }}
     </h1>
     <VInput
       v-model="state.name"
@@ -64,8 +66,9 @@ const submitForm = async () => {
       :text="$t('auth.register.sign_up')"
       type="submit"
       size="full"
-      :loader="loading"
+      :loader="loading || regularUserLoader"
       class="mt-3"
     />
+    <slot />
   </form>
 </template>

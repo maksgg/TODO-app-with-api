@@ -14,7 +14,7 @@ const openList = () => emit("openList", listId);
 <template>
   <h3 class="flex items-center gap-2 text-headingCard min-w-0 overflow-hidden">
     <span
-      :class="['flex rounded-full', !listId ? 'w-2 h-2' : 'w-[10px] h-[10px]']"
+      class="flex rounded-full w-3 h-3"
       :style="{ backgroundColor: hexColor }"
     />
     <VButton
@@ -26,7 +26,7 @@ const openList = () => emit("openList", listId);
     />
     <span
       v-else
-      class="text-bodyEmphasis text-txtPrimary"
+      class="text-uiHead capitalize text-txtPrimary"
     >
       {{ title }}
     </span>

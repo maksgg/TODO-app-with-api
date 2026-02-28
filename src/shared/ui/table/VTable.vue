@@ -118,7 +118,7 @@ const loadMore = () => {
   <div class="relative w-full overflow-auto no-scrollbar">
     <div
       :class="[`relative self-center flex flex-col w-full
-                bg-primaryBg text-text-color`
+               text-text-color`
       ]"
     >
       <div
@@ -217,7 +217,7 @@ const loadMore = () => {
         </div>
         <VButton
           v-if="pagination.hasMore"
-          text="Load more"
+          :text="$t('usersTable.btn.load_more')"
           class="my-5 self-center"
           :disabled="loader"
           @click="loadMore"

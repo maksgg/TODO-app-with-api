@@ -1,9 +1,10 @@
-import { computed, shallowRef, ref/* , inject  */ } from "vue";
+import { computed, shallowRef, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import useListsRequests from "../api/useListsRequests";
 import { useListsStore } from "../store/useListsStore";
-import {
+import type {
   List, ListModal,
   RequestParams,
 } from "../types";
@@ -16,8 +17,8 @@ export const useListModal = (
   const listPayload = ref({ title: "", hexColor: "#3B82F6" });
   const targetList = shallowRef<List | null>(null);
 
-  // const params = inject(ListParamsKey);
   const listStore = useListsStore();
+  const { t } = useI18n();
   const {
     createUserList,
     updateUserLists,
@@ -49,7 +50,7 @@ export const useListModal = (
     if (isModalType.value === "edit") {
       return (
         listPayload.value.title !== targetList.value.title ||
-      listPayload.value.hexColor !== targetList.value.hexColor
+        listPayload.value.hexColor !== targetList.value.hexColor
       );
     }
 
@@ -77,7 +78,7 @@ export const useListModal = (
   const { execute: createList, loading: createLoader } = createUserList({
     data: listPayload,
     onSuccess: () => {
-      toast.success("List created successfully");
+      toast.success(t("lists.toasts.list_created_successfully"));
       closeModal();
       listStore.getAllLists({ params: params });
     },
@@ -88,7 +89,7 @@ export const useListModal = (
     {
       data: listPayload,
       onSuccess: () => {
-        toast.success("List updated successfully");
+        toast.success(t("lists.toasts.list_updated_successfully"));
         closeModal();
         listStore.getAllLists({ params: params });
       },
@@ -98,7 +99,7 @@ export const useListModal = (
     () => targetList.value._id,
     {
       onSuccess: () => {
-        toast.success("List deleted successfully");
+        toast.success(t("lists.toasts.list_deleted_successfully"));
         closeModal();
         listStore.getAllLists({ params: params });
       },

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ListName from "./ListName.vue";
-import { List } from "../../types";
+import type { List } from "../../types";
 
-import { ModalType } from "@/shared/types";
+import type { ModalType } from "@/shared/types";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 import VDropDown from "@/shared/ui/common/VDropDown.vue";
 
@@ -44,8 +44,8 @@ const openModal = (modalType: ModalType) => emit("openModal", modalType, list);
     </div>
     <template #footer>
       <div class="flex items-start gap-4 text-bodyL">
-        <span class="text-secondary">{{ list.totalTasks }} tasks</span>
-        <span class="text-muted">{{ list.completedTasks }} completed</span>
+        <span class="text-secondary">{{ list.totalTasks }} {{ $t("lists.card.tasks") }}</span>
+        <span class="text-muted">{{ list.completedTasks }} {{ $t("lists.card.completed") }}</span>
       </div>
     </template>
   </VContainer>

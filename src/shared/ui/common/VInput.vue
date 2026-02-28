@@ -93,7 +93,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
   toolbar: `
   ${baseInputStyles}
    max-w-[30rem] py-3 pl-10 pr-10 rounded-2xl placeholder-muted 
-   placeholder:text-borderDefault hover:placeholder:text-borderHover 
+   placeholder:text-primary hover:placeholder:text-borderHover 
    disabled:placeholder:text-disabledBorder focus:border-primary
   `,
 };
@@ -119,7 +119,8 @@ const inputStylesVariant: Record<VariantStyles, string> = {
     >
       <div
         v-if="$slots['icon-left'] || props.icon || props.loader"
-        class="absolute left-4 bottom-4 flex justify-center items-center"
+        class="absolute left-4 bottom-4 flex justify-center items-center
+        text-primary hover:text-borderHover"
       >
         <slot name="icon-left">
           <VLoader v-if="props.loader" />

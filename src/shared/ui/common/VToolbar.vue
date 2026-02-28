@@ -8,6 +8,7 @@ type ToolbarProps = {
   isSearchable?: boolean;
   disabled?: boolean;
   selectWidth?: "sm" | "md" | "lg";
+  placeholder: string;
 };
 
 const {
@@ -15,16 +16,23 @@ const {
   isSearchable = true,
   disabled = false,
   selectWidth = "sm",
+  placeholder = "",
 } = defineProps<ToolbarProps>();
 
 const search = defineModel<string>("search");
 
-const filters = defineModel<Record<string, any>>("filters", { required: true });
+const filters = defineModel<Record<string, any>>("filters");
+const updateFilter = (key: string, value: any) => {
+  filters.value = {
+    ...filters.value,
+    [key]: value,
+  };
+};
 
 const size: Record<ToolbarProps["selectWidth"], string> = {
-  sm: "w-[10rem]",
-  md: "w-[15rem]",
-  lg: "w-[20rem]",
+  sm: "w-[12rem]",
+  md: "w-[17rem]",
+  lg: "w-[22rem]",
 };
 </script>
 
@@ -38,7 +46,7 @@ const size: Record<ToolbarProps["selectWidth"], string> = {
         v-model="search"
         variant="toolbar"
         :disabled="disabled"
-        placeholder="Search..."
+        :placeholder="placeholder"
         icon="magnifyingGlass"
       />
     </div>
@@ -50,6 +58,7 @@ const size: Record<ToolbarProps["selectWidth"], string> = {
       :disabled="disabled"
       :title="config.label"
       :class="size[selectWidth]"
+      @update:model="val => updateFilter(config.key, val)"
     />
   </div>
 </template>

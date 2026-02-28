@@ -1,4 +1,5 @@
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 import { useListsStore } from "@/features/lists/store/useListsStore";
@@ -9,8 +10,10 @@ export function useWeeklyGoals() {
   const weeklySelectedTaskIds = ref<string[]>([]);
   const initialWeeklyIds = ref<string[]>([]);
   const modalMode = ref<"add" | "edit">("add");
+  const localLoaderId = ref<string | null>(null);
 
   const listsStore = useListsStore();
+  const { t } = useI18n();
   const { fetchWeeklyGoalTasks, fetchToggleWeeklyGoalTasks } = useTasksRequests();
   const modals = {
     add: useModal("addAndEditWeeklyGoals"),
@@ -44,6 +47,7 @@ export function useWeeklyGoals() {
     onFinish: () => {
       weeklySelectedTaskIds.value = [];
       initialWeeklyIds.value = [];
+      localLoaderId.value = null;
     },
   });
 
@@ -73,7 +77,7 @@ export function useWeeklyGoals() {
       weeklySelectedTaskIds.value.splice(index, 1);
     } else {
       if (weeklySelectedTaskIds.value.length >= maxWeeklyGoals) {
-        toast.warning("You can select up to 3 weekly goals");
+        toast.warning(t("dasboard.toasts.you_can_select_up_to_3_weekly_goals"));
         return;
       }
       weeklySelectedTaskIds.value.push(taskId);
@@ -82,17 +86,19 @@ export function useWeeklyGoals() {
 
   const submitGoals = async () => {
     await toggleWeeklyTask();
-    toast.success("Updated successfully");
+    toast.success(t("dasboard.toasts.updated_successfully"));
     closeModal();
   };
 
   const removeWeeklyTask = async (taskId: string) => {
+    localLoaderId.value = taskId;
     weeklySelectedTaskIds.value = [taskId];
     await toggleWeeklyTask();
   };
 
   return {
     listsWithTasks,
+    localLoaderId,
     weeklyTasks,
     weeklySelectedTaskIds,
     weeklyTasksLoader,

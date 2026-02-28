@@ -6,8 +6,6 @@ type LoaderProps = {
 const props = withDefaults(defineProps<LoaderProps>(), {
   size: "sm",
 });
-
-// Визначаємо конкретний розмір у пікселях для кожного пропса
 const sizes = {
   sm: "20px",
   md: "28px",
@@ -36,7 +34,6 @@ const sizes = {
 }
 
 .loader {
-  /* Використовуємо значення з пропса */
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
@@ -54,7 +51,6 @@ const sizes = {
   position: absolute;
   left: 0;
   top: 0;
-  /* Після тегу ::after розмір має бути 100% від батька */
   width: var(--size);
   height: var(--size);
   border-radius: 50%;

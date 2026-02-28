@@ -3,7 +3,7 @@ import { ref, shallowRef } from "vue";
 import { useRoute } from "vue-router";
 
 import useTasksRequests from "../api/useTasksRequests";
-import { Task } from "../types";
+import type { Task } from "../types";
 import { dateFormatterIntoOneWord } from "../utils/dateFormatterIntoOneWord";
 
 export const useTasksStore = defineStore("tasks", () => {

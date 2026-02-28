@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { useLanguages } from "@/features/i18n/composables/useI18n";
+import { useLanguages } from "@/shared/composables/useI18n";
 import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
 
 const { locale, languages } = useLanguages();
@@ -17,7 +17,6 @@ const selectedLangObject = computed({
   <VMultiselect
     v-model:model="selectedLangObject"
     :options="languages.options"
-    :title="languages.label"
-    size="sm"
+    class="w-[5rem]"
   />
 </template>

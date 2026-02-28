@@ -1,0 +1,21 @@
+<script setup lang="ts">
+import VButton from "@/shared/ui/common/VButton.vue";
+
+const { loader } = defineProps<{ loader: boolean; }>();
+const emit = defineEmits<{ "submitRegularUser": [void] }>();
+const submit = () => emit("submitRegularUser");
+</script>
+
+<template>
+  <div class="flex items-center w-full gap-4">
+    <div class="h-[1px] bg-borderDefault flex-1" />
+    <span class="text-uiLabel text-secondary">{{ $t('auth.regularUser.or') }}</span>
+    <div class="h-[1px] bg-borderDefault flex-1" />
+  </div>
+  <VButton
+    :text="$t('auth.regularUser.sign_in_as_regular_user')"
+    size="full"
+    :class="loader ? 'pointer-events-none' : ''"
+    @click="submit"
+  />
+</template>

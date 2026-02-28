@@ -2,6 +2,9 @@
 import { type Component } from "vue";
 
 import Checked from "../icons/Checked.vue";
+import UaFlag from "../icons/UaFlag.vue";
+import UkFlag from "../icons/UkFlag.vue";
+import Users from "../icons/Users.vue";
 
 import Analytic from "@/shared/ui/icons/Analytic.vue";
 import ChevronDown from "@/shared/ui/icons/ChevronDown.vue";
@@ -45,21 +48,22 @@ const icons: Record<string, Component> = {
   x: Close,
   horizontalDots: HorizontalDots,
   checked: Checked,
+  uaFlag: UaFlag,
+  enFlag: UkFlag,
+  users: Users,
 };
 
 const sizeStyle: Record<IconProps["size"], string> = {
   sm: "w-2.5 h-1.5",
   md: "w-4 h-4",
-  lg: "w-6 h-6",
+  lg: "w-12 h-12",
 };
 </script>
 
 <template>
-  <!-- <div :class="['flex justify-center items-center', sizeStyle[size]]"> -->
   <component
     :is="icons[type]"
     :class="['flex justify-center items-center', sizeStyle[size]]"
   />
-  <!-- </div> -->
 </template>
 

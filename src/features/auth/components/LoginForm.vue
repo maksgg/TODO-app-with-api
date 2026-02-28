@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { tokenManager } from "@ametie/vue-muza-use";
 import { useI18n } from "vue-i18n";
-import { toast } from "vue-sonner";
 
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useLoginFormValidation } from "@/features/auth/composables/useAuthValidation";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
+
+const { regularUserLoader } = defineProps<{ regularUserLoader: boolean; }>();
 
 const { t } = useI18n();
 const { state, v$ } = useLoginFormValidation();
@@ -17,7 +18,6 @@ const useStore = useAuthStore();
 const { loading, error, execute: request } = fetchLoginUser({
   authMode: "public",
   onSuccess: async ({ data }) => {
-    toast.success(t("auth.login.success"));
     tokenManager.setTokens({
       accessToken: data.accessToken,
       refreshToken: data.refreshToken,
@@ -65,8 +65,9 @@ const submitForm = async () => {
       :text="$t('auth.login.sign_in')"
       type="submit"
       size="full"
-      :loader="loading"
+      :loader="loading || regularUserLoader"
       class="mt-3"
     />
+    <slot />
   </form>
 </template>

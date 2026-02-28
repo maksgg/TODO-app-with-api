@@ -1,0 +1,443 @@
+{
+  "auth": {
+    "login": {
+      "success": "Успіх",
+      "login": "Логін",
+      "email_address": "Адреса електронної пошти",
+      "password": "Пароль",
+      "remember_me": "пам'ятай мене",
+      "sign_in": "Увійдіть",
+      "create_new_account": "Створити новий акаунт",
+      "forgot_password?": "Забули пароль?",
+      "log_in": "авторизуватися",
+      "enter_your_email": "Введіть адресу електронної пошти",
+      "enter_your_password": "Введіть свій пароль",
+      "email": "Електронна пошта",
+      "Welcome_back": "З поверненням"
+    },
+    "register": {
+      "success_registration": "Успішна реєстрація",
+      "create_account": "Створити акаунт",
+      "your_name": "Ваше ім'я",
+      "email_address": "Адреса електронної пошти",
+      "password": "Пароль",
+      "confirm_password": "Підтвердьте пароль",
+      "remember_me": "пам'ятай мене",
+      "sign_up": "Зареєструватися",
+      "already_have_an_account?": "Вже маєте обліковий запис?",
+      "create_your_account": "Створіть свій акаунт",
+      "enter_your_name": "Введіть своє ім'я",
+      "enter_your_email": "Введіть адресу електронної пошти",
+      "enter_your_password": "Введіть свій пароль",
+      "confirm_your_password": "Підтвердьте свій пароль",
+      "name": "Ім'я",
+      "email": "Електронна пошта",
+      "repeat_password": "Повторіть пароль"
+    },
+    "errorMsg": {
+      "write_your_name": "Напишіть своє ім'я",
+      "name_should_be_at_least_5_letters": "Назва має складатися не менше ніж з 5 букв",
+      "write_email": "Напишіть електронний лист",
+      "please_write_real_email": "Будь ласка, напишіть справжній електронний лист",
+      "write_password": "Напишіть пароль",
+      "password_need_to_be_8_symbols": "Пароль повинен складатися з 8 символів",
+      "repeat_password": "Повторіть пароль",
+      "passwords_must_match": "Паролі мають збігатися"
+    },
+    "tabs": {
+      "sign_in": "Увійдіть",
+      "sign_up": "Зареєструватися"
+    },
+    "regularUser": { 
+      "sign_in_as_regular_user" : "Увійдіть як звичайний користувач",
+      "or": "чи"
+    }
+  },
+  "credentials": {
+    "designer": "Дизайнер",
+    "anastasiia_orieshyna": "Анастасія Орєшина",
+    "developer": "Розробник",
+    "maksym_zhovmir": "Максим Жовмір",
+    "design_&_development_contributors": "Учасники дизайну та розробки"
+  },
+  "lists": {
+    "actions": {
+      "edit_list": "Редагувати список",
+      "delete_list": "Видалити список"
+    },
+    "modal": {
+      "edit_list": "Редагувати список",
+      "create_list": "Створити список",
+      "delete_list": "Видалити список",
+      "are_you_sure_you_want_to_delete": "Ви впевнені, що хочете видалити",
+      "list?": "список?",
+      "this_action_can’t_be_undone": "Цю дію не можна скасувати",
+      "list_name": "Назва списку",
+      "enter_list_name": "Введіть назву списку",
+      "list_color": "Колір списку"
+    },
+    "modalBtn": {
+      "save_changes": "Зберегти зміни",
+      "create_list": "Створити список",
+      "cancel": "Скасувати",
+      "delete_list": "Видалити список"
+    },
+    "btn": {
+      "create_new_list": "Створити новий список"
+    },
+    "card": {
+      "tasks": "Завдань",
+      "completed": "Виконано",
+      "role:": "Роль:"
+    },
+    "lists": "Списки",
+    "toasts": {
+      "list_created_successfully": "Список успішно створено",
+      "list_updated_successfully": "Список успішно оновлено",
+      "list_deleted_successfully": "Список успішно видалено"
+    },
+    "toolbar": {
+      "recently_created": "Нещодавно створений",
+      "recently_updated": "Нещодавно оновлено",
+      "A_->_Z": "А -> Я",
+      "Z_->_A": "Я -> A",
+      "sort_by": "Сортувати за",
+      "search": "Пошук"
+    },
+    "tabs": {
+      "my_lists": "Мої списки",
+      "users_lists": "Списки користувачів"
+    },
+    "emptyState": {
+      "no_lists_yet": "Списків ще немає",
+      "create_your_first_list_to_start_organizing_your_tasks": "Створіть свій перший список, щоб почати впорядковувати свої завдання"
+    },
+    "toolbarRef": {
+      "recently_created": "Нещодавно створений"
+    },
+    "toolbarasd": {
+      "recently_created": "Нещодавно створений"
+    }
+  },
+  "profile": {
+    "account_details": "Реквізити рахунку",
+    "full_name": "Ім'я користувача",
+    "save_changes": "Зберегти зміни",
+    "member_since": "Учасник з",
+    "toasts": {
+      "profile_is_successful_updated": "Профіль успішно оновлено"
+    },
+    "profile_overview": "Огляд профілю"
+  },
+  "tasks": {
+    "modalPriority": {
+      "high": "Високий",
+      "medium": "Середній",
+      "low": "Низький",
+      "priority": "Пріоритети"
+    },
+    "toasts": {
+      "duplicate_tags_are_not_allowed": "Подвійні теги не допускаються",
+      "task_updated_successfully": "Завдання успішно оновлено",
+      "task_created_successfully": "Завдання успішно створено",
+      "task_deleted_successfully": "Завдання успішно видалено",
+      "status_updated": "Статус оновлено"
+    },
+    "modal": {
+      "task_name": "Назва завдання",
+      "enter_task_name": "Введіть назву завдання",
+      "due": "Виконати до",
+      "pick_date": "Виберіть дату",
+      "tags": "Теги",
+      "frontend,_Backend,_Vue": "Frontend, Backend, Vue",
+      "you_have_exceeded_the_limit": "Ви перевищили ліміт",
+      "you_can_add_up_to_6_tags": "Ви можете додати до 6 тегів",
+      "delete_task": "Видалити завдання",
+      "are_you_sure_you_want_to_delete": "Ви впевнені, що хочете видалити",
+      "task?": "завдання?",
+      "this_action_can’t_be_undone": "Цю дію не можна скасувати",
+      "edit_task": "Редагувати завдання",
+      "add_new_task": "Додати нове завдання"
+    },
+    "calendar": {
+      "days": {
+        "mon": "Пн",
+        "tue": "Вт",
+        "wed": "Ср",
+        "thu": "Чт",
+        "fri": "Пт",
+        "sat": "Сб",
+        "sun": "Нд"
+      },
+      "months": {
+        "jan": "Січень",
+        "feb": "Лютий",
+        "mar": "Березень",
+        "apr": "Квітень",
+        "may": "Травень",
+        "jun": "Червень",
+        "jul": "Липень",
+        "aug": "Серпень",
+        "sep": "Вересень",
+        "oct": "Жовтень",
+        "nov": "Листопад",
+        "dec": "Грудень"
+      }
+    },
+    "modalBtn": {
+      "cancel": "Скасувати",
+      "delete list": "Видалити список",
+      "save_changes": "Зберегти зміни",
+      "add_task": "Додати завдання",
+      "delete_task": "Видалити завдання"
+    },
+    "toolbar": {
+      "all_priorities": "Всі пріоритети",
+      "recently_created": "Нещодавно створений",
+      "priority": "Пріоритет",
+      "high_priority": "Високий пріоритет",
+      "medium_priority": "Середній пріоритет",
+      "low_priority": "Низький пріоритет",
+      "sort_by": "Сортувати за",
+      "recently_updated": "Нещодавно оновлено",
+      "A_->_Z": "А -> Я",
+      "Z_->_A": "Я -> А",
+      "search": "Пошук"
+    },
+    "tableHead": {
+      "pending": "В очікуванні",
+      "completed": "Виконано"
+    },
+    "pendingTableHead": {
+      "title": "Назва",
+      "priority": "Пріоритет",
+      "deadline": "Дедлайн",
+      "tags": "Теги",
+      "actions": "Дії"
+    },
+    "completedTableHead": {
+      "title": "Назва",
+      "priority": "Пріоритет",
+      "tags": "Теги"
+    },
+    "actions": {
+      "edit_task": "Редагувати завдання",
+      "delete_task": "Видалити завдання"
+    },
+    "emptyState": {
+      "no_tasks_yet": "Завдань ще немає",
+      "create_your_first_task_to_start_organizing_your_work": "Створіть своє перше завдання, щоб почати організовувати свою роботу"
+    },
+    "btn": {
+      "add_task": "Додати завдання"
+    },
+    "dates": {
+      "overdue": "Прострочено",
+      "today": "Сьогодні",
+      "tomorrow": "Завтра",
+      "this_week": "Цього тижня",
+      "next_week": "Наступного тижня",
+      "later": "Пізніше"
+    }
+  },
+  "dashboard": {
+    "taskItem": {
+      "completed": "Виконано",
+      "pending": "В очікуванні",
+      "no_tags": "Без тегів"
+    },
+    "modalBtn": {
+      "cancel": "Скасувати",
+      "save_changes": "Зберегти зміни",
+      "add_goals": "Додайте цілі"
+    },
+    "title": {
+      "today's_tasks": "Сьогоднішні завдання",
+      "upcoming_deadlines": "Найближчі терміни",
+      "weekly_focus_goals": "Цілі на тиждень",
+      "today_tasks": "Завдання на сьогодні"
+    },
+    "subTitle": {
+      "you’ve": "Ви маєте",
+      "tasks_for_today": "завдань на сьогодні",
+      "tasks_that_need_your_attention_soon": "Завдання, які незабаром потребують вашої уваги",
+      "your_top_priorities_for_this_week": "Ваші головні пріоритети на цей тиждень"
+    },
+    "btn": {
+      "view_all": "Переглянути всі",
+      "edit": "Редагувати"
+    },
+    "emptyState": {
+      "no_tasks_for_today_yet": "На сьогодні ще немає завдань",
+      "create_your_first_task_to_get_started": "Створіть своє перше завдання, щоб почати",
+      "create_your_own_list": "Створи свій список",
+      "no_upcoming_deadlines": "Немає найближчих термінів",
+      "tasks_with_due_dates_will_appear_here": "Тут з’являться завдання з термінами виконання",
+      "no_weekly_goals_yet": "Тижневих цілей ще немає",
+      "add_your_top_priorities_to_stay_focused": "Додайте головні пріоритети, щоб залишатися зосередженим",
+      "add_weekly_goal": "Додати тижневу ціль"
+    },
+    "date": {
+      "tomorrow": "завтра",
+      "day_after_tomorrow": "Післязавтра",
+      "this_week": "Цього тижня",
+      "later": "Пізніше"
+    }
+  },
+  "header": {
+    "title": {
+      "manage_all_your_task_groups_in_one_place": "Керуйте всіма своїми списками завдань в одному місці",
+      "see_how_your_tasks_are_progressing_over_time": "Подивіться, як прогресують ваші завдання з часом",
+      "good_to_see_you_again": "Раді вас знову бачити"
+    }
+  },
+  "sidebar": {
+    "links": {
+      "dashboard": "Дашборд",
+      "lists": "Списки",
+      "analytics": "Аналітика",
+      "profile": "Профіль",
+      "admin_panel": "Панель адміністратора",
+      "about_us": "Про нас"
+    },
+    "btn": {
+      "log_out": "Вихід"
+    },
+    "modalTitle": {
+      "log_out": "Вийти"
+    },
+    "modal": {
+      "are_you_sure_you_want_to_log_out?": "Ви впевнені, що бажаєте вийти?",
+      "you_will_need_to_sign_in_again_to_access_your_account": "Вам потрібно буде знову ввійти, щоб отримати доступ до свого облікового запису"
+    },
+    "modalBtn": {
+      "cancel": "Скасувати",
+      "log_out": "Вийти"
+    }
+  },
+  "usersTable": {
+    "tableHead": {
+      "member": "Член",
+      "role": "Роль",
+      "registered": "Зареєстрований",
+      "actions": "Дії"
+    },
+    "btn": {
+      "load_more": "Завантажити ще"
+    },
+    "toolbar": {
+      "all_roles": "Всі ролі",
+      "user": "Користувач",
+      "admin": "Адмін",
+      "search": "Пошук"
+    },
+    "actions": {
+      "user_profile": "Профіль користувача",
+      "remove_user": "Видалити користувача"
+    }
+  },
+  "users": {
+    "title": {
+      "user_management": "Керування користувачами"
+    }
+  },
+  "usersModal": {
+    "remove_user": "Видалити користувача",
+    "are_you_sure_you_want_to_remove": "Ви впевнені, що хочете видалити",
+    "user?": "Користувач?",
+    "this_action_can’t_be_undone": "Цю дію не можна скасувати",
+    "btn": {
+      "cancel": "Скасувати"
+    }
+  },
+  "userInfo": {
+    "title": {
+      "profile_overview": "Огляд профілю"
+    }
+  },
+  "usersInfo": {
+    "role": {
+      "user": "Користувач",
+      "administrator": "Адміністратор"
+    },
+    "title": {
+      "permissions_&_Access": "Дозволи та доступ",
+      "role": "Роль"
+    },
+    "text": {
+      "select_all_permissions": "Виберіть усі дозволи"
+    },
+    "btn": {
+      "save_changes": "Зберегти зміни"
+    },
+    "permissions": {
+      "lists_permissions": "Списки дозволів",
+      "tasks_permissions": "Дозволи завдань",
+      "user_management": "Керування користувачами",
+      "analytics_&_dashboard": "Аналітика та інформаційна панель"
+    },
+    "permissionsList": {
+      "create_list": "Створіть нові списки",
+      "read_list": "Перегляд власних списків",
+      "update_list": "Оновити власні списки",
+      "delete_list": "Видалити власні списки",
+      "read_all-lists": "View all users lists (admin)",
+      "create_task": "Створюйте нові завдання",
+      "read_task": "Перегляд власних завдань",
+      "update_task": "Оновлення власних завдань",
+      "delete_task": "Видалення власних завдань",
+      "read_all-tasks": "Переглянути всі завдання користувача (адміністратор)",
+      "read_users": "Переглянути список користувачів",
+      "update_user": "Оновити профілі користувачів",
+      "delete_user": "Видалити користувачів",
+      "manage_roles": "Керуйте ролями користувачів",
+      "manage_permissions": "Керувати дозволами користувача",
+      "read_dashboard": "Інформаційна панель доступу",
+      "read_analytics": "Перегляд аналітичних даних"
+    }
+  },
+  "analitycs": {
+    "tabs": {
+      "week": "тиждень",
+      "month": "місяць",
+      "top_5": "Топ 5",
+      "top_10": "Топ 10",
+      "top_15": "Топ 15"
+    }
+  },
+  "analytics": {
+    "chart": {
+      "created": "Створено",
+      "completed": "Завершено"
+    },
+    "date": {
+      "en_GB": "En GB",
+      "en-GB": "En-GB"
+    },
+    "daily": {
+      "created": "Створено",
+      "completed": "Виконано"
+    },
+    "title": {
+      "task_completion": "Виконання завдань",
+      "tasks_by_priority": "Завдання за пріоритетністю",
+      "status_overview": "Огляд завдань",
+      "tags_popularity": "Популярність тегів"
+    },
+    "completed": "Виконано",
+    "active": "Активний",
+    "overdue": "Прострочена"
+  },
+  "dasboard": {
+    "modalTitle": {
+      "edit_weekly_focus_goals": "Редагувати тижневі цілі",
+      "add-weekly_goals": "Додати тижневі цілі",
+      "selected": "Вибрано",
+      "choose_up_to_3_tasks_to_focus_on_this_week": "Виберіть до 3 завдань, на яких сфокусуєтесь на цьому тижні"
+    },
+    "toasts": {
+      "you_can_select_up_to_3_weekly_goals": "Ви можете вибрати до 3 цілей на тиждень",
+      "updated_successfully": "Оновлено успішно"
+    }
+  }
+}

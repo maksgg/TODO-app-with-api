@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ModalType } from "@/shared/types";
+import type { ModalType } from "@/shared/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 
 const { item } = defineProps<{
@@ -9,14 +9,12 @@ const { item } = defineProps<{
     emptyText: string;
     btnTitle: string;
     addBtnText: string;
+    btnKey?: string | undefined;
   };
 }>();
 
 const emit = defineEmits<{ "addWeeklyGoals": [ModalType] }>();
-const addWeeklyGoals = () => {
-  console.log("Button clicked, emitting addWeeklyGoals");
-  emit("addWeeklyGoals", "add");
-};
+const addWeeklyGoals = () => emit("addWeeklyGoals", "edit");
 </script>
 
 <template>
@@ -36,12 +34,12 @@ const addWeeklyGoals = () => {
         {{ item.emptyText }}
       </p>
       <VButton
-        v-if="item.addBtnText === 'Add weekly goal'"
+        v-if="item.btnKey === 'edit'"
         :text="item.addBtnText"
         variant="ghost"
         icon="plus"
         class="m-auto px-5 py-2 text-uiBtn text-primary gap-2 hover:scale-110"
-        @click="addWeeklyGoals"
+        @click="addWeeklyGoals()"
       />
       <VButton
         v-else

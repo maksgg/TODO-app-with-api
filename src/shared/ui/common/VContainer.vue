@@ -34,7 +34,7 @@ const styleVariants: Record<BoxStyle, string> = {
         {{ title }}
       </slot>
     </div>
-    <div class="flex flex-col justify-between">
+    <div class="flex flex-col flex-1">
       <slot />
     </div>
     <div

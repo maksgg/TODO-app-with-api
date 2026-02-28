@@ -1,6 +1,10 @@
 import { DateVariant } from "../types";
 
-export const formatDate = (isoString: string, variant: DateVariant): string => {
+export const formatDate = (
+  isoString: string,
+  variant: DateVariant,
+  locale = "en-GB",
+): string => {
   const date = new Date(isoString);
   const options: Record<DateVariant, Intl.DateTimeFormatOptions> = {
     short: {
@@ -14,7 +18,7 @@ export const formatDate = (isoString: string, variant: DateVariant): string => {
     },
   };
 
-  return date.toLocaleDateString("en-GB", options[variant]);
+  return date.toLocaleDateString(locale, options[variant]);
 };
 
 /**
