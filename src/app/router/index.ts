@@ -1,3 +1,4 @@
+import { tokenManager } from "@ametie/vue-muza-use";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 import { authGuard } from "./authGuards";
@@ -95,13 +96,21 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  await authStore.setUser();
+
+  if (tokenManager.getAccessToken() && !authStore.userData) {
+    await authStore.setUser();
+  }
 
   const authRes = authGuard(to);
-  if (authRes) return next(authRes);
+  if (authRes) {
+    return to.name === authRes.name ? next() : next(authRes);
+  }
 
   const permRes = permissionGuard(to);
-  if (permRes) return next(permRes);
+  if (permRes) {
+    if (to.name === permRes.name) return next();
+    return next(permRes);
+  }
 
   next();
 });

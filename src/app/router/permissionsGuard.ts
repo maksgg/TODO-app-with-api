@@ -13,6 +13,7 @@ export const permissionGuard = (to: RouteLocationNormalized) => {
 
   if (!hasAccess) {
     const fallbackName = to.name === "Dashboard" ? "profile" : "Dashboard";
+
     if (to.name === fallbackName) return;
 
     return { name: fallbackName };

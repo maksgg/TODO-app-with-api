@@ -18,6 +18,6 @@ export const authGuard = (to: RouteLocationNormalized) => {
   }
 
   if (to.meta.role === "admin" && useStore.userData && useStore.userData.role !== "admin") {
-    return { name: "Users" };
+    return { name: "Dashboard" };
   }
 };
