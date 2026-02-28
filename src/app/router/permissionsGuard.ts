@@ -1,4 +1,4 @@
-import type { RouteLocationNormalized } from "vue-router";
+import { RouteLocationNormalized } from "vue-router";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 
@@ -12,10 +12,9 @@ export const permissionGuard = (to: RouteLocationNormalized) => {
   const hasAccess = userPermissions.includes(requiredPermission);
 
   if (!hasAccess) {
-    if (to.name === "Dashboard") {
-      return { name: "profile" };
-    }
+    const fallbackName = to.name === "Dashboard" ? "profile" : "Dashboard";
+    if (to.name === fallbackName) return;
 
-    return { name: "Dashboard" };
+    return { name: fallbackName };
   }
 };
