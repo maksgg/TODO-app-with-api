@@ -5,11 +5,11 @@
       "login": "Логін",
       "email_address": "Адреса електронної пошти",
       "password": "Пароль",
-      "remember_me": "пам'ятай мене",
+      "remember_me": "Запам'ятати мене",
       "sign_in": "Увійдіть",
       "create_new_account": "Створити новий акаунт",
       "forgot_password?": "Забули пароль?",
-      "log_in": "авторизуватися",
+      "log_in": "Авторизуватися",
       "enter_your_email": "Введіть адресу електронної пошти",
       "enter_your_password": "Введіть свій пароль",
       "email": "Електронна пошта",
@@ -22,7 +22,7 @@
       "email_address": "Адреса електронної пошти",
       "password": "Пароль",
       "confirm_password": "Підтвердьте пароль",
-      "remember_me": "пам'ятай мене",
+      "remember_me": "Запам'ятати мене",
       "sign_up": "Зареєструватися",
       "already_have_an_account?": "Вже маєте обліковий запис?",
       "create_your_account": "Створіть свій акаунт",
@@ -120,8 +120,10 @@
     }
   },
   "profile": {
-    "account_details": "Реквізити рахунку",
+    "account_details": "Дані профілю",
     "full_name": "Ім'я користувача",
+    "email": "Електронна пошта",
+    "change_email_is_currently_unavailable": "Зміна електронної пошти наразі недоступна",
     "save_changes": "Зберегти зміни",
     "member_since": "Учасник з",
     "toasts": {
@@ -278,7 +280,7 @@
       "add_weekly_goal": "Додати тижневу ціль"
     },
     "date": {
-      "tomorrow": "завтра",
+      "tomorrow": "Завтра",
       "day_after_tomorrow": "Післязавтра",
       "this_week": "Цього тижня",
       "later": "Пізніше"
@@ -317,7 +319,7 @@
   },
   "usersTable": {
     "tableHead": {
-      "member": "Член",
+      "member": "Учасник",
       "role": "Роль",
       "registered": "Зареєстрований",
       "actions": "Дії"
@@ -352,7 +354,7 @@
   },
   "userInfo": {
     "title": {
-      "profile_overview": "Огляд профілю"
+      "all_members": "Усі учасники"
     }
   },
   "usersInfo": {
@@ -381,7 +383,7 @@
       "read_list": "Перегляд власних списків",
       "update_list": "Оновити власні списки",
       "delete_list": "Видалити власні списки",
-      "read_all-lists": "View all users lists (admin)",
+      "read_all-lists": "Переглянути всі списки користувача (адміністратор)",
       "create_task": "Створюйте нові завдання",
       "read_task": "Перегляд власних завдань",
       "update_task": "Оновлення власних завдань",

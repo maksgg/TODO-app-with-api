@@ -28,7 +28,7 @@ const menuItems = computed(() => authStore.getSidebarLinks(routes));
       v-if="route.name !== 'NotFound'"
       :links="menuItems"
     />
-    <div class="flex flex-col gap-6 mx-12 my-6 w-full min-w-0">
+    <div class="flex flex-col gap-6 mx-12 mt-6 w-full min-w-0">
       <Header />
       <RouterView />
     </div>

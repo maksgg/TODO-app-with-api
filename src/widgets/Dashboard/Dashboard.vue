@@ -55,8 +55,7 @@ const loadData = async () => {
   ]);
 };
 
-const mainLoader = computed(
-  () => deadlinesLoader.value || listsStore.allListsLoader || weeklyTasksLoader.value);
+const mainLoader = computed(() => deadlinesLoader.value || listsStore.allListsLoader);
 const groupDeadlineTasks = computed(() => filterDeadlineTasks(deadlinesTasks.value?.data));
 
 const tasksGroup = computed(() => {
@@ -117,6 +116,7 @@ onMounted(() => loadData());
         v-else
         :item="tasks"
         :loader="mainLoader"
+        :weekly-loader="weeklyTasksLoader"
         :local-loader="localLoaderId"
         @edit-weekly-goals="openModal"
         @remove-weekly-goal="removeWeeklyTask"

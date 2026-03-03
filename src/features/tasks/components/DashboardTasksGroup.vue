@@ -9,8 +9,9 @@ import VContainer from "@/shared/ui/common/VContainer.vue";
 import VLoader from "@/shared/ui/common/VLoader.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 
-const { item, loader = false, localLoader = null } = defineProps<{
+const { item, loader = false, weeklyLoader = false, localLoader = null } = defineProps<{
   loader: boolean;
+  weeklyLoader: boolean;
   localLoader: string | null;
   item: {
     variant?: "weekly" | "deadline",
@@ -65,8 +66,17 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
           :key="el"
         />
       </template>
+    </template>
+    <template v-if="item.variant === 'deadline'">
+      <DashboardTaskItem
+        v-for="el in item.fetchedData"
+        :key="el.id"
+        :item="el"
+      />
+    </template>
+    <template v-if=" weeklyLoader">
       <div
-        v-else-if="item.variant === 'weekly'"
+        v-if="item.variant === 'weekly'"
         class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-6"
       >
         <VContainer
@@ -79,13 +89,6 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
       </div>
     </template>
     <template v-else>
-      <template v-if="item.variant === 'deadline'">
-        <DashboardTaskItem
-          v-for="el in item.fetchedData"
-          :key="el.id"
-          :item="el"
-        />
-      </template>
       <div
         v-if="item.variant === 'weekly'"
         class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-6"

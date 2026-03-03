@@ -13,6 +13,7 @@ const { userData, loader } = defineProps<{
 
 const formField = ref({
   name: userData?.name || "",
+  email: userData?.email || "",
 });
 
 const isChanged = computed(() => formField.value.name !== userData?.name);
@@ -32,6 +33,12 @@ const updateUser = () => emit("updateUserData", formField.value);
       <VInput
         v-model="formField.name"
         :label="$t('profile.full_name')"
+      />
+      <VInput
+        v-model="formField.email"
+        :label="$t('profile.email')"
+        :disabled="true"
+        :support-text="$t('profile.change_email_is_currently_unavailable')"
       />
       <VButton
         :text="$t('profile.save_changes')"

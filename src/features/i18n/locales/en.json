@@ -122,6 +122,8 @@
   "profile": {
     "account_details": "Account details",
     "full_name": "Full name",
+    "email": "Email",
+    "change_email_is_currently_unavailable": "Change email is currently unavailable",
     "save_changes": "Save changes",
     "member_since": "Member since",
     "toasts": {
@@ -352,7 +354,7 @@
   },
   "userInfo": {
     "title": {
-      "profile_overview": "Profile overview"
+      "all_members": "All members"
     }
   },
   "usersInfo": {
