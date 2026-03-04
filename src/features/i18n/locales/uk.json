@@ -49,12 +49,13 @@
       "sign_up": "Зареєструватися"
     },
     "regularUser": { 
-      "sign_in_as_regular_user" : "Увійдіть як звичайний користувач",
+      "quick_start" : "Швидкий старт",
       "or": "чи"
     }
   },
   "credentials": {
     "designer": "Дизайнер",
+    "front_end": "Фронтенд",
     "anastasiia_orieshyna": "Анастасія Орєшина",
     "developer": "Розробник",
     "maksym_zhovmir": "Максим Жовмір",
@@ -427,8 +428,8 @@
       "tags_popularity": "Популярність тегів"
     },
     "completed": "Виконано",
-    "active": "Активний",
-    "overdue": "Прострочена"
+    "active": "Активні",
+    "overdue": "Прострочено"
   },
   "dasboard": {
     "modalTitle": {

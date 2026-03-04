@@ -9,7 +9,7 @@ const developersInfo = [
   {
     jobTitle: t("credentials.developer"),
     name: t("credentials.maksym_zhovmir"),
-    techStack: "Front-end (JS, TS, Vue.js, Pinia)",
+    techStack: `${t("credentials.front_end")} (JS, TS, Vue 3, Pinia, Vue Router, Composition API)`,
     email: "maks.zhovmir.97@gmail.com",
     linkedIn: "https://www.linkedin.com/in/maks-zhovmir-82864b27b/",
     worksLabel: "GitHub",

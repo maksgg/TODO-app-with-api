@@ -49,12 +49,13 @@
       "sign_up": "Sign up"
     },
     "regularUser": { 
-      "sign_in_as_regular_user" : "Sign in as regular user",
+      "quick_start" : "Quick start",
       "or": "or"
     }
   },
   "credentials": {
     "designer": "Designer",
+    "front_end": "Front-end",
     "anastasiia_orieshyna": "Anastasiia orieshyna",
     "developer": "Developer",
     "maksym_zhovmir": "Maksym zhovmir",

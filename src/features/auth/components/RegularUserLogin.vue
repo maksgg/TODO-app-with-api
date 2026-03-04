@@ -13,8 +13,9 @@ const submit = () => emit("submitRegularUser");
     <div class="h-[1px] bg-borderDefault flex-1" />
   </div>
   <VButton
-    :text="$t('auth.regularUser.sign_in_as_regular_user')"
+    :text="$t('auth.regularUser.quick_start')"
     size="full"
+    variant="secondary"
     :class="loader ? 'pointer-events-none' : ''"
     @click="submit"
   />
