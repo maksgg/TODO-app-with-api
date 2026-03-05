@@ -41,7 +41,7 @@ const allUsersLists = computed(() => groupListsByUser(listStore.allLists?.data))
 const expandList = (id: string) => isExpanded.value = isExpanded.value === id ? null : id;
 const openTargetList = (id: string) => {
   expandList(id);
-  router.replace({ name: "List", query: { id } });
+  router.push({ name: "Tasks", params: { id } });
 };
 
 const listActions = computed(() =>[
@@ -70,6 +70,7 @@ const activeModalType = computed(() => {
       defer
     >
       <VButton
+        v-if="currentTab === 'myLists'"
         :text="$t('lists.btn.create_new_list')"
         icon="plus"
         :disabled="!authStore.isAllowed('create:list')"

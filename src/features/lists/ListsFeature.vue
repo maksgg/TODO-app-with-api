@@ -27,7 +27,7 @@ const filterConfig = computed(() => [
   },
 ]);
 
-const currentTab = ref<"myLists" | "usersLists">("myLists");
+
 const searchQuery = ref("");
 const debounceSearch = debouncedRef<string>(searchQuery, 700);
 const toolbarPayload = ref({ sort: "createdAt:desc" });
@@ -56,7 +56,7 @@ const requestParams = computed(() => {
     q: searchQuery.value,
     sort: field,
     order: direction,
-    isOwn: currentTab.value === "myLists" ? true : undefined,
+    isOwn: listStore.currentTab === "myLists" ? true : undefined,
   };
 });
 const hasLists = computed(() => !!listStore.allLists?.data?.length);
@@ -65,25 +65,26 @@ watch(
   () => [
     debounceSearch.value,
     toolbarPayload.value,
-    currentTab.value,
+    listStore.currentTab,
   ],
   () => listStore.getAllLists({ params: requestParams.value }),
   { deep: true },
 );
 onMounted(() => listStore.getAllLists({ params: requestParams.value }));
-onUnmounted(() => currentTab.value = "myLists");
+onUnmounted(() => listStore.currentTab = "myLists");
 </script>
 
 <template>
   <div class="flex flex-col flex-1 gap-6">
     <VToggleTabs
       v-if="authStore.userData?.isAdmin || authStore.isAllowed('read:all-lists')"
-      v-model="currentTab"
+      v-model="listStore.currentTab"
       :options="listTabs"
     />
     <VToolbar
       v-model:search="searchQuery"
       v-model:filters="toolbarSelect"
+      :is-searchable="listStore.currentTab === 'myLists'"
       :filter-configs="filterConfig"
       :disabled="listStore.allListsLoader || !authStore.isAllowed('read:list')"
       :placeholder="$t('lists.toolbar.search')"
@@ -101,7 +102,7 @@ onUnmounted(() => currentTab.value = "myLists");
       />
       <ListCardsWrapper
         v-show="!listStore.allListsLoader && hasLists"
-        :current-tab="currentTab"
+        :current-tab="listStore.currentTab"
         :params="requestParams"
       />
     </div>

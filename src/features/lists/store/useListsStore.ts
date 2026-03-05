@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
 import useListsRequests from "@/features/lists/api/useListsRequests";
 
 export const useListsStore = defineStore("userLists", () => {
+  const currentTab = ref<"myLists" | "usersLists">("myLists");
   const { getAllUserLists } = useListsRequests();
 
   const {
@@ -15,5 +17,6 @@ export const useListsStore = defineStore("userLists", () => {
     allLists,
     allListsLoader,
     getAllLists,
+    currentTab,
   };
 });

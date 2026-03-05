@@ -290,6 +290,7 @@
   "header": {
     "title": {
       "manage_all_your_task_groups_in_one_place": "Manage all your task groups in one place",
+      "lists_overview": "Lists overview",
       "see_how_your_tasks_are_progressing_over_time": "See how your tasks are progressing over time",
       "good_to_see_you_again": "Good to see you again"
     }

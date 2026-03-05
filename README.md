@@ -4,7 +4,7 @@
 [![Vue](https://img.shields.io/badge/vue-3.x-4fc08d.svg)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-%23007acc.svg?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-**Muza** — це сучасний та інтуїтивно зрозумілий таск-менеджер, розроблений для ефективного управління щоденними справами та робочими процесами.
+**Task Manager** — це сучасний та інтуїтивно зрозумілий таск-менеджер, розроблений для ефективного управління щоденними справами та робочими процесами.
 
 🔗 **Відвідати додаток:** [https://maksgg.github.io/TODO-app-with-api/](https://maksgg.github.io/TODO-app-with-api/)
 

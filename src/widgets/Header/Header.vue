@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
 import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
+import { useListsStore } from "@/features/lists/store/useListsStore";
 import { useTasksStore } from "@/features/tasks/store/useTasksStore";
 import ThemeToggle from "@/features/theme/components/ThemeToggle.vue";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
@@ -11,13 +12,17 @@ import VButton from "@/shared/ui/common/VButton.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 
 const authStore = useAuthStore();
+const listsStore = useListsStore();
 const tasksStore = useTasksStore();
 const { t } = useI18n();
 const route = useRoute();
 
 const headerLoader = computed(() => tasksStore.loading || authStore.loading);
 const header = computed(() => {
-  if (route.name === "List" && route.query.id) {
+  if (listsStore.currentTab === "usersLists") {
+    return { title: t("header.title.lists_overview") };
+  }
+  if (route.name === "Tasks" && route.params.id) {
     return { title: tasksStore.allTasks?.listInfo?.title, path: "/list" };
   }
   if (route.name === "Dashboard") {
@@ -35,7 +40,7 @@ const header = computed(() => {
   <div
     v-show="header.title || headerLoader"
     class="flex justify-between items-center bg-secondaryBg
-    header-container rounded-xl py-3 px-4"
+    header-container rounded-xl py-3 px-4 h-[70px]"
   >
     <VSkeleton
       v-if="headerLoader && !tasksStore.targetTaskLoader"
@@ -58,7 +63,9 @@ const header = computed(() => {
         {{ header?.title }}
       </h2>
     </div>
-    <div class="flex gap-6">
+    <div
+      class="flex gap-6"
+    >
       <div id="header-action" />
       <ThemeToggle />
       <LanguageSelector variant="select" />
