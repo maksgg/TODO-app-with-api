@@ -62,8 +62,7 @@ const loadData = async () => {
   await Promise.all(promises);
 };
 
-const mainLoader = computed(
-  () => deadlinesLoader.value || listsStore.allListsLoader || weeklyTasksLoader.value);
+const mainLoader = computed(() => deadlinesLoader.value || listsStore.allListsLoader);
 const groupDeadlineTasks = computed(() => filterDeadlineTasks(deadlinesTasks.value?.data));
 
 const tasksGroup = computed(() => {
@@ -125,6 +124,7 @@ onMounted(() => loadData());
         :item="tasks"
         :loader="mainLoader"
         :is-allowed="authStore.isAllowed('read:list')"
+        :weekly-loader="weeklyTasksLoader"
         :local-loader="localLoaderId"
         @edit-weekly-goals="openModal"
         @remove-weekly-goal="removeWeeklyTask"

@@ -70,6 +70,7 @@ const activeModalType = computed(() => {
       defer
     >
       <VButton
+        v-if="currentTab === 'myLists'"
         :text="$t('lists.btn.create_new_list')"
         icon="plus"
         :disabled="!authStore.isAllowed('create:list')"

@@ -115,7 +115,7 @@ watch(
           :options="userRoles"
           :disabled="!authStore.isAllowed('manage:roles')"
           :title="$t('usersInfo.title.role')"
-          class="w-[11rem]"
+          class="w-[13.5rem]"
           @update:model="roleChange"
         />
         <VCheckbox

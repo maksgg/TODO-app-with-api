@@ -1,42 +1,24 @@
+<script setup lang="ts">
+import VNotFoundBackground from "@/shared/ui/common/VNotFoundBackground.vue";
+</script>
+
 <template>
-  <div class="not-found">
-    <h1>404</h1>
-    <p>Сторінку не знайдено</p>
-    <router-link to="/">
-      Повернутися на головну
+  <div
+    class="flex flex-col justify-center items-center gap-6
+  bg-primaryBg min-h-[100vh]"
+  >
+    <VNotFoundBackground />
+    <h1 class="text-headPrimary text-txtPrimary">
+      {{ $t("notFound.page_not_found") }}
+    </h1>
+    <p class="text-uiHead text-txtPrimary">
+      {{ $t("notFound.sub_text") }}
+    </p>
+    <router-link
+      to="/"
+      class="text-uiBtn text-primary hover:scale-110 transition-all"
+    >
+      {{ $t("notFound.back_to_dashboard") }}
     </router-link>
   </div>
 </template>
-
-<script setup lang="ts">
-// NotFound Page
-</script>
-
-<style scoped>
-.not-found {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  text-align: center;
-}
-
-.not-found h1 {
-  font-size: 6rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.not-found p {
-  font-size: 1.5rem;
-  margin: 1rem 0;
-}
-
-.not-found a {
-  color: #42b983;
-  text-decoration: none;
-  font-weight: 500;
-}
-</style>
-

@@ -49,12 +49,13 @@
       "sign_up": "Sign up"
     },
     "regularUser": { 
-      "sign_in_as_regular_user" : "Sign in as regular user",
+      "quick_start" : "Quick start",
       "or": "or"
     }
   },
   "credentials": {
     "designer": "Designer",
+    "front_end": "Front-end",
     "anastasiia_orieshyna": "Anastasiia orieshyna",
     "developer": "Developer",
     "maksym_zhovmir": "Maksym zhovmir",
@@ -122,6 +123,8 @@
   "profile": {
     "account_details": "Account details",
     "full_name": "Full name",
+    "email": "Email",
+    "change_email_is_currently_unavailable": "Change email is currently unavailable",
     "save_changes": "Save changes",
     "member_since": "Member since",
     "toasts": {
@@ -287,6 +290,7 @@
   "header": {
     "title": {
       "manage_all_your_task_groups_in_one_place": "Manage all your task groups in one place",
+      "lists_overview": "Lists overview",
       "see_how_your_tasks_are_progressing_over_time": "See how your tasks are progressing over time",
       "good_to_see_you_again": "Good to see you again"
     }
@@ -352,7 +356,7 @@
   },
   "userInfo": {
     "title": {
-      "profile_overview": "Profile overview"
+      "all_members": "All members"
     }
   },
   "usersInfo": {
@@ -442,5 +446,10 @@
       "you_can_select_up_to_3_weekly_goals": "You can select up to 3 weekly goals",
       "updated_successfully": "Updated successfully"
     }
+  },
+  "notFound": {
+    "page_not_found": "Oops! This task is missing...",
+    "sub_text": "It seems this page was deleted or never existed. Don't let this throw off your schedule!",
+    "back_to_dashboard": "Go back"
   }
 }

@@ -5,11 +5,11 @@
       "login": "Логін",
       "email_address": "Адреса електронної пошти",
       "password": "Пароль",
-      "remember_me": "пам'ятай мене",
+      "remember_me": "Запам'ятати мене",
       "sign_in": "Увійдіть",
       "create_new_account": "Створити новий акаунт",
       "forgot_password?": "Забули пароль?",
-      "log_in": "авторизуватися",
+      "log_in": "Авторизуватися",
       "enter_your_email": "Введіть адресу електронної пошти",
       "enter_your_password": "Введіть свій пароль",
       "email": "Електронна пошта",
@@ -22,7 +22,7 @@
       "email_address": "Адреса електронної пошти",
       "password": "Пароль",
       "confirm_password": "Підтвердьте пароль",
-      "remember_me": "пам'ятай мене",
+      "remember_me": "Запам'ятати мене",
       "sign_up": "Зареєструватися",
       "already_have_an_account?": "Вже маєте обліковий запис?",
       "create_your_account": "Створіть свій акаунт",
@@ -49,12 +49,13 @@
       "sign_up": "Зареєструватися"
     },
     "regularUser": { 
-      "sign_in_as_regular_user" : "Увійдіть як звичайний користувач",
+      "quick_start" : "Швидкий старт",
       "or": "чи"
     }
   },
   "credentials": {
     "designer": "Дизайнер",
+    "front_end": "Фронтенд",
     "anastasiia_orieshyna": "Анастасія Орєшина",
     "developer": "Розробник",
     "maksym_zhovmir": "Максим Жовмір",
@@ -120,8 +121,10 @@
     }
   },
   "profile": {
-    "account_details": "Реквізити рахунку",
+    "account_details": "Дані профілю",
     "full_name": "Ім'я користувача",
+    "email": "Електронна пошта",
+    "change_email_is_currently_unavailable": "Зміна електронної пошти наразі недоступна",
     "save_changes": "Зберегти зміни",
     "member_since": "Учасник з",
     "toasts": {
@@ -278,7 +281,7 @@
       "add_weekly_goal": "Додати тижневу ціль"
     },
     "date": {
-      "tomorrow": "завтра",
+      "tomorrow": "Завтра",
       "day_after_tomorrow": "Післязавтра",
       "this_week": "Цього тижня",
       "later": "Пізніше"
@@ -287,6 +290,7 @@
   "header": {
     "title": {
       "manage_all_your_task_groups_in_one_place": "Керуйте всіма своїми списками завдань в одному місці",
+      "lists_overview": "Огляд списків",
       "see_how_your_tasks_are_progressing_over_time": "Подивіться, як прогресують ваші завдання з часом",
       "good_to_see_you_again": "Раді вас знову бачити"
     }
@@ -317,7 +321,7 @@
   },
   "usersTable": {
     "tableHead": {
-      "member": "Член",
+      "member": "Учасник",
       "role": "Роль",
       "registered": "Зареєстрований",
       "actions": "Дії"
@@ -352,7 +356,7 @@
   },
   "userInfo": {
     "title": {
-      "profile_overview": "Огляд профілю"
+      "all_members": "Усі учасники"
     }
   },
   "usersInfo": {
@@ -381,7 +385,7 @@
       "read_list": "Перегляд власних списків",
       "update_list": "Оновити власні списки",
       "delete_list": "Видалити власні списки",
-      "read_all-lists": "View all users lists (admin)",
+      "read_all-lists": "Переглянути всі списки користувача (адміністратор)",
       "create_task": "Створюйте нові завдання",
       "read_task": "Перегляд власних завдань",
       "update_task": "Оновлення власних завдань",
@@ -425,8 +429,8 @@
       "tags_popularity": "Популярність тегів"
     },
     "completed": "Виконано",
-    "active": "Активний",
-    "overdue": "Прострочена"
+    "active": "Активні",
+    "overdue": "Прострочено"
   },
   "dasboard": {
     "modalTitle": {
@@ -439,5 +443,10 @@
       "you_can_select_up_to_3_weekly_goals": "Ви можете вибрати до 3 цілей на тиждень",
       "updated_successfully": "Оновлено успішно"
     }
+  },
+  "notFound": {
+    "page_not_found": "Ой! Цей таск кудись зник...",
+    "sub_text": "Схоже, ця сторінка була видалена або ніколи не існувала. Не дозволяйте цьому збити ваш графік!",
+    "back_to_dashboard": "Повернутись"
   }
 }

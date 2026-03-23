@@ -5,7 +5,7 @@ import { RouterLink } from "vue-router";
 import VIcon from "./VIcon.vue";
 import VLoader from "./VLoader.vue";
 
-type ButtonStyle = "primary" | "dangerous" | "ghost" | "sidebar";
+type ButtonStyle = "primary" | "dangerous" | "ghost" | "sidebar" | "secondary";
 
 type ButtonSize = "sm" | "md" | "lg" | "fit" | "full";
 
@@ -72,6 +72,18 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     gap-2 px-4 py-3 rounded-xl bg-dangerous
     enabled:hover:border-text-primary 
   `,
+  secondary: `
+  ${baseButtonStyles}
+  bg-white/5
+  backdrop-blur-md
+  border border-white/10
+  text-white/80
+  hover:bg-white/10
+  hover:text-white
+  hover:border-white/20
+  gap-2 px-4 py-3 rounded-xl
+  transition-all duration-300
+`,
   ghost: `
     group flex items-center gap-2 border-none text-bodyL text-start truncate
     transition-all duration-300 disabled:text-txtMutedLight 

@@ -25,12 +25,16 @@ const selectItem = (color: string) => activeColor.value = color;
         v-for="item in items"
         :key="item.id"
         type="button"
-        class="w-6 h-6 rounded-full hover:border-2 hover:border-toggle"
-        :style="{ backgroundColor: item.color }"
+        class="w-6 h-6 rounded-full transition-all duration-200 ease-out
+         hover:scale-105 hover:shadow-lg active:scale-95"
+        :style="{
+          backgroundColor: item.color,
+          '--hover-shadow': item.color + '40'
+        }"
         :class="[
-          activeColor === item.color
-            ? 'border-2  border-toggle hover:toggle'
-            : ''
+          activeColor === item.color ?
+            'ring-1 ring-offset-1 ring-toggle' :
+            'hover:ring-2 hover:ring-offset-1 hover:ring-gray-300'
         ]"
         @click="selectItem(item.color)"
       />

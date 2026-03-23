@@ -42,7 +42,7 @@ export function useWeeklyGoals() {
   } =  fetchToggleWeeklyGoalTasks(changedIds, {
     method: "PATCH",
     onSuccess: async () => {
-      await Promise.all([getWeeklyTasks(), listsStore.getAllLists({ params: { isOwn: true } })]);
+      await getWeeklyTasks();
     },
     onFinish: () => {
       weeklySelectedTaskIds.value = [];
