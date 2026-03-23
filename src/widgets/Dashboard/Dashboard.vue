@@ -6,10 +6,12 @@ import WeeklyGoalsModals from "./components/WeeklyGoalsModals.vue";
 import { useWeeklyGoals } from "./composables/useWeeklyGoals";
 import { filterDeadlineTasks } from "./utils/filterDateByDeadlines";
 
+
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import useTasksRequests from "@/features/tasks/api/useTasksRequests";
 import DashboardTasksGroup from "@/features/tasks/components/DashboardTasksGroup.vue";
 import EmptyDashboardTasks from "@/features/tasks/components/ui/EmptyDashboardTasks.vue";
+import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VContainer from "@/shared/ui/common/VContainer.vue";
 
 const taskPayloadParams = ref({
@@ -21,6 +23,7 @@ const taskPayloadParams = ref({
 const { t } = useI18n();
 
 const listsStore = useListsStore();
+const authStore = useAuthStore();
 const {
   listsWithTasks,
   weeklyTasks,
@@ -48,11 +51,15 @@ const {
 });
 
 const loadData = async () => {
-  await Promise.all([
+  const promises: any[] = [
     getDeadlinesTasks(),
     getWeeklyTasks(),
-    listsStore.getAllLists({ params: { isOwn: true } }),
-  ]);
+  ];
+  if (authStore.isAllowed("read:list")) {
+    promises.push(listsStore.getAllLists({ params: { isOwn: true } }));
+  }
+
+  await Promise.all(promises);
 };
 
 const mainLoader = computed(
@@ -117,6 +124,7 @@ onMounted(() => loadData());
         v-else
         :item="tasks"
         :loader="mainLoader"
+        :is-allowed="authStore.isAllowed('read:list')"
         :local-loader="localLoaderId"
         @edit-weekly-goals="openModal"
         @remove-weekly-goal="removeWeeklyTask"

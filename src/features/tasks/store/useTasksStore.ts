@@ -14,7 +14,7 @@ export const useTasksStore = defineStore("tasks", () => {
 
   const { fetchAllTasks } = useTasksRequests();
 
-  const { data: allTasks, execute: getAllTasks, loading } = fetchAllTasks(() => route.query.id, {
+  const { data: allTasks, execute: getAllTasks, loading } = fetchAllTasks(() => route.params.id, {
     onSuccess: ({ data }) => {
       data.data.forEach((el) => el.deadline = dateFormatterIntoOneWord(el.dueDate));
       targetTaskLoader.value = null;

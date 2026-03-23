@@ -9,8 +9,9 @@ import VContainer from "@/shared/ui/common/VContainer.vue";
 import VLoader from "@/shared/ui/common/VLoader.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 
-const { item, loader = false, localLoader = null } = defineProps<{
+const { item, loader = false, localLoader = null, isAllowed = false } = defineProps<{
   loader: boolean;
+  isAllowed: boolean;
   localLoader: string | null;
   item: {
     variant?: "weekly" | "deadline",
@@ -50,6 +51,7 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
       </span>
     </div>
     <VButton
+      v-if="isAllowed"
       :text="item.btnTitle"
       variant="ghost"
       class="self-start text-uiBtn text-primary hover:scale-110"

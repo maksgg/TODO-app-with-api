@@ -41,7 +41,7 @@ const allUsersLists = computed(() => groupListsByUser(listStore.allLists?.data))
 const expandList = (id: string) => isExpanded.value = isExpanded.value === id ? null : id;
 const openTargetList = (id: string) => {
   expandList(id);
-  router.replace({ name: "List", query: { id } });
+  router.push({ name: "Tasks", params: { id } });
 };
 
 const listActions = computed(() =>[

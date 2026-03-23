@@ -101,7 +101,7 @@ export const useTasksModals = (params: () => TaskRequestParams) => {
         tasksStore.getAllTasks({ params: params });
       },
     });
-  const { execute: createTask, loading: createLoading } = fetchCreateTask(() => route.query.id, {
+  const { execute: createTask, loading: createLoading } = fetchCreateTask(() => route.params.id, {
     data: taskPayload,
     onSuccess: () => {
       toast.success(t("tasks.toasts.task_created_successfully"));

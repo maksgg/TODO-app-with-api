@@ -17,7 +17,7 @@ const route = useRoute();
 
 const headerLoader = computed(() => tasksStore.loading || authStore.loading);
 const header = computed(() => {
-  if (route.name === "List" && route.query.id) {
+  if (route.name === "Tasks" && route.params.id) {
     return { title: tasksStore.allTasks?.listInfo?.title, path: "/list" };
   }
   if (route.name === "Dashboard") {
