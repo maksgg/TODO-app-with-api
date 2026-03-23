@@ -9,12 +9,16 @@ import VContainer from "@/shared/ui/common/VContainer.vue";
 import VLoader from "@/shared/ui/common/VLoader.vue";
 import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 
-const { item, loader = false, localLoader = null, isAllowed = false } = defineProps<{
-  loader: boolean;
-  isAllowed: boolean;
-const { item, loader = false, weeklyLoader = false, localLoader = null } = defineProps<{
+const {
+  item,
+  loader = false,
+  weeklyLoader = false,
+  localLoader = null,
+  isAllowed = false,
+} = defineProps<{
   loader: boolean;
   weeklyLoader: boolean;
+  isAllowed: boolean;
   localLoader: string | null;
   item: {
     variant?: "weekly" | "deadline",
