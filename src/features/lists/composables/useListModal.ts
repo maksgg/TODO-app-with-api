@@ -79,7 +79,11 @@ export const useListModal = (options: ListOptions) => {
     onSuccess: () => {
       toast.success(t("lists.toasts.list_created_successfully"));
       closeModal();
-      options.searchQuery.value = "";
+
+      options.filters.value = {
+        search: "",
+        sort: "createdAt:desc",
+      };
     },
   });
 

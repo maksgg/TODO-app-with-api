@@ -20,7 +20,7 @@ const { params } = defineProps<{
   params: RequestParams;
 }>();
 
-const searchQuery = defineModel<string>("searchQuery");
+const filters = defineModel<Record<"search" | "sort", string>>("filters");
 
 const listStore = useListsStore();
 const authStore = useAuthStore();
@@ -37,7 +37,7 @@ const {
   isChanged,
 } = useListModal({
   params: () => params,
-  searchQuery: searchQuery,
+  filters: filters,
 });
 
 const isExpanded = ref<string | null>(null);

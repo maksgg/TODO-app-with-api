@@ -65,7 +65,7 @@ type ListModal = "create" | "edit" | "delete";
 
 type ListOptions = {
   params: () => RequestParams;
-  searchQuery: Ref<string>;
+  filters: Ref<Record<"search" | "sort", string>>;
 };
 
 export type {

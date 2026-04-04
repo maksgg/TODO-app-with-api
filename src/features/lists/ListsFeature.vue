@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { debouncedRef } from "@vueuse/core";
-import { onUnmounted, onMounted, computed, ref, watch } from "vue";
+import { refDebounced } from "@vueuse/core";
+import { onUnmounted, onMounted, computed, ref, watch, toRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 import ListCardsWrapper from "./components/ListCardsWrapper.vue";
@@ -26,16 +26,17 @@ const filterConfig = computed(() => [
     ],
   },
 ]);
-
-const searchQuery = ref("");
-const debounceSearch = debouncedRef<string>(searchQuery, 700);
-const toolbarPayload = ref({ sort: "createdAt:desc" });
+const filters = ref({
+  search: "",
+  sort: "createdAt:desc",
+});
+const debounceSearch = refDebounced<string>(toRef(filters.value, "search"), 700);
 
 const toolbarSelect = computed({
-  get: () => getMappedFilters(filterConfig.value, toolbarPayload.value),
+  get: () => getMappedFilters(filterConfig.value, filters.value),
   set: (newValues) => {
     const updated = extractFilterValues(newValues);
-    Object.assign(toolbarPayload.value, updated);
+    Object.assign(filters.value, updated);
   },
 });
 
@@ -48,11 +49,11 @@ const listTabs = computed(() => [
 ]);
 
 const requestParams = computed(() => {
-  const rawSort = toolbarPayload.value.sort || "createdAt:desc";
+  const rawSort = filters.value.sort || "createdAt:desc";
   const [field, direction] = rawSort.split(":");
 
   return {
-    q: listStore.currentTab === "myLists" ? searchQuery.value : undefined,
+    q: listStore.currentTab === "myLists" ? filters.value.search : undefined,
     sort: field,
     order: direction,
     isOwn: listStore.currentTab === "myLists" ? true : undefined,
@@ -63,7 +64,7 @@ const hasLists = computed(() => !!listStore.allLists?.data?.length);
 watch(
   () => [
     debounceSearch.value,
-    toolbarPayload.value,
+    filters.value.sort,
     listStore.currentTab,
   ],
   () => listStore.getAllLists({ params: requestParams.value }),
@@ -81,7 +82,7 @@ onUnmounted(() => listStore.currentTab = "myLists");
       :options="listTabs"
     />
     <VToolbar
-      v-model:search="searchQuery"
+      v-model:search="filters.search"
       v-model:filters="toolbarSelect"
       :is-searchable="listStore.currentTab === 'myLists'"
       :filter-configs="filterConfig"
@@ -101,7 +102,7 @@ onUnmounted(() => listStore.currentTab = "myLists");
       />
       <ListCardsWrapper
         v-show="!listStore.allListsLoader && hasLists"
-        v-model:search-query="searchQuery"
+        v-model:filters="filters"
         :params="requestParams"
       />
     </div>
