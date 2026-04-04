@@ -16,10 +16,11 @@ import { useAuthStore } from "@/shared/stores/useAuthStore";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VModal from "@/shared/ui/common/VModal.vue";
 
-const { currentTab, params } = defineProps<{
-  currentTab: "myLists" | "usersLists";
+const { params } = defineProps<{
   params: RequestParams;
 }>();
+
+const searchQuery = defineModel<string>("searchQuery");
 
 const listStore = useListsStore();
 const authStore = useAuthStore();
@@ -34,7 +35,10 @@ const {
   isModalType,
   targetList,
   isChanged,
-} = useListModal(() => params);
+} = useListModal({
+  params: () => params,
+  searchQuery: searchQuery,
+});
 
 const isExpanded = ref<string | null>(null);
 const allUsersLists = computed(() => groupListsByUser(listStore.allLists?.data));
@@ -70,7 +74,7 @@ const activeModalType = computed(() => {
       defer
     >
       <VButton
-        v-if="currentTab === 'myLists'"
+        v-if="listStore.currentTab === 'myLists'"
         :text="$t('lists.btn.create_new_list')"
         icon="plus"
         :disabled="!authStore.isAllowed('create:list')"
@@ -81,7 +85,7 @@ const activeModalType = computed(() => {
       v-if="authStore.isAllowed('read:list')"
       class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6"
     >
-      <template v-if="currentTab === 'myLists'">
+      <template v-if="listStore.currentTab === 'myLists'">
         <ListCard
           v-for="list in listStore.allLists?.data"
           :key="list._id"
@@ -91,7 +95,7 @@ const activeModalType = computed(() => {
           @open-list="openTargetList"
         />
       </template>
-      <template v-if="currentTab === 'usersLists'">
+      <template v-if="listStore.currentTab === 'usersLists'">
         <UserListCard
           v-for="list in allUsersLists"
           :key="list.userListsInfo.ownerId"

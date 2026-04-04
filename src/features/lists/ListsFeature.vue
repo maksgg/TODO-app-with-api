@@ -27,7 +27,6 @@ const filterConfig = computed(() => [
   },
 ]);
 
-
 const searchQuery = ref("");
 const debounceSearch = debouncedRef<string>(searchQuery, 700);
 const toolbarPayload = ref({ sort: "createdAt:desc" });
@@ -53,7 +52,7 @@ const requestParams = computed(() => {
   const [field, direction] = rawSort.split(":");
 
   return {
-    q: searchQuery.value,
+    q: listStore.currentTab === "myLists" ? searchQuery.value : undefined,
     sort: field,
     order: direction,
     isOwn: listStore.currentTab === "myLists" ? true : undefined,
@@ -102,7 +101,7 @@ onUnmounted(() => listStore.currentTab = "myLists");
       />
       <ListCardsWrapper
         v-show="!listStore.allListsLoader && hasLists"
-        :current-tab="listStore.currentTab"
+        v-model:search-query="searchQuery"
         :params="requestParams"
       />
     </div>

@@ -16,7 +16,7 @@ export const useAuthStore = defineStore("user", () => {
     if (userData.value || !tokenManager.getAccessToken()) return;
 
     await execute();
-    return userData.value ;
+    return userData.value;
   };
 
   const router =  useRouter();

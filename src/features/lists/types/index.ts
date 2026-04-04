@@ -1,3 +1,5 @@
+import { Ref } from "vue";
+
 import type { Pagination, Response } from "@/shared/types/index";
 
 type RequestParams = {
@@ -61,6 +63,11 @@ type AllListResponse = Response<List, Pagination>;
 
 type ListModal = "create" | "edit" | "delete";
 
+type ListOptions = {
+  params: () => RequestParams;
+  searchQuery: Ref<string>;
+};
+
 export type {
   List,
   UserGroupInfo,
@@ -72,4 +79,5 @@ export type {
   ListResponse,
   ListModal,
   RequestParams,
+  ListOptions,
 };

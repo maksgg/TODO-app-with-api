@@ -6,13 +6,12 @@ import useListsRequests from "../api/useListsRequests";
 import { useListsStore } from "../store/useListsStore";
 import type {
   List, ListModal,
-  RequestParams,
+  ListOptions,
 } from "../types";
 
 import { useModal } from "@/shared/composables/useModal";
 
-export const useListModal = (
-  params: () => RequestParams) => {
+export const useListModal = (options: ListOptions) => {
   const isModalType = ref<ListModal | null>(null);
   const listPayload = ref({ title: "", hexColor: "#3B82F6" });
   const targetList = shallowRef<List | null>(null);
@@ -80,7 +79,7 @@ export const useListModal = (
     onSuccess: () => {
       toast.success(t("lists.toasts.list_created_successfully"));
       closeModal();
-      listStore.getAllLists({ params: params });
+      options.searchQuery.value = "";
     },
   });
 
@@ -91,7 +90,7 @@ export const useListModal = (
       onSuccess: () => {
         toast.success(t("lists.toasts.list_updated_successfully"));
         closeModal();
-        listStore.getAllLists({ params: params });
+        listStore.getAllLists({ params: options.params });
       },
     });
 
@@ -101,7 +100,7 @@ export const useListModal = (
       onSuccess: () => {
         toast.success(t("lists.toasts.list_deleted_successfully"));
         closeModal();
-        listStore.getAllLists({ params: params });
+        listStore.getAllLists({ params: options.params });
       },
     });
 
