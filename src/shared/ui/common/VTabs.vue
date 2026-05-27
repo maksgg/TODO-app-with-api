@@ -46,14 +46,27 @@ const inactiveStyle: Record<string, string> = {
 </script>
 
 <template>
-  <div v-if="loader" class="flex gap-2 p-2">
-    <VSkeleton v-for="tab in tabs" :key="tab.id" width="80" height="32" />
+  <div
+    v-if="loader"
+    class="flex gap-2 p-2"
+  >
+    <VSkeleton
+      v-for="tab in tabs"
+      :key="tab.id"
+      width="80"
+      height="32"
+    />
   </div>
-  <div v-else :class="containerStyle[variant]">
-    <span v-if="title" class="text-sm font-medium text-secondary-bg px-2">{{
-      title
-    }}</span>
-
+  <div
+    v-else
+    :class="containerStyle[variant]"
+  >
+    <span
+      v-if="title"
+      class="text-sm font-medium text-secondary-bg px-2"
+    >
+      {{ title }}
+    </span>
     <button
       v-for="tab in tabs"
       :key="tab.id"
@@ -65,7 +78,10 @@ const inactiveStyle: Record<string, string> = {
       ]"
       @click="modelValue = tab.id"
     >
-      <slot :name="`tab-${tab.id}`" :tab="tab">
+      <slot
+        :name="`tab-${tab.id}`"
+        :tab="tab"
+      >
         <span class="relative z-10">{{ tab.label }}</span>
       </slot>
 
