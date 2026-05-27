@@ -11,10 +11,8 @@ import { useThemeStore } from "@/shared/stores/useThemeStore";
 
 import "./main.scss";
 
-// Create Vue app instance
 const app = createApp(App);
 
-// Install plugins
 app.use(createPinia());
 app.use(router);
 app.use(i18n);
@@ -40,7 +38,6 @@ export const api = createApiClient({
   },
 });
 
-// 2. Install Plugin
 app.use(createApi({
   axios: api,
   onError: (error) => toast.error(error.message),

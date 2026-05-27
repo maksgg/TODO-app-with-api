@@ -4,7 +4,7 @@ import { toast } from "vue-sonner";
 
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useRegisterFormValidation } from "@/features/auth/composables/useAuthValidation";
-import type { AuthFormType } from "@/features/auth/types/index";
+import type { AuthFormType } from "@/features/auth/types";
 import VButton from "@/shared/ui/common/VButton.vue";
 import VInput from "@/shared/ui/common/VInput.vue";
 

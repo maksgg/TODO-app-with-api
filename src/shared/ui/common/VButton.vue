@@ -73,17 +73,17 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     enabled:hover:border-text-primary 
   `,
   secondary: `
-  ${baseButtonStyles}
-  bg-white/5
-  backdrop-blur-md
-  border border-white/10
-  text-white/80
-  hover:bg-white/10
-  hover:text-white
-  hover:border-white/20
-  gap-2 px-4 py-3 rounded-xl
-  transition-all duration-300
-`,
+    ${baseButtonStyles}
+    bg-white/5
+    backdrop-blur-md
+    border border-white/10
+    text-white/80
+    hover:bg-white/10
+    hover:text-white
+    hover:border-white/20
+    gap-2 px-4 py-3 rounded-xl
+    transition-all duration-300
+  `,
   ghost: `
     group flex items-center gap-2 border-none text-bodyL text-start truncate
     transition-all duration-300 disabled:text-txtMutedLight 
@@ -169,30 +169,8 @@ const btnSize: Record<ButtonSize, string> = {
 </template>
 
 <style scoped>
-/* Анімація появи тексту */
-.sidebar-fade-enter-active {
-  /* Текст чекає 0.2с, поки розшириться сайдбар */
-  transition: all 0.05s ease-out 0.05s;
-}
-
-/* Анімація зникнення тексту */
-.sidebar-fade-leave-active {
-  /* Зникає миттєво, щоб не "вилазити" при звуженні */
-  transition: all 0.1s ease-in;
-}
-
-.sidebar-fade-enter-from,
-.sidebar-fade-leave-to {
-  opacity: 0;
-  transform: translateX(-10px);
-  /* Обнуляємо ширину, щоб текст не штовхав сусідні елементи під час зникнення */
-  max-width: 0;
-}
-
 .v-button__text {
   display: inline-block;
   white-space: nowrap;
-  /* Для плавності можна додати max-width */
-  /* max-width: 200px; */
 }
 </style>
