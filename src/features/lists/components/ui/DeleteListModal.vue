@@ -17,12 +17,12 @@ const request = () => emit("request");
     :title="$t('lists.modal.delete_list')"
   >
     <div class="flex flex-col gap-2 text-center">
-      <h4 class="text-uiHead text-txtPrimary">
+      <h4 class="text-ui-head text-txt-primary">
         {{ $t("lists.modal.are_you_sure_you_want_to_delete") }}
         <span>"{{ list?.title }}"</span>
         {{ $t("lists.modal.list?") }}
       </h4>
-      <p class="text-bodyM text-secondary">
+      <p class="text-body-m text-secondary">
         {{ $t("lists.modal.this_action_can’t_be_undone") }}
       </p>
     </div>
@@ -30,7 +30,7 @@ const request = () => emit("request");
       <div class="flex gap-5 w-full justify-center">
         <VButton
           :text="$t('lists.modalBtn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="closeModal"
         />
         <VButton

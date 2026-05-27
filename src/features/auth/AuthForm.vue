@@ -69,7 +69,7 @@ const submitRegularUser = async () => {
 <template>
   <div
     class="flex flex-col justify-center items-center gap-8 px-12 py-8
-    bg-authForm border border-authBorder rounded-2xl w-[27.5rem]"
+    bg-auth-form border border-auth-border rounded-2xl w-110"
   >
     <VTabs
       v-model="activeTab"

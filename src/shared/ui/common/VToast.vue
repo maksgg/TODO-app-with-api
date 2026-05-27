@@ -29,7 +29,10 @@ const { theme } = defineProps<{ theme: "light" | "dark" }>();
 </template>
 
 <style scoped>
+@reference "../../../app/main.css";
+
 :deep([data-sonner-toast]) {
-  @apply bg-secondaryBg text-txtPrimary border border-borderDefault rounded-xl
+  @apply bg-secondary-bg text-txt-primary
+    border border-border-default rounded-xl;
 }
 </style>

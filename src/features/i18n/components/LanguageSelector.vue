@@ -17,6 +17,6 @@ const selectedLangObject = computed({
   <VMultiselect
     v-model:model="selectedLangObject"
     :options="languages.options"
-    class="w-[5rem]"
+    class="w-20"
   />
 </template>

@@ -43,11 +43,10 @@ const openModal = (modalType: ModalType) => emit("openModal", modalType, list);
       />
     </div>
     <template #footer>
-      <div class="flex items-start gap-4 text-bodyL">
+      <div class="flex items-start gap-4 text-body-l">
         <span class="text-secondary">{{ list.totalTasks }} {{ $t("lists.card.tasks") }}</span>
         <span class="text-muted">{{ list.completedTasks }} {{ $t("lists.card.completed") }}</span>
       </div>
     </template>
   </VContainer>
 </template>
-

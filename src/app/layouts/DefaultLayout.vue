@@ -22,7 +22,7 @@ const menuItems = computed(() => authStore.getSidebarLinks(routes));
   </div>
   <main
     v-else
-    class="relative flex flex-1 w-full h-screen bg-primaryBg"
+    class="relative flex flex-1 w-full h-screen bg-primary-bg"
   >
     <Sidebar
       v-if="route.name !== 'NotFound'"

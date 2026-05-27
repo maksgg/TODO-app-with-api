@@ -21,19 +21,19 @@ const tasksInfo = computed(() => {
       key: "completed",
       taskStatus:  t("analytics.completed"),
       tasksCount: data?.tasks.completed,
-      tasksCountColor: "text-success",
+      tasksCountColor: "text-success!",
     },
     {
       key: "active",
       taskStatus: t("analytics.active"),
       tasksCount: data?.tasks.todo,
-      tasksCountColor: "text-muted",
+      tasksCountColor: "text-muted!",
     },
     {
       key: "overdue",
       taskStatus: t("analytics.overdue"),
       tasksCount: data?.tasks.archived,
-      tasksCountColor: "text-dangerous",
+      tasksCountColor: "text-dangerous!",
     },
   ];
 });
@@ -46,7 +46,7 @@ const tasksInfo = computed(() => {
       <VContainer
         v-for="taskInfo in tasksInfo"
         :key="taskInfo.key"
-        class="w-[20%] shadow-customShadow"
+        class="w-[20%] shadow-custom-shadow"
       >
         <template #header>
           <VSkeleton
@@ -56,7 +56,7 @@ const tasksInfo = computed(() => {
           />
           <h3
             v-else
-            class="text-uiLabel text-secondary"
+            class="text-ui-label text-secondary"
           >
             {{ taskInfo.taskStatus }}
           </h3>
@@ -68,7 +68,7 @@ const tasksInfo = computed(() => {
         />
         <span
           v-else
-          :class="['text-dataMetric text-muted', taskInfo.tasksCountColor]"
+          :class="['text-data-metric text-muted', taskInfo.tasksCountColor]"
         >
           {{ taskInfo.tasksCount }}
         </span>

@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* Базові стилі для html та body */
+html {
+  background-color: var(--color-secondary-bg);
+}
+body {
+  background-color: var(--color-secondary-bg);
+  min-height: 100vh;
+}
+
+@theme {
+  /* --- ШРИФТИ --- */
+  --font-sans: "Inter", "system-ui", "sans-serif";
+
+  /* --- РОЗМІРИ ШРИФТІВ & СТИЛІ --- */
+  --text-auth-title: 40px;
+  --text-auth-title--line-height: 110%;
+  --text-auth-title--font-weight: 600;
+
+  --text-head-primary: 32px;
+  --text-head-primary--line-height: 120%;
+  --text-head-primary--font-weight: 600;
+
+  --text-data-metric: 28px;
+  --text-data-metric--line-height: 120%;
+  --text-data-metric--font-weight: 600;
+
+  --text-modal-head: 24px;
+  --text-modal-head--line-height: 120%;
+  --text-modal-head--font-weight: 600;
+
+  --text-intro: 24px;
+  --text-intro--line-height: 120%;
+  --text-intro--font-weight: 500;
+
+  --text-heading-card: 20px;
+  --text-heading-card--line-height: 120%;
+  --text-heading-card--font-weight: 600;
+
+  --text-display-name: 20px;
+  --text-display-name--line-height: 120%;
+  --text-display-name--font-weight: 500;
+
+  --text-body-intro: 20px;
+  --text-body-intro--line-height: 130%;
+  --text-body-intro--font-weight: 400;
+
+  --text-ui-head: 16px;
+  --text-ui-head--line-height: 110%;
+  --text-ui-head--font-weight: 600;
+
+  --text-ui-btn: 16px;
+  --text-ui-btn--line-height: 110%;
+  --text-ui-btn--font-weight: 500;
+
+  --text-body-l: 16px;
+  --text-body-l--line-height: 130%;
+  --text-body-l--font-weight: 400;
+
+  --text-body-emphasis: 14px;
+  --text-body-emphasis--line-height: 120%;
+  --text-body-emphasis--font-weight: 600;
+
+  --text-ui-label: 14px;
+  --text-ui-label--line-height: 120%;
+  --text-ui-label--font-weight: 500;
+
+  --text-body-m: 14px;
+  --text-body-m--line-height: 130%;
+  --text-body-m--font-weight: 400;
+
+  --text-data-body: 12px;
+  --text-data-body--line-height: 120%;
+  --text-data-body--font-weight: 500;
+
+  --text-ui-caption: 12px;
+  --text-ui-caption--line-height: 120%;
+  --text-ui-caption--font-weight: 400;
+
+  /* --- КОРДОНИ --- */
+  --color-theme-switch-b: var(--color-theme-switch-border);
+
+  /* --- ТІНІ (box-shadow) --- */
+  --shadow-soft: 0 0 12px -6px var(--color-shadow-color);
+  --shadow-taught: 0 0 14px -2px var(--color-shadow-color);
+  --shadow-theme-switch-shadow: var(--color-theme-switch-shadow);
+  --shadow-sidebar-hover: inset 0px 4px 8px -4px rgba(0, 8, 232, 0.2);
+  --shadow-sidebar-active: 0px 0 8px 0px rgba(0, 0, 0, 0.35);
+  --shadow-sidebar-bg-shadow: 0px 0px 15px 0px rgba(49, 33, 191, 0.4);
+  --shadow-theme-morph:
+    inset 1px -1px 1px -1px rgba(255, 255, 255), inset -1px 1px 1px -1px #fff;
+  --shadow-inner-outline: inset 0 0 0 2px var(--color-primary);
+  --shadow-inner-border: inset 0 0 0 1px var(--color-list-card-border);
+  --shadow-inner-outline-dangerous: inset 0 0 0 2px var(--color-dangerous);
+  --shadow-inner-custom-shadow: inset 0 -10px 10px -5px
+    rgba(124, 131, 190, 0.26);
+  --shadow-custom-shadow: 0 4px 6px -2px rgba(124, 131, 190, 0.26);
+  --shadow-active-tab: 1px 1px 2px 0 rgba(35, 46, 146, 0.16);
+  --shadow-select-shadow: 0 2px 6px 0 rgba(124, 131, 190, 0.16);
+  --shadow-weekly-goal-modal: inset 0 0 4px 1px rgba(124, 131, 190, 0.26);
+  --shadow-select-option: inset 13px 0 0px -10px rgba(62, 79, 255, 1);
+
+  /* --- ТІНІ (drop-shadow) --- */
+  --filter-theme-svg-shadow: drop-shadow(0 0 1.26px white) drop-shadow(0 0 2.52px white);
+  --drop-shadow-primary: 1px 0px 2px rgba(62, 79, 255, 1);
+  --drop-shadow-dangerous: 1px 0px 2px rgba(220, 38, 38, 1);
+
+  /* --- ФОНОВІ ЗОБРАЖЕННЯ / ГРАДІЄНТИ --- */
+  --background-image-theme-switch-gradient: linear-gradient(
+    to bottom,
+    var(--color-gradient-from),
+    var(--color-gradient-to)
+  );
+  --background-image-header-border: linear-gradient(
+    90deg,
+    rgba(62, 13, 168, 1) 0%,
+    rgba(95, 134, 239, 1) 100%
+  );
+  --background-image-logo-gradient: linear-gradient(
+    90deg,
+    #4b5bff 0%,
+    #7592ff 100%
+  );
+  --background-image-auth-bg: url(@/shared/assets/images/auth-bg.png);
+  --background-image-auth-form: linear-gradient(
+    180deg,
+    rgba(30, 0, 76, 0.4) 0%,
+    rgba(0, 12, 240, 0.4) 100%
+  );
+
+  /* ==========================================================================
+     🎨 РЕЄСТРАЦІЯ НАЗВ КОЛЬОРІВ (Тут ми кажемо Tailwind, які класи створювати)
+     ========================================================================== */
+  --color-primary-bg: #f9fafb;
+  --color-secondary-bg: #ffffff;
+  --color-secondary-bg-dark: #11162a;
+  --color-secondary-bg-light: #ffffff;
+  --color-skeleton-bg: #dedfe0;
+  --color-txt-primary: #0f172a;
+  --color-txt-primary-dark: #e6e9f5;
+  --color-txt-secondary-dark: #a6adcf;
+  --color-txt-disabled-dark: #767d9b;
+  --color-txt-muted-dark: #6e76a3;
+  --color-txt-muted-light: #94a3b8;
+  --color-txt-intro: rgba(44, 52, 90, 1);
+  --color-muted: #94a3b8;
+  --color-elevated: #ffffff;
+  --color-disabled-btn: #cbd5e1;
+  --color-primary: #476fff;
+  --color-secondary: #475569;
+  --color-active-primary: #4b5bff;
+  --color-dangerous: #ef4444;
+  --color-warning: #f59e0b;
+  --color-success: #22c55e;
+  --color-toggle: #283f78;
+  --color-active-dangerous: #b91c1c;
+  --color-dangerous-err-msg: #f08a8a;
+  --color-auth-border: #6c7cff;
+  --color-border-default: #d3e0fc;
+  --color-list-card-border: #c6d3f4;
+  --color-border-hover: #a9befe;
+  --color-border-default-dark: #2b3d8a;
+  --color-disabled-border: #f0f1f3;
+  --color-vue-date-picker: #959595;
+  --color-sidebar-hover-link: #232a4a;
+  --color-sidebar-hover-btn: rgba(0, 8, 232, 0.2);
+  --color-sidebar-border: rgba(11, 0, 80, 0.5);
+  --color-gradient-from: #422cd0;
+  --color-gradient-to: #7592ff;
+  --color-theme-switch-border: #b7c7f8;
+  --color-thumb: rgba(11, 0, 80, 0.2);
+  --color-shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   🌙 ЗМІНА ЗНАЧЕНЬ ДЛЯ ТЕМНОЇ ТЕМИ (Пишеться окремо під @theme блоком)
+   ========================================================================== */
+[data-theme="dark"] {
+  --color-primary-bg: #0b0f1a;
+  --color-secondary-bg: #11162a;
+  --color-secondary-bg-dark: #11162a;
+  --color-secondary-bg-light: #ffffff;
+  --color-skeleton-bg: #202a42;
+  --color-txt-primary: #e6e9f5;
+  --color-txt-primary-dark: #e6e9f5;
+  --color-txt-secondary-dark: #a6adcf;
+  --color-txt-disabled-dark: #767d9b;
+  --color-txt-muted-dark: #6e76a3;
+  --color-txt-muted-light: #94a3b8;
+  --color-txt-intro: rgba(183, 199, 248, 1);
+  --color-muted: #94a3b8;
+  --color-elevated: #1d2645;
+  --color-disabled-btn: #cbd5e1;
+  --color-primary: #6c7cff;
+  --color-secondary: #a6adcf;
+  --color-active-primary: #4b5bff;
+  --color-dangerous: #ef4444;
+  --color-warning: #f59e0b;
+  --color-success: #22c55e;
+  --color-toggle: #c6d3f4;
+  --color-active-dangerous: #b91c1c;
+  --color-dangerous-err-msg: #f08a8a;
+  --color-auth-border: #6c7cff;
+  --color-border-default: #2b3d8a;
+  --color-list-card-border: #283f78;
+  --color-border-hover: #a9befe;
+  --color-border-default-dark: #2b3d8a;
+  --color-disabled-border: #1b2240;
+  --color-vue-date-picker: #959595;
+  --color-sidebar-hover-link: #232a4a;
+  --color-sidebar-hover-btn: rgba(0, 8, 232, 0.2);
+  --color-sidebar-border: rgba(11, 0, 80, 0.5);
+  --color-gradient-from: #161c33;
+  --color-gradient-to: #183bc4;
+  --color-theme-switch-border: #2c345a;
+  --color-thumb: rgba(11, 0, 80, 0.2);
+  --color-shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Наприкінці підключаємо інші стилі компонентів */
+@import "../shared/assets/styles/components/style.css";

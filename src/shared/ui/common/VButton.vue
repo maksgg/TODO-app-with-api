@@ -42,9 +42,9 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const isRouterLink = computed((): boolean => !!props.to);
 
 const baseButtonStyles: string = `
-  group relative flex justify-center items-center text-uiBtn text-secondaryBgLight
-  disabled:border-disabledBtn disabled:bg-disabledBtn disabled:text-txtMutedLight 
-  disabled:drop-shadow-none disabled:cursor-not-allowed
+  group relative flex justify-center items-center text-ui-btn text-secondary-bg-light
+  disabled:border-disabled-btn disabled:bg-disabled-btn disabled:text-txt-muted-light
+  disabled:drop-shadow-none disabled:cursor-not-allowed cursor-pointer
 `;
 const iconTransform = computed(() => {
   if (props.variant !== "sidebar") return "";
@@ -55,22 +55,22 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
   primary: `
     ${baseButtonStyles}
     border border-primary
-    hover:bg-activePrimary
-    hover:border-activePrimary
-    active:bg-activePrimary
+    hover:bg-active-primary
+    hover:border-active-primary
+    active:bg-active-primary
     active:drop-shadow-none
     gap-2 px-4 py-3 rounded-xl bg-primary
-    enabled:hover:border-text-primary 
+    enabled:hover:border-text-primary
   `,
   dangerous: `
     ${baseButtonStyles}
     border border-dangerous
-    hover:bg-activeDangerous
-    hover:border-activeDangerous
-    active:bg-activeDangerous
+    hover:bg-active-dangerous
+    hover:border-active-dangerous
+    active:bg-active-dangerous
     active:drop-shadow-none
     gap-2 px-4 py-3 rounded-xl bg-dangerous
-    enabled:hover:border-text-primary 
+    enabled:hover:border-text-primary
   `,
   secondary: `
     ${baseButtonStyles}
@@ -85,17 +85,17 @@ const btnStyleVariants: Record<ButtonStyle, string> = {
     transition-all duration-300
   `,
   ghost: `
-    group flex items-center gap-2 border-none text-bodyL text-start truncate
-    transition-all duration-300 disabled:text-txtMutedLight 
+    group flex items-center gap-2 border-none text-body-l text-start truncate
+    transition-all duration-300 disabled:text-txt-muted-light cursor-pointer
     disabled:drop-shadow-none disabled:cursor-not-allowed disabled:pointer-events-none
   `,
-  sidebar: `group relative flex items-center gap-2 px-4 py-3 w-full border-none 
-    whitespace-nowrap text-txtSecondaryDark text-uiBtn hover:rounded-lg leading-none
-    [&.router-link-active]:bg-secondaryBgDark
-    [&.router-link-active]:text-txtPrimaryDark
+  sidebar: `group relative flex items-center gap-2 px-4 py-3 w-full border-none cursor-pointer
+    whitespace-nowrap text-txt-secondary-dark text-ui-btn hover:rounded-lg leading-none
+    [&.router-link-active]:bg-secondary-bg-dark
+    [&.router-link-active]:text-txt-primary-dark
     [&.router-link-active]:rounded-lg
-    [&.router-link-active]:shadow-sidebarActive
-    hover:bg-sidebarHoverBtn
+    [&.router-link-active]:shadow-sidebar-active
+    hover:bg-sidebar-hover-btn
     hover:text-white
   `,
 };
@@ -159,7 +159,7 @@ const btnSize: Record<ButtonSize, string> = {
       v-if="props.tooltip && !showText"
       class="
         pointer-events-none absolute bottom-full left-[85%] -translate-x-1/4 mb-1
-        z-[100] whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white shadow-lg
+        z-100 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white shadow-lg
         opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100
       "
     >

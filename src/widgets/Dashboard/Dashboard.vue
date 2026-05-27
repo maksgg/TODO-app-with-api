@@ -107,12 +107,12 @@ onMounted(() => loadData());
 <template>
   <div
     class="relative grid grid-cols-1 lg:grid-cols-2 gap-6 w-full pb-2
-    rounded-lg overflow-auto no-scrollbar min-h-[5rem]"
+    rounded-lg overflow-auto no-scrollbar min-h-20"
   >
     <VContainer
       v-for="(tasks, index) in tasksGroup"
       :key="tasks.title"
-      :class="['shadow-customShadow', index === 2 ? 'lg:col-span-2' : 'col-span-1']"
+      :class="['shadow-custom-shadow', index === 2 ? 'lg:col-span-2' : 'col-span-1']"
     >
       <EmptyDashboardTasks
         v-if="!mainLoader && tasks.fetchedData?.length === 0"

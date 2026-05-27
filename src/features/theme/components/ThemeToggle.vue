@@ -22,13 +22,13 @@ const theme = computed<boolean>({
   >
     <template #custom-switch="{ checked }">
       <div
-        class="relative h-[32px] w-[60px] rounded-2xl
-        transition-all ease-in-out overflow-hidden bg-themeSwitchGradient border
-        border-themeSwitchBorder"
+        class="relative h-8 w-15 rounded-2xl
+        transition-all ease-in-out overflow-hidden bg-theme-switch-gradient border
+        border-theme-switch-border"
       >
         <div
           class="absolute top-1/2 -translate-y-1/2 transition-all duration-300"
-          :class="checked ? 'left-2' : 'left-[calc(100%-35%)]'"
+          :class="checked ? 'left-2' : 'left-[65%]'"
         >
           <SwitchSunIcon v-if="checked" />
           <ThemeMoonIcon v-else />
@@ -36,9 +36,9 @@ const theme = computed<boolean>({
 
         <div
           class="absolute top-1/2 -translate-y-1/2 rounded-full
-          shadow-themeMorph w-[26px] h-[26px] flex items-center
+          shadow-theme-morph w-6.5 h-6.5 flex items-center
            justify-center transition-all ease-in-out bg-thumb"
-          :class="!checked ? 'left-[3px]' : 'left-[calc(100%-3px)] -translate-x-full'"
+          :class="!checked ? 'left-0.75' : 'left-[calc(100%-3px)] -translate-x-full'"
         >
           <SwitchSunIcon v-if="!checked" />
           <ThemeMoonIcon v-else />

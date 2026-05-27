@@ -84,7 +84,7 @@ const priorityOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle :title="$t('analytics.title.tasks_by_priority')" />
-    <VContainer class="shadow-customShadow h-full">
+    <VContainer class="shadow-custom-shadow h-full">
       <div class="flex flex-col justify-center items-center gap-8 flex-1">
         <VSkeleton
           v-if="!data && loader"
@@ -109,7 +109,7 @@ const priorityOption = computed<EChartsOption>(() => {
         :option="priorityOption"
         :autoresize="true"
         :loading="loader"
-        class="h-[26.4rem]"
+        class="h-[26.4rem]!"
       />
     </VContainer>
   </div>

@@ -26,20 +26,20 @@ onClickOutside(target, () => {
   <div
     ref="target"
     :class="[
-      `flex flex-col gap-5 p-6 bg-secondaryBg shadow-innerBorder transition-all hover:scale-105`,
+      `flex flex-col gap-5 p-6 bg-secondary-bg shadow-inner-border transition-all hover:scale-105`,
       isExpanded ? 'rounded-t-xl z-50 relative' : 'rounded-xl z-0 relative',
     ]"
   >
     <div class="flex flex-col gap-1">
-      <h3 class="text-headingCard text-txtPrimary">
+      <h3 class="text-heading-card text-txt-primary">
         {{ userListsInfo.name }}
       </h3>
-      <h4 class="text-uiCaption text-muted">
+      <h4 class="text-ui-caption text-muted">
         {{ userListsInfo.email }}
       </h4>
-      <h4 class="text-bodyEmphasis text-txtPrimary border-b border-borderDefault pb-2">
+      <h4 class="text-body-emphasis text-txt-primary border-b border-border-default pb-2">
         {{ $t("lists.card.role:") }}
-        <span class="text-bodyM text-secondary">
+        <span class="text-body-m text-secondary">
           {{ $t(`usersTable.toolbar.${userListsInfo.role}`).toLowerCase() }}
         </span>
       </h4>
@@ -49,7 +49,7 @@ onClickOutside(target, () => {
         :text="`${$t('lists.lists')} (${totalLists})`"
         variant="ghost"
         icon-size="sm"
-        class="text-txtPrimary"
+        class="text-txt-primary"
         @click="expandList"
       >
         <template #icon-right>
@@ -66,16 +66,16 @@ onClickOutside(target, () => {
     <Transition name="slide-fade">
       <div
         v-if="isExpanded"
-        class="absolute left-0 top-full z-50 w-full mt-[-2px] rounded-xl rounded-t-none
-        border border-t-0 border-listCardBorder bg-secondaryBg p-4 shadow-customShadow"
+        class="absolute left-0 top-full z-50 w-full -mt-0.5 rounded-xl rounded-t-none
+        border border-t-0 border-list-card-border bg-secondary-bg p-4 shadow-custom-shadow"
       >
-        <div class="flex flex-col gap-2 overflow-y-auto pr-2 custom-scrollbar max-h-[200px]">
+        <div class="flex flex-col gap-2 overflow-y-auto pr-2 custom-scrollbar max-h-50">
           <div
             v-for="(list, index) in userListsInfo.allTitles"
             :key="list.listId"
             :style="{ zIndex: userListsInfo.allTitles.length - index }"
-            class="group relative flex items-center gap-1 text-bodyM text-txtPrimary
-                bg-secondaryBg rounded-lg border border-transparent cursor-pointer
+            class="group relative flex items-center gap-1 text-body-m text-txt-primary
+                bg-secondary-bg rounded-lg border border-transparent cursor-pointer
                 transition-all"
           >
             <VButton
@@ -83,13 +83,15 @@ onClickOutside(target, () => {
               variant="ghost"
               icon-size="sm"
               :disabled="disabled"
-              :class="[disabled ? '' : 'group-hover:text-activePrimary transition-colors']"
+              :class="[
+                disabled ? '' : 'group-hover:text-active-primary transition-colors',
+              ]"
               @click="openList(list.listId)"
             />
             <span
               :class="[
-                'text-muted text-uiCaption',
-                disabled ? '' : 'group-hover:text-activePrimary transition-colors'
+                'text-muted text-ui-caption',
+                disabled ? '' : 'group-hover:text-active-primary transition-colors'
               ]"
             >
               ({{ list.totalTasks }})

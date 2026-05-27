@@ -72,7 +72,7 @@ const tagsOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle :title="$t('analytics.title.tags_popularity')" />
-    <VContainer class="shadow-customShadow">
+    <VContainer class="shadow-custom-shadow">
       <VTabs
         v-model="limit.id"
         :tabs="limitOptions"
@@ -96,7 +96,7 @@ const tagsOption = computed<EChartsOption>(() => {
         :autoresize="true"
         :loading="loader"
         :loading-options="loadingOptions"
-        class="h-[23rem]"
+        class="h-92!"
       />
     </VContainer>
   </div>

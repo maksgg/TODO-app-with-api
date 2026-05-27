@@ -13,7 +13,7 @@ const expandSidebar = () => emit("is-expanded");
   <div class="flex justify-between">
     <span
       v-if="isExpanded"
-      class="text-bodyEmphasis bg-logoGradient bg-clip-text text-transparent text-nowrap"
+      class="text-body-emphasis bg-logo-gradient bg-clip-text text-transparent text-nowrap"
     >TASK MANAGER</span>
     <VButton
       :icon="isExpanded ? 'chevronLeft' : 'chevronRight'"
@@ -25,4 +25,3 @@ const expandSidebar = () => emit("is-expanded");
     />
   </div>
 </template>
-

@@ -12,7 +12,7 @@ import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
     </div>
 
     <div
-      class="flex flex-col border-b border-borderDefault bg-primaryBg"
+      class="flex flex-col border-b border-border-default bg-primary-bg"
     >
       <div class="flex px-2">
         <div class="flex gap-2 w-[45%]">
@@ -48,7 +48,7 @@ import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
       <div
         v-for="i in 9"
         :key="i"
-        class="flex items-center gap-4 px-2 py-5 border-b border-borderDefault last:border-0"
+        class="flex items-center gap-4 px-2 py-5 border-b border-border-default last:border-0"
       >
         <div class="flex flex-col gap-2 w-[45%]">
           <VSkeleton

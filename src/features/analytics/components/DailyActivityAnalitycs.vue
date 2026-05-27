@@ -90,7 +90,7 @@ const dailyOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle :title="$t('analytics.title.task_completion')" />
-    <VContainer class="shadow-customShadow">
+    <VContainer class="shadow-custom-shadow">
       <div
         v-if="!data && loader"
         class="flex flex-col gap-7 w-full"
@@ -108,7 +108,7 @@ const dailyOption = computed<EChartsOption>(() => {
         :autoresize="true"
         :loading="loader"
         :loading-options="loadingOptions"
-        class="h-[20rem]"
+        class="h-80!"
       />
     </VContainer>
   </div>

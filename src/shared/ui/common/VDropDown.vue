@@ -68,12 +68,12 @@ const selectedLabel = computed((): string => {
 
 const triggerStyle: Record<DropDown["variant"], string> = {
   primary: "text-primary hover:drop-shadow-primary",
-  custom: "text-bodyL text-txtPrimary",
+  custom: "text-body-l text-txt-primary",
   languages: "bg-primary p-1 text-text-color",
 };
 const menuStyle: Record<DropDown["variant"], string> = {
-  primary: "border rounded-lg bg-primaryBg border-borderDefault",
-  custom: "text-bodyL text-txtPrimary bg-primaryBg",
+  primary: "border rounded-lg bg-primary-bg border-border-default",
+  custom: "text-body-l text-txt-primary bg-primary-bg",
   languages: "bg-primary p-1 text-text-color",
 };
 const placementStyle: Record<DropDown["placement"], string> = {
@@ -86,13 +86,13 @@ const placementStyle: Record<DropDown["placement"], string> = {
 
 <template>
   <div
-    class="relative cursor-pointer"
+    class="relative"
     tabindex="0"
     @focusout="isOpened = false"
   >
     <button
       :class="[
-        'flex items-center gap-2 transition-all',
+        'flex items-center gap-2 transition-all cursor-pointer',
         disabled ? 'cursor-not-allowed opacity-50' : '',
         props.trigger === 'icon' ? triggerStyle[props.variant] : 'p-1'
       ]"
@@ -141,11 +141,11 @@ const placementStyle: Record<DropDown["placement"], string> = {
         v-for="item in props.options"
         :key="item.value"
         :class="[
-          'flex gap-2 px-2 py-2 text-bodyL disabled:cursor-none rounded-md',
-          item.dangerous ? 'text-dangerous' : 'text-txtPrimary',
+          'flex gap-2 px-2 py-2 text-body-l disabled:cursor-none rounded-md',
+          item.dangerous ? 'text-dangerous' : 'text-txt-primary',
           item.disabled
             ? 'opacity-50 cursor-not-allowed pointer-events-none'
-            : 'hover:bg-borderDefault cursor-pointer',
+            : 'hover:bg-border-default cursor-pointer',
         ]"
         @click="selectedValue(item)"
       >

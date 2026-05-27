@@ -115,7 +115,7 @@ watch(
           :options="userRoles"
           :disabled="!authStore.isAllowed('manage:roles')"
           :title="$t('usersInfo.title.role')"
-          class="w-[13.5rem]"
+          class="w-54"
           @update:model="roleChange"
         />
         <VCheckbox
@@ -130,7 +130,7 @@ watch(
           :key="list.group"
           class="flex flex-col gap-4"
         >
-          <span class="text-headingCard text-txtPrimary">{{ list.group }}</span>
+          <span class="text-heading-card text-txt-primary">{{ list.group }}</span>
           <div
             v-for="el in list.items"
             :key="el.value"

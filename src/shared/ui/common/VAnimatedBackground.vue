@@ -119,6 +119,6 @@ onUnmounted(() => {
     class="fixed inset-0 z-10 pointer-events-none"
   />
   <div
-    class="fixed inset-0 z-10 bg-gradient-to-br from-primary/5 via-accent/5 to-info/5"
+    class="fixed inset-0 z-10 bg-linear-to-br from-primary/5 via-accent/5 to-info/5"
   />
 </template>

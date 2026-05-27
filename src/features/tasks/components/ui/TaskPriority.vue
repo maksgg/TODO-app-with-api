@@ -26,10 +26,9 @@ const priorityStyles: Record<string, { dot: string, text: string }> = {
       :class="priorityStyles[priority]?.dot"
     />
     <span
-      :class="['text-bodyM',priorityStyles[priority]?.text]"
+      :class="['text-body-m',priorityStyles[priority]?.text]"
     >
       {{ firstLetterUp(priority) }}
     </span>
   </div>
 </template>
-

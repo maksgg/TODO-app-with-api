@@ -9,7 +9,7 @@ import router from "./router";
 import { i18n } from "@/shared/composables/useI18n";
 import { useThemeStore } from "@/shared/stores/useThemeStore";
 
-import "./main.scss";
+import "./main.css";
 
 const app = createApp(App);
 
@@ -24,10 +24,11 @@ export const api = createApiClient({
   baseURL: import.meta.env.VITE_API_URL,
   authOptions: {
     refreshUrl: "/auth/refresh",
-    onTokenRefreshed: ({ data }) => tokenManager.setTokens({
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-    }),
+    onTokenRefreshed: ({ data }) =>
+      tokenManager.setTokens({
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+      }),
     refreshPayload: () => ({
       refreshToken: tokenManager.getRefreshToken(),
     }),
@@ -38,10 +39,12 @@ export const api = createApiClient({
   },
 });
 
-app.use(createApi({
-  axios: api,
-  onError: (error) => toast.error(error.message),
-}));
+app.use(
+  createApi({
+    axios: api,
+    onError: (error) => toast.error(error.message),
+  }),
+);
 
 // Mount the app
 app.mount("#app");

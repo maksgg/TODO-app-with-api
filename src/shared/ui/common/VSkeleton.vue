@@ -31,7 +31,7 @@ const variantClasses = {
   <div
     :class="[
       `skeleton-loader relative overflow-hidden rounded-2xl
-      animate-pulse bg-skeletonBg`,
+      animate-pulse bg-skeleton-bg`,
       variantClasses[variant]
     ]"
     :style="skeletonStyles"

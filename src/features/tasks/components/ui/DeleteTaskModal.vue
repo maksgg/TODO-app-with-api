@@ -17,20 +17,20 @@ const request = () => emit("request");
     :title="$t('tasks.modal.delete_task')"
   >
     <div class="flex flex-col gap-2 text-center">
-      <h4 class="text-uiHead text-txtPrimary">
+      <h4 class="text-ui-head text-txt-primary">
         {{ $t("tasks.modal.are_you_sure_you_want_to_delete") }}
         <span>"{{ task?.title }}"</span>
         {{ $t("tasks.modal.task?") }}
       </h4>
-      <p class="text-bodyM text-secondary">
-        {{ $t("tasks.modal.this_action_can’t_be_undone") }}
+      <p class="text-body-m text-secondary">
+        {{ $t("tasks.modal.this_action_can't_be_undone") }}
       </p>
     </div>
     <template #footer>
       <div class="flex gap-5 w-full justify-center">
         <VButton
           :text="$t('tasks.modalBtn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="closeModal"
         />
         <VButton

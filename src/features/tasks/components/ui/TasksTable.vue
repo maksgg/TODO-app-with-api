@@ -56,7 +56,7 @@ const emit = defineEmits<{
     <template #col-deadline="{ row }">
       <span
         :class="[
-          'text-bodyM', row.deadline === 'Overdue' ? 'text-dangerous' : 'text-txtPrimary']"
+          'text-body-m', row.deadline === 'Overdue' ? 'text-dangerous' : 'text-txt-primary']"
       >
         {{ row.deadline }}
       </span>

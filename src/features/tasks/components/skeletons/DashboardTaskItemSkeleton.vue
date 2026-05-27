@@ -3,7 +3,7 @@ import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 h-[85px]">
+  <div class="flex flex-col gap-3 h-21.25">
     <div class="flex justify-between">
       <VSkeleton
         width="200"

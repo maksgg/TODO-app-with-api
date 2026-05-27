@@ -233,7 +233,7 @@ onMounted(() => loadData());
       <div class="flex gap-5 w-full justify-end">
         <VButton
           :text="$t('tasks.modalBtn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="closeModal"
         />
         <VButton

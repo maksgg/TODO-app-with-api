@@ -39,7 +39,7 @@ const submitForm = async () => {
 <template>
   <form
     class="flex flex-col items-center gap-5
-    rounded-xl w-full text-authTitle text-txtPrimaryDark"
+    rounded-xl w-full text-auth-title text-txt-primary-dark"
     @submit.prevent="submitForm"
   >
     <h1>

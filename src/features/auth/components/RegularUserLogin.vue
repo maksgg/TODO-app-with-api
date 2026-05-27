@@ -8,9 +8,9 @@ const submit = () => emit("submitRegularUser");
 
 <template>
   <div class="flex items-center w-full gap-4">
-    <div class="h-[1px] bg-borderDefault flex-1" />
-    <span class="text-uiLabel text-secondary">{{ $t('auth.regularUser.or') }}</span>
-    <div class="h-[1px] bg-borderDefault flex-1" />
+    <div class="h-px bg-border-default flex-1" />
+    <span class="text-ui-label text-secondary">{{ $t('auth.regularUser.or') }}</span>
+    <div class="h-px bg-border-default flex-1" />
   </div>
   <VButton
     :text="$t('auth.regularUser.quick_start')"

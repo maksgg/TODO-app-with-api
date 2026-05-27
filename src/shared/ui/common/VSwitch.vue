@@ -77,15 +77,15 @@ const trackSize: Record<ToggleSize, string> = {
                trackSize[props.size], { 'opacity-50': props.disabled },
                checked ?
                  `border-none bg-primary ` :
-                 'bg-secondaryBg border-toggle'
+                 'bg-secondary-bg border-toggle'
       ]"
     >
       <span
         :class="['flex justify-center items-center', toggleSize[props.size],
                  'rounded-full absolute top-1/2 -translate-y-1/2 transition-all',
                  checked ?
-                   `bg-secondaryBg left-[calc(100%-1px)] -translate-x-full` :
-                   `bg-toggle left-[1px] translate-x-0`
+                   `bg-secondary-bg left-[calc(100%-1px)] -translate-x-full` :
+                   `bg-toggle left-1px translate-x-0`
         ]"
       >
         <slot
@@ -96,7 +96,7 @@ const trackSize: Record<ToggleSize, string> = {
     </div>
     <div
       v-if="props.text"
-      class="text-bodyM text-txtPrimary"
+      class="text-body-m text-txt-primary"
     >
       <slot>{{ props.text }}</slot>
     </div>
