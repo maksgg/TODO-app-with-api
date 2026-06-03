@@ -5,7 +5,7 @@ import VButton from "../common/VButton.vue";
 import VLoader from "../common/VLoader.vue";
 
 import { TableParams } from "@/shared/types";
-import VTableSortIcon from "@/shared/ui/common/VTableSortIcon.vue";
+import VTableSortIcon from "@/shared/ui/table/VTableSortIcon.vue";
 import { firstLetterUp } from "@/shared/utils/index";
 
 type TableHeader = {
@@ -157,7 +157,7 @@ const loadMore = () => {
               {{ head.label }}
               <button
                 v-if="sortAble && shouldShowFilter(head)"
-                class="ml-auto"
+                class="ml-auto cursor-pointer"
                 @click="sorted(head.key)"
               >
                 <VTableSortIcon

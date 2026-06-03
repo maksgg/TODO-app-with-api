@@ -13,8 +13,7 @@ import { groupListsByUser } from "../utils/groupListsByUser";
 
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VModal } from "@/shared/ui/index";
 
 const { params } = defineProps<{
   params: RequestParams;

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 const { loader } = defineProps<{ loader: boolean; }>();
 const emit = defineEmits<{ "submitRegularUser": [void] }>();
+
 const submit = () => emit("submitRegularUser");
 </script>
 

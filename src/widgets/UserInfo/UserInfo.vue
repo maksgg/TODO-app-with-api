@@ -6,7 +6,7 @@ import ProfileOverview from "@/features/profile/components/ProfileOverview.vue";
 import useUsersRequests from "@/features/users/api/useUsersRequests";
 import UserInfoPermissionsList from "@/features/users/components/UserInfoPermissionsList.vue";
 import type {  UserPayload } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 const route = useRoute();
 

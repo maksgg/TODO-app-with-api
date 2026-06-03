@@ -3,13 +3,12 @@ import { computed, toValue } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
-import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
+import { LanguageSelector } from "@/features/i18n/index";
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import { useTasksStore } from "@/features/tasks/store/useTasksStore";
-import ThemeToggle from "@/features/theme/components/ThemeToggle.vue";
+import { ThemeToggle } from "@/features/theme/index";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VButton, VSkeleton } from "@/shared/ui/index";
 
 const authStore = useAuthStore();
 const listsStore = useListsStore();

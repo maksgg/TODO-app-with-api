@@ -6,13 +6,12 @@ import WeeklyGoalsModals from "./components/WeeklyGoalsModals.vue";
 import { useWeeklyGoals } from "./composables/useWeeklyGoals";
 import { filterDeadlineTasks } from "./utils/filterDateByDeadlines";
 
-
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import useTasksRequests from "@/features/tasks/api/useTasksRequests";
 import DashboardTasksGroup from "@/features/tasks/components/DashboardTasksGroup.vue";
 import EmptyDashboardTasks from "@/features/tasks/components/ui/EmptyDashboardTasks.vue";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VContainer from "@/shared/ui/common/VContainer.vue";
+import { VContainer } from "@/shared/ui/index";
 
 const taskPayloadParams = ref({
   limit: 20,
@@ -144,11 +143,11 @@ onMounted(() => loadData());
 
 <style scoped>
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Для Chrome, Safari та Opera */
+  display: none;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* Для Internet Explorer та Edge */
-  scrollbar-width: none;  /* Для Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

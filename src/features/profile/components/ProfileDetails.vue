@@ -2,9 +2,7 @@
 import { ref, computed } from "vue";
 
 import type { UserInfo } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VInput from "@/shared/ui/common/VInput.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { VButton, VInput, VTitle } from "@/shared/ui/index";
 
 const { userData, loader } = defineProps<{
   userData: UserInfo | null;

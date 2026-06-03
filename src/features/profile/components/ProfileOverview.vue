@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import ProfileOverviewSkeleton from "./ProfileOverviewSkeleton.vue";
-
+import { ProfileOverviewSkeleton } from "@/features/profile/components/index";
 import type { UserInfo } from "@/shared/types";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { VTitle } from "@/shared/ui/index";
 import { formatDate } from "@/shared/utils/index";
 
 const { userData, title, loader = false } = defineProps<{

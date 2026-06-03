@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VContainer, VSkeleton } from "@/shared/ui/index";
 </script>
 
 <template>

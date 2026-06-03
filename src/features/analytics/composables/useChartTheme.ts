@@ -1,6 +1,6 @@
 import { computed, MaybeRefOrGetter, toValue } from "vue";
 
-import { getThemeColor } from "../utils/getThemeColor";
+import { getThemeColor } from "@/features/analytics/utils/getThemeColor";
 
 export function useChartTheme(theme: MaybeRefOrGetter<string>) {
   const chartTheme = computed(() => {

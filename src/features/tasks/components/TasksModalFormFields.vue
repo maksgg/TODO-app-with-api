@@ -9,8 +9,7 @@ import type { ModalFields, Task } from "../types";
 import TaskTags from "./ui/TaskTags.vue";
 
 import useDatePickerLocale from "@/shared/composables/useDatePickerLocale";
-import VInput from "@/shared/ui/common/VInput.vue";
-import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
+import { VInput, VMultiselect } from "@/shared/ui/index";
 
 const { targetTask = null } = defineProps<{ targetTask: Partial<Task> | null; }>();
 

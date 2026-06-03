@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { List } from "../../types";
 
-import VButton from "@/shared/ui/common/VButton.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VModal } from "@/shared/ui/index";
 
 const { list = null, loader } = defineProps<{ list: List | null; loader?: boolean; }>();
 

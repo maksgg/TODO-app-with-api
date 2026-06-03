@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from "vue";
 
-import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
+import { LanguageSelector } from "@/features/i18n/index";
 import { useThemeStore } from "@/shared/stores/useThemeStore";
-import VAnimatedBackground from "@/shared/ui/common/VAnimatedBackground.vue";
+import { VAnimatedBackground } from "@/shared/ui/index";
 
 const themeStore = useThemeStore();
 

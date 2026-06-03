@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { VContainer, VTitle } from "@/shared/ui/index";
 
 const { t } =  useI18n();
 const developersInfo = [

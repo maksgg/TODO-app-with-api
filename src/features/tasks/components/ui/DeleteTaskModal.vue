@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { Task } from "../../types/index";
 
-import VButton from "@/shared/ui/common/VButton.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VModal } from "@/shared/ui/index";
 
 const { task = null, loader } = defineProps<{ task: Partial<Task> | null; loader?: boolean; }>();
 

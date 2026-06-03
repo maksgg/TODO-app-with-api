@@ -9,8 +9,7 @@ import SidebarMain from "./components/SidebarMain.vue";
 import { useModal } from "@/shared/composables/useModal";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import type { SidebarLink } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VModal } from "@/shared/ui/index";
 
 const userStore = useAuthStore();
 const route = useRoute();

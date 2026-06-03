@@ -97,6 +97,8 @@ type FilterConfig = {
   options: SelectOption[];
 }[];
 
+type Theme = "light" | "dark";
+
 export type {
   UserProfileData,
   UserInfo,
@@ -116,4 +118,5 @@ export type {
   SidebarLink,
   FilterConfig,
   SelectOption,
+  Theme,
 };

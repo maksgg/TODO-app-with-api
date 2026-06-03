@@ -1,13 +1,22 @@
-/**
- * 🎨 UI Kit
- *
- * Generic компоненти: VButton, VCard, VInput, VModal тощо
- *
- * Правила:
- * - Тільки props, ніякої бізнес-логіки
- * - Не роблять API запити
- * - Емітять події
- */
-
-export {};
-
+export { default as VAnimatedBackground } from "./common/VAnimatedBackground.vue";
+export { default as VButton } from "./common/VButton.vue";
+export { default as VCheckbox } from "./common/VCheckbox.vue";
+export { default as VColorPicker } from "./common/VColorPicker.vue";
+export { default as VContainer } from "./common/VContainer.vue";
+export { default as VDropDown } from "./common/VDropDown.vue";
+export { default as VEmptyState } from "./common/VEmptyState.vue";
+export { default as VExpandableSection } from "./common/VExpandableSection.vue";
+export { default as VIcon } from "./common/VIcon.vue";
+export { default as VInput } from "./common/VInput.vue";
+export { default as VLoader } from "./common/VLoader.vue";
+export { default as VModal } from "./common/VModal.vue";
+export { default as VMultiselect } from "./common/VMultiselect.vue";
+export { default as VNotFoundBackground } from "./common/VNotFoundBackground.vue";
+export { default as VSkeleton } from "./common/VSkeleton.vue";
+export { default as VSwitch } from "./common/VSwitch.vue";
+export { default as VTabs } from "./common/VTabs.vue";
+export { default as VTitle } from "./common/VTitle.vue";
+export { default as VToast } from "./common/VToast.vue";
+export { default as VToggleTabs } from "./common/VToggleTabs.vue";
+export { default as VToolbar } from "./common/VToolbar.vue";
+export { default as VTable } from "./table/VTable.vue";

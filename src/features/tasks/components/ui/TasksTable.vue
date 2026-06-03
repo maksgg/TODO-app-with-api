@@ -4,8 +4,7 @@ import TaskTags from "./TaskTags.vue";
 import type { Task } from "../../types";
 import TaskTableSkeleton from "../skeletons/TaskTableSkeleton.vue";
 
-import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
-import VTable from "@/shared/ui/table/VTable.vue";
+import { VCheckbox, VTable } from "@/shared/ui/index";
 
 type TableHeader = {
   key: string;

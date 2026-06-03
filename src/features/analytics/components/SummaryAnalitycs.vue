@@ -2,11 +2,8 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
-import type { AnalyticsResponse } from "../types";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import type { AnalyticsResponse } from "@/features/analytics/types/index";
+import { VContainer, VSkeleton, VTitle } from "@/shared/ui/index";
 
 type TaskInfo = {
   data: AnalyticsResponse | null;

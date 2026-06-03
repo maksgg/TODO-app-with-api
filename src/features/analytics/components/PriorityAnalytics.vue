@@ -4,13 +4,10 @@ import { computed } from "vue";
 import VChart from "vue-echarts";
 import { useI18n } from "vue-i18n";
 
-import { useChartTheme } from "../composables/useChartTheme";
-import type { PriorityResponse } from "../types";
-import { mapPriorityColors } from "../utils/priorityDataByColor";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { useChartTheme } from "@/features/analytics/composables/useChartTheme";
+import type { PriorityResponse } from "@/features/analytics/types/index";
+import { mapPriorityColors } from "@/features/analytics/utils/priorityDataByColor";
+import { VContainer, VSkeleton, VTitle } from "@/shared/ui/index";
 
 const {
   data = [],

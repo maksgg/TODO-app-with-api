@@ -4,10 +4,7 @@ import DashboardTaskItemSkeleton from "./skeletons/DashboardTaskItemSkeleton.vue
 import DashboardTaskItem from "./ui/DashboardTaskItem.vue";
 
 import type { ModalType } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VLoader from "@/shared/ui/common/VLoader.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VButton, VContainer, VLoader, VSkeleton } from "@/shared/ui/index";
 
 const {
   item,

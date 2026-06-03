@@ -5,10 +5,7 @@ import WeeklyGoalsModalHead from "./WeeklyGoalsModalHead.vue";
 
 import ListName from "@/features/lists/components/ui/ListName.vue";
 import type { List } from "@/features/lists/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
-import VExpandableSection from "@/shared/ui/common/VExpandableSection.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VCheckbox, VExpandableSection, VModal } from "@/shared/ui/index";
 
 const { lists, selectedIds, mode, loading } = defineProps<{
   lists: List[] | undefined;

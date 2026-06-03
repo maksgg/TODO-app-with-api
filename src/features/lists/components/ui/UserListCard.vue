@@ -2,10 +2,8 @@
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 
-import type { UserGroupInfo } from "../../types";
-
-import VButton from "@/shared/ui/common/VButton.vue";
-import VIcon from "@/shared/ui/common/VIcon.vue";
+import type { UserGroupInfo } from "@/features/lists/types/index";
+import { VButton, VIcon } from "@/shared/ui/index";
 
 const { userListsInfo, totalLists, isExpanded, disabled } = defineProps<UserGroupInfo>();
 

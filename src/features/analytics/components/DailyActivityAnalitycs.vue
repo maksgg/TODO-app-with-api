@@ -4,12 +4,9 @@ import { computed } from "vue";
 import VChart from "vue-echarts";
 import { useI18n } from "vue-i18n";
 
-import { useChartTheme } from "../composables/useChartTheme";
-import { DailyActivityResponse } from "../types";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { useChartTheme } from "@/features/analytics/composables/useChartTheme";
+import type { DailyActivityResponse } from "@/features/analytics/types";
+import { VContainer, VSkeleton, VTitle } from "@/shared/ui/index";
 import { firstLetterUp } from "@/shared/utils";
 
 const {

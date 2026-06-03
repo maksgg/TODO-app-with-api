@@ -1,5 +1,4 @@
-import type { PriorityResponse } from "../types";
-
+import type { PriorityResponse } from "@/features/analytics/types";
 /**
  * Мапить пріоритети на кольори теми
  * @param data - масив даних з бекенду

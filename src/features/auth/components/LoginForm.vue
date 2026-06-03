@@ -5,8 +5,7 @@ import { useI18n } from "vue-i18n";
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useLoginFormValidation } from "@/features/auth/composables/useAuthValidation";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VInput from "@/shared/ui/common/VInput.vue";
+import { VButton, VInput } from "@/shared/ui/index";
 
 const { regularUserLoader } = defineProps<{ regularUserLoader: boolean; }>();
 

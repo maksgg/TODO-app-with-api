@@ -3,13 +3,9 @@ import { EChartsOption } from "echarts";
 import { computed } from "vue";
 import VChart from "vue-echarts";
 
-import { useChartTheme } from "../composables/useChartTheme";
-import type { TagsResponse } from "../types";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTabs from "@/shared/ui/common/VTabs.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { useChartTheme } from "@/features/analytics/composables/useChartTheme";
+import type { TagsResponse } from "@/features/analytics/types/index";
+import { VContainer, VSkeleton, VTitle, VTabs } from "@/shared/ui/index";
 
 const {
   data = [],

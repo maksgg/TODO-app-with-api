@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import ListName from "./ListName.vue";
-import type { List } from "../../types";
-
+import ListName from "@/features/lists/components/ui/ListName.vue";
+import type { List } from "@/features/lists/types/index";
 import type { ModalType } from "@/shared/types";
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VDropDown from "@/shared/ui/common/VDropDown.vue";
+import { VContainer, VDropDown } from "@/shared/ui/index";
 
 const { list , listActions } = defineProps<{
   list: List;
