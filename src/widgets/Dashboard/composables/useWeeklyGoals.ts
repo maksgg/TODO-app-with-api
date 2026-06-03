@@ -40,7 +40,6 @@ export function useWeeklyGoals() {
     execute: toggleWeeklyTask,
     loading: weeklyToggleLoader,
   } =  fetchToggleWeeklyGoalTasks(changedIds, {
-    method: "PATCH",
     onSuccess: async () => {
       await getWeeklyTasks();
     },
