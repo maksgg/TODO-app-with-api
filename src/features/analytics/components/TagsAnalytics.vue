@@ -3,13 +3,9 @@ import { EChartsOption } from "echarts";
 import { computed } from "vue";
 import VChart from "vue-echarts";
 
-import { useChartTheme } from "../composables/useChartTheme";
-import type { TagsResponse } from "../types";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTabs from "@/shared/ui/common/VTabs.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { useChartTheme } from "@/features/analytics/composables/useChartTheme";
+import type { TagsResponse } from "@/features/analytics/types/index";
+import { VContainer, VSkeleton, VTitle, VTabs } from "@/shared/ui/index";
 
 const {
   data = [],
@@ -72,7 +68,7 @@ const tagsOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle :title="$t('analytics.title.tags_popularity')" />
-    <VContainer class="shadow-customShadow">
+    <VContainer class="shadow-custom-shadow">
       <VTabs
         v-model="limit.id"
         :tabs="limitOptions"
@@ -96,7 +92,7 @@ const tagsOption = computed<EChartsOption>(() => {
         :autoresize="true"
         :loading="loader"
         :loading-options="loadingOptions"
-        class="h-[23rem]"
+        class="h-92!"
       />
     </VContainer>
   </div>

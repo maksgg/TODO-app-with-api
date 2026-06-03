@@ -2,10 +2,8 @@
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
-import useProfileRequests from "./api/useProfileRequests";
-import ProfileDetails from "./components/ProfileDetails.vue";
-
-import ProfileOverview from "@/features/profile/components/ProfileOverview.vue";
+import useProfileRequests from "@/features/profile/api/useProfileRequests";
+import { ProfileDetails, ProfileOverview } from "@/features/profile/components/index";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import type { UserInfo } from "@/shared/types";
 
@@ -35,5 +33,4 @@ const updateProfile = async (payload: Partial<UserInfo>) => await execute({ data
     :loader="loading"
     @update-user-data="updateProfile"
   />
-  <!-- v-if="authStore.isAllowed('update:user')" -->
 </template>

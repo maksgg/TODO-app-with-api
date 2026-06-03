@@ -48,7 +48,7 @@
       "sign_in": "Sign in",
       "sign_up": "Sign up"
     },
-    "regularUser": { 
+    "regularUser": {
       "quick_start" : "Quick start",
       "or": "or"
     }
@@ -56,9 +56,9 @@
   "credentials": {
     "designer": "Designer",
     "front_end": "Front-end",
-    "anastasiia_orieshyna": "Anastasiia orieshyna",
+    "anastasiia_orieshyna": "Anastasiia Orieshyna",
     "developer": "Developer",
-    "maksym_zhovmir": "Maksym zhovmir",
+    "maksym_zhovmir": "Maksym Zhovmir",
     "design_&_development_contributors": "Design & development contributors"
   },
   "lists": {

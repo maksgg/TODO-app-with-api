@@ -9,8 +9,7 @@ import SidebarMain from "./components/SidebarMain.vue";
 import { useModal } from "@/shared/composables/useModal";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import type { SidebarLink } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VModal } from "@/shared/ui/index";
 
 const userStore = useAuthStore();
 const route = useRoute();
@@ -27,9 +26,10 @@ const openModal = () => modal.open();
 <template>
   <aside
     :class="[
-      `flex flex-col justify-between items-start gap-5 border-sidebarBorder rounded-r-lg sidebar-bg
-      p-6 text-sm transition-all sidebar-custom-bg border shadow-sidebarBgShadow`,
-      expanded ? 'w-[22rem]': 'w-[5rem]'
+      `flex flex-col justify-between items-start gap-5 border-sidebar-border
+      rounded-r-lg sidebar-bg p-6 text-sm transition-all sidebar-custom-bg
+      border shadow-sidebar-bg-shadow`,
+      expanded ? 'w-88': 'w-20'
     ]"
   >
     <div class="flex flex-col gap-9 w-full">
@@ -53,10 +53,10 @@ const openModal = () => modal.open();
     :title="$t('sidebar.modalTitle.log_out')"
   >
     <div class="flex flex-col justify-center items-center gap-2">
-      <h4 class="text-uiHead text-txtPrimary">
+      <h4 class="text-ui-head text-txt-primary">
         {{ $t("sidebar.modal.are_you_sure_you_want_to_log_out?") }}
       </h4>
-      <p class="text-bodyM text-secondary">
+      <p class="text-body-m text-secondary">
         {{ $t("sidebar.modal.you_will_need_to_sign_in_again_to_access_your_account") }}
       </p>
     </div>
@@ -64,7 +64,7 @@ const openModal = () => modal.open();
       <div class="flex justify-center items-center gap-4">
         <VButton
           :text="$t('sidebar.modalBtn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="modal.close"
         />
         <VButton

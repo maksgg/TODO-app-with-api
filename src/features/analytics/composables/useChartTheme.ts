@@ -1,6 +1,6 @@
 import { computed, MaybeRefOrGetter, toValue } from "vue";
 
-import { getThemeColor } from "../utils/getThemeColor";
+import { getThemeColor } from "@/features/analytics/utils/getThemeColor";
 
 export function useChartTheme(theme: MaybeRefOrGetter<string>) {
   const chartTheme = computed(() => {
@@ -11,10 +11,10 @@ export function useChartTheme(theme: MaybeRefOrGetter<string>) {
       success: getThemeColor("success"),
       warning: getThemeColor("warning"),
       dangerous: getThemeColor("dangerous"),
-      muted: getThemeColor("txtMutedLight"),
-      secondaryBgLight: getThemeColor("secondaryBgLight"),
-      border: getThemeColor("borderDefault"),
-      bg: getThemeColor("primaryBg"),
+      muted: getThemeColor("txt-muted-light"),
+      secondaryBgLight: getThemeColor("secondary-bg-light"),
+      border: getThemeColor("border-default"),
+      bg: getThemeColor("primary-bg"),
       font: "Inter, sans-serif",
     };
   });

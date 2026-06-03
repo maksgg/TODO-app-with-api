@@ -13,12 +13,14 @@ const {
 } = defineProps<{
   title?: string;
   label?: string;
-  options: { name: string, value: string }[];
+  options: { name: string; value: string }[];
   placeholder?: string;
   disabled?: boolean;
 }>();
 
-const model = defineModel<{ name: string; value: string; } | null | undefined>("model");
+const model = defineModel<{ name: string; value: string } | null | undefined>(
+  "model",
+);
 
 const isOpen = ref(false);
 </script>
@@ -29,12 +31,11 @@ const isOpen = ref(false);
     :class="{ 'is-disabled': disabled }"
   >
     <span
-      v-if="
-        title
-          ||
-          label"
-      :class="['whitespace-nowrap',
-               title ? 'text-bodyL text-txtPrimary' : 'text-uiLabel text-secondary']"
+      v-if="title || label"
+      :class="[
+        'whitespace-nowrap',
+        title ? 'text-body-l text-txt-primary' : 'text-ui-label text-secondary',
+      ]"
     >
       {{ title || label }}
     </span>
@@ -70,7 +71,8 @@ const isOpen = ref(false);
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
 
 <style scoped>
-  /* Основне поле */
+@reference "../../../app/main.css";
+/* Основне поле */
 :deep(.multiselect) {
   @apply relative h-10 cursor-pointer;
 }
@@ -81,28 +83,28 @@ const isOpen = ref(false);
   @apply rounded-lg;
 }
 :deep(.multiselect__single) {
-  @apply truncate bg-secondaryBg;
+  @apply truncate bg-secondary-bg;
 }
 
 /* Випадаючий список */
 :deep(.multiselect__content-wrapper) {
-  @apply absolute left-0 bg-secondaryBg mt-2 rounded-lg text-txtPrimary
-  border-2 border-borderDefault hover:border-borderHover
-  shadow-selectShadow z-[100] overflow-y-auto max-h-[500px];
+  @apply absolute left-0 bg-secondary-bg mt-2 rounded-lg text-txt-primary
+  border-2 border-border-default hover:border-border-hover
+  shadow-select-shadow z-100 overflow-y-auto max-h-125;
 
- border-top-style: solid;
+  border-top-style: solid;
 }
 
 /* Підсвітка при наведенні */
 :deep(.multiselect__option--highlight) {
-  @apply bg-transparent text-txtPrimary rounded-lg hover:text-primary hover:bg-primaryBg;
+  @apply bg-transparent text-txt-primary rounded-lg hover:text-primary hover:bg-primary-bg;
 }
 :deep(.multiselect__tags) {
-  @apply pr-10 rounded-lg border-2 bg-secondaryBg text-txtPrimary
-  border-borderDefault hover:border-borderHover;
+  @apply pr-10 rounded-lg border-2 bg-secondary-bg text-txt-primary
+  border-border-default hover:border-border-hover;
 }
 :deep(.multiselect--active .multiselect__tags) {
-  @apply rounded-lg border-primary
+  @apply rounded-lg border-primary;
 }
 /* Обраний елемент у списку */
 :deep(.multiselect__option--selected) {
@@ -115,7 +117,7 @@ const isOpen = ref(false);
 }
 
 .is-disabled :deep(.multiselect__tags) {
-  @apply border-disabledBorder pointer-events-none;
+  @apply border-disabled-border pointer-events-none;
 }
 
 .caret-click-zone {

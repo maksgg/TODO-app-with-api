@@ -5,7 +5,7 @@ import type {
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
-} from "@/features/auth/types/index";
+} from "@/features/auth/types";
 
 export default () => {
   const fetchLoginUser = (options?: UseApiOptions<LoginResponse, LoginRequest>) => {

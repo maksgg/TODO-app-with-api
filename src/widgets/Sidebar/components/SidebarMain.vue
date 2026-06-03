@@ -2,7 +2,7 @@
 import { useRoute } from "vue-router";
 
 import type { SidebarLink } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 const route = useRoute();
 

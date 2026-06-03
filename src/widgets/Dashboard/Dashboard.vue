@@ -6,13 +6,12 @@ import WeeklyGoalsModals from "./components/WeeklyGoalsModals.vue";
 import { useWeeklyGoals } from "./composables/useWeeklyGoals";
 import { filterDeadlineTasks } from "./utils/filterDateByDeadlines";
 
-
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import useTasksRequests from "@/features/tasks/api/useTasksRequests";
 import DashboardTasksGroup from "@/features/tasks/components/DashboardTasksGroup.vue";
 import EmptyDashboardTasks from "@/features/tasks/components/ui/EmptyDashboardTasks.vue";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VContainer from "@/shared/ui/common/VContainer.vue";
+import { VContainer } from "@/shared/ui/index";
 
 const taskPayloadParams = ref({
   limit: 20,
@@ -107,12 +106,12 @@ onMounted(() => loadData());
 <template>
   <div
     class="relative grid grid-cols-1 lg:grid-cols-2 gap-6 w-full pb-2
-    rounded-lg overflow-auto no-scrollbar min-h-[5rem]"
+    rounded-lg overflow-auto no-scrollbar min-h-20"
   >
     <VContainer
       v-for="(tasks, index) in tasksGroup"
       :key="tasks.title"
-      :class="['shadow-customShadow', index === 2 ? 'lg:col-span-2' : 'col-span-1']"
+      :class="['shadow-custom-shadow', index === 2 ? 'lg:col-span-2' : 'col-span-1']"
     >
       <EmptyDashboardTasks
         v-if="!mainLoader && tasks.fetchedData?.length === 0"
@@ -144,11 +143,11 @@ onMounted(() => loadData());
 
 <style scoped>
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Для Chrome, Safari та Opera */
+  display: none;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* Для Internet Explorer та Edge */
-  scrollbar-width: none;  /* Для Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

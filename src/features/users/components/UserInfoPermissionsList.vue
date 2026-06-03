@@ -2,17 +2,11 @@
 import { watch, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 
-import UserInfoPermissionsListSkeleton from "./UserInfoPermissionsListSkeleton.vue";
-import { formatPermissionsByGroups } from "../utils/formatPermissionsByGroups";
-
+import { UserInfoPermissionsListSkeleton } from "@/features/users/components/index";
+import { formatPermissionsByGroups } from "@/features/users/utils/formatPermissionsByGroups";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import type { UserInfo, Roles, Permissions, UserPayload, PermissionsByRole } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
-import VSwitch from "@/shared/ui/common/VSwitch.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { VButton, VCheckbox, VContainer, VMultiselect, VSwitch, VTitle } from "@/shared/ui/index";
 
 const authStore = useAuthStore();
 const { t } = useI18n();
@@ -115,7 +109,7 @@ watch(
           :options="userRoles"
           :disabled="!authStore.isAllowed('manage:roles')"
           :title="$t('usersInfo.title.role')"
-          class="w-[13.5rem]"
+          class="w-54"
           @update:model="roleChange"
         />
         <VCheckbox
@@ -130,7 +124,7 @@ watch(
           :key="list.group"
           class="flex flex-col gap-4"
         >
-          <span class="text-headingCard text-txtPrimary">{{ list.group }}</span>
+          <span class="text-heading-card text-txt-primary">{{ list.group }}</span>
           <div
             v-for="el in list.items"
             :key="el.value"

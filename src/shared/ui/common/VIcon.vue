@@ -23,13 +23,6 @@ import Plus from "@/shared/ui/icons/Plus.vue";
 import Tool from "@/shared/ui/icons/Tool.vue";
 import UserIcon from "@/shared/ui/icons/UserIcon.vue";
 
-type IconProps = {
-  type: string;
-  size?: "sm" | "md" | "lg";
-};
-
-const { type, size = "md" } = defineProps<IconProps>();
-
 const icons: Record<string, Component> = {
   magnifyingGlass: MagnifyingGlass,
   eye: Eye,
@@ -53,6 +46,13 @@ const icons: Record<string, Component> = {
   users: Users,
 };
 
+type IconProps = {
+  type: keyof typeof icons;
+  size?: "sm" | "md" | "lg";
+};
+
+const { type, size = "md" } = defineProps<IconProps>();
+
 const sizeStyle: Record<IconProps["size"], string> = {
   sm: "w-2.5 h-1.5",
   md: "w-4 h-4",
@@ -66,4 +66,3 @@ const sizeStyle: Record<IconProps["size"], string> = {
     :class="['flex justify-center items-center', sizeStyle[size]]"
   />
 </template>
-

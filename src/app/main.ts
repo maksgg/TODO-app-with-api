@@ -9,12 +9,10 @@ import router from "./router";
 import { i18n } from "@/shared/composables/useI18n";
 import { useThemeStore } from "@/shared/stores/useThemeStore";
 
-import "./main.scss";
+import "./main.css";
 
-// Create Vue app instance
 const app = createApp(App);
 
-// Install plugins
 app.use(createPinia());
 app.use(router);
 app.use(i18n);
@@ -26,10 +24,11 @@ export const api = createApiClient({
   baseURL: import.meta.env.VITE_API_URL,
   authOptions: {
     refreshUrl: "/auth/refresh",
-    onTokenRefreshed: ({ data }) => tokenManager.setTokens({
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-    }),
+    onTokenRefreshed: ({ data }) =>
+      tokenManager.setTokens({
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+      }),
     refreshPayload: () => ({
       refreshToken: tokenManager.getRefreshToken(),
     }),
@@ -40,11 +39,12 @@ export const api = createApiClient({
   },
 });
 
-// 2. Install Plugin
-app.use(createApi({
-  axios: api,
-  onError: (error) => toast.error(error.message),
-}));
+app.use(
+  createApi({
+    axios: api,
+    onError: (error) => toast.error(error.message),
+  }),
+);
 
 // Mount the app
 app.mount("#app");

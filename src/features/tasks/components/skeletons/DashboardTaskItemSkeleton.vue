@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VSkeleton } from "@/shared/ui/index";
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 h-[85px]">
+  <div class="flex flex-col gap-3 h-21.25">
     <div class="flex justify-between">
       <VSkeleton
         width="200"

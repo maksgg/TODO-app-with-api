@@ -5,8 +5,7 @@ import { useI18n } from "vue-i18n";
 import useAuthRequests from "@/features/auth/api/useAuthRequests";
 import { useLoginFormValidation } from "@/features/auth/composables/useAuthValidation";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VInput from "@/shared/ui/common/VInput.vue";
+import { VButton, VInput } from "@/shared/ui/index";
 
 const { regularUserLoader } = defineProps<{ regularUserLoader: boolean; }>();
 
@@ -39,7 +38,7 @@ const submitForm = async () => {
 <template>
   <form
     class="flex flex-col items-center gap-5
-    rounded-xl w-full text-authTitle text-txtPrimaryDark"
+    rounded-xl w-full text-auth-title text-txt-primary-dark"
     @submit.prevent="submitForm"
   >
     <h1>

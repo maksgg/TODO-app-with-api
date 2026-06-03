@@ -4,10 +4,7 @@ import DashboardTaskItemSkeleton from "./skeletons/DashboardTaskItemSkeleton.vue
 import DashboardTaskItem from "./ui/DashboardTaskItem.vue";
 
 import type { ModalType } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VLoader from "@/shared/ui/common/VLoader.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VButton, VContainer, VLoader, VSkeleton } from "@/shared/ui/index";
 
 const {
   item,
@@ -41,7 +38,7 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
 <template>
   <div class="flex justify-between items-center mb-4">
     <div>
-      <h3 class="text-headPrimary text-txtPrimary">
+      <h3 class="text-head-primary text-txt-primary">
         {{ item.title }}
       </h3>
       <VSkeleton
@@ -52,7 +49,7 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
       />
       <span
         v-else
-        class="text-bodyM text-secondary"
+        class="text-body-m text-secondary"
       >
         {{ item.subtitle }}
       </span>
@@ -61,7 +58,7 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
       v-if="isAllowed"
       :text="item.btnTitle"
       variant="ghost"
-      class="self-start text-uiBtn text-primary hover:scale-110"
+      class="self-start text-ui-btn text-primary hover:scale-110"
       :to="item?.btnKey !== 'edit' ? '/list' : undefined"
       @click="item?.btnKey === 'edit' ? openEditModal() : null"
     />
@@ -112,11 +109,11 @@ const removeWeeklyGoal = (id: string) => emit("removeWeeklyGoal", id);
           >
             <VLoader v-if="localLoader === el.id" />
             <div class="flex justify-between w-full">
-              <span class="text-bodyL text-txtPrimary truncate w-[80%]">{{ el.title }}</span>
+              <span class="text-body-l text-txt-primary truncate w-[80%]">{{ el.title }}</span>
               <VButton
                 icon="x"
                 variant="ghost"
-                class="ml-auto text-txtPrimary hover:text-dangerous active:scale-75"
+                class="ml-auto text-txt-primary hover:text-dangerous active:scale-75"
                 @click="removeWeeklyGoal(el.id)"
               />
             </div>

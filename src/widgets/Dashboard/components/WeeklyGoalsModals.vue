@@ -5,10 +5,7 @@ import WeeklyGoalsModalHead from "./WeeklyGoalsModalHead.vue";
 
 import ListName from "@/features/lists/components/ui/ListName.vue";
 import type { List } from "@/features/lists/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VCheckbox from "@/shared/ui/common/VCheckbox.vue";
-import VExpandableSection from "@/shared/ui/common/VExpandableSection.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
+import { VButton, VCheckbox, VExpandableSection, VModal } from "@/shared/ui/index";
 
 const { lists, selectedIds, mode, loading } = defineProps<{
   lists: List[] | undefined;
@@ -37,7 +34,7 @@ const expandedList = ref<string | null>(null);
         :mode="mode"
       />
     </template>
-    <div class="h-[25rem] overflow-auto custom-scrollbar">
+    <div class="h-100 overflow-auto custom-scrollbar">
       <VExpandableSection
         v-for="list in lists"
         :key="list._id"
@@ -72,7 +69,7 @@ const expandedList = ref<string | null>(null);
             :model-value="selectedIds.includes(task.id)"
             @update:model-value="toggleTask(task.id)"
           />
-          <div class="h-[1px] rounded bg-primary w-[calc(100%-20px)]" />
+          <div class="h-px rounded bg-primary w-[calc(100%-20px)]" />
         </div>
       </VExpandableSection>
     </div>
@@ -80,7 +77,7 @@ const expandedList = ref<string | null>(null);
       <div class="flex gap-5 w-full justify-end">
         <VButton
           :text="$t('dashboard.modalBtn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="close"
         />
         <VButton

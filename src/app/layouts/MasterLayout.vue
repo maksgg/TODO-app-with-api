@@ -5,7 +5,7 @@ import { useRoute } from "vue-router";
 import AuthLayout from "@/app/layouts/AuthLayout.vue";
 import DefaultLayout from "@/app/layouts/DefaultLayout.vue";
 import { useThemeStore } from "@/shared/stores/useThemeStore";
-import VToast from "@/shared/ui/common/VToast.vue";
+import { VToast } from "@/shared/ui/index";
 
 const route = useRoute();
 const themeStore = useThemeStore();

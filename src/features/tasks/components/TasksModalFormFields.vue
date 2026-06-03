@@ -9,8 +9,7 @@ import type { ModalFields, Task } from "../types";
 import TaskTags from "./ui/TaskTags.vue";
 
 import useDatePickerLocale from "@/shared/composables/useDatePickerLocale";
-import VInput from "@/shared/ui/common/VInput.vue";
-import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
+import { VInput, VMultiselect } from "@/shared/ui/index";
 
 const { targetTask = null } = defineProps<{ targetTask: Partial<Task> | null; }>();
 
@@ -82,7 +81,9 @@ watch(
       class="max-w-[50%]"
     />
     <div class="flex items-center gap-4 max-w-[70%]">
-      <span class="text-uiLabel text-secondary whitespace-nowrap">{{ $t("tasks.modal.due") }}</span>
+      <span class="text-ui-label text-secondary whitespace-nowrap">
+        {{ $t("tasks.modal.due") }}
+      </span>
       <VueDatePicker
         v-model="modal.deadline"
         :enable-time-picker="false"
@@ -118,19 +119,21 @@ watch(
 </template>
 
 <style scoped>
+@reference "../../../app/main.css";
 :deep(.dp__theme_light) {
   --dp-primary-color: var(--color-primary);
   --dp-primary-text-color: #ffffff;
-  --dp-background-color: var(--color-secondaryBg);
-  --dp-text-color: var(--color-txtPrimary);
-  --dp-hover-color: var(--color-primaryBg);
-  --dp-border-color: var(--color-borderDefault);
-  --dp-border-color-hover: var(--color-borderHover);
+  --dp-background-color: var(--color-secondary-bg);
+  --dp-text-color: var(--color-txt-primary);
+  --dp-hover-color: var(--color-primary-bg);
+  --dp-border-color: var(--color-border-default);
+  --dp-border-color-hover: var(--color-border-hover);
 }
 
 /* Інпут */
 :deep(.dp-custom-input) {
-  @apply border-2 border-borderDefault transition-all py-2 text-bodyM text-muted shadow-activeTab;
+  @apply border-2 border-border-default transition-all
+  py-2 text-body-m text-muted shadow-active-tab;
 }
 
 :deep(.dp__input) {
@@ -138,7 +141,7 @@ watch(
 }
 
 :deep(.dp__input_icon) {
-  @apply text-txtPrimary;
+  @apply text-txt-primary;
 }
 
 :deep(.dp--clear-btn) {
@@ -146,7 +149,7 @@ watch(
 }
 
 :deep(.dp-custom-input:hover) {
-  @apply  border-borderHover;
+  @apply border-border-hover;
 }
 
 :deep(.dp__input_focus) {
@@ -155,27 +158,27 @@ watch(
 
 /* Випадаюче меню (Календар) */
 :deep(.dp__menu) {
-  @apply rounded-r-xl border-borderDefault shadow-selectShadow;
+  @apply rounded-r-xl border-border-default shadow-select-shadow;
 }
 
 :deep(.dp__calendar_header_item), :deep(.dp__cell_inner) {
-  @apply text-uiCaption;
+  @apply text-ui-caption;
 }
 
 :deep(.dp__month_year_select) {
-  @apply rounded-2xl text-uiLabel;
+  @apply rounded-2xl text-ui-label;
 }
 
 :deep(.dp__cell_inner:hover) {
-  @apply bg-primaryBg text-primary;
+  @apply bg-primary-bg text-primary;
 }
 
 :deep(.dp__month_year_select:hover) {
-  @apply bg-primaryBg text-primary;
+  @apply bg-primary-bg text-primary;
 }
 
 :deep(.dp__inner_nav:hover) {
-  @apply bg-primaryBg text-primary;
+  @apply bg-primary-bg text-primary;
 }
 /* Іконка годинника */
 :deep(.dp--tp-wrap) {

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import VNotFoundBackground from "@/shared/ui/common/VNotFoundBackground.vue";
+import { VNotFoundBackground } from "@/shared/ui/index";
 </script>
 
 <template>
   <div
     class="flex flex-col justify-center items-center gap-6
-  bg-primaryBg min-h-[100vh]"
+  bg-primaryBg min-h-screen"
   >
     <VNotFoundBackground />
     <h1 class="text-headPrimary text-txtPrimary">

@@ -13,13 +13,15 @@ import type { Task, TasksModals } from "./types";
 import { groupTasksByStatus } from "./utils/groupTasksByStatus";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VDropDown from "@/shared/ui/common/VDropDown.vue";
-import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
-import VExpandableSection from "@/shared/ui/common/VExpandableSection.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
-import VToolbar from "@/shared/ui/common/VToolbar.vue";
+import {
+  VButton,
+  VDropDown,
+  VContainer,
+  VEmptyState,
+  VExpandableSection,
+  VModal,
+  VToolbar,
+} from "@/shared/ui/index";
 import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
 
 const { t } = useI18n();
@@ -233,7 +235,7 @@ onMounted(() => loadData());
       <div class="flex gap-5 w-full justify-end">
         <VButton
           :text="$t('tasks.modalBtn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="closeModal"
         />
         <VButton

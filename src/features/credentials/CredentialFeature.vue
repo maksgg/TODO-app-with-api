@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { VContainer, VTitle } from "@/shared/ui/index";
 
 const { t } =  useI18n();
 const developersInfo = [
@@ -33,26 +32,26 @@ const developersInfo = [
     <VContainer
       v-for="info in developersInfo"
       :key="info.jobTitle"
-      class="w-full shadow-customShadow"
+      class="w-full shadow-custom-shadow"
     >
       <div class="flex flex-col gap-4">
         <span
-          class="flex justify-center items-center text-bodyEmphasis text-txtIntro bg-listCardBorder
-          px-4 py-3 rounded-lg w-[7rem]"
+          class="flex justify-center items-center text-body-emphasis text-txt-intro
+          bg-list-card-border px-4 py-3 rounded-lg w-28"
         >
           {{ info.jobTitle.toUpperCase() }}
         </span>
-        <h4 class="text-uiBtn text-txtPrimary">
+        <h4 class="text-ui-btn text-txt-primary">
           {{ info.name }}
         </h4>
-        <span class="text-dataBody text-secondary border-b border-borderDefault pb-4">
+        <span class="text-data-body text-secondary border-b border-border-default pb-4">
           {{ info.techStack }}
         </span>
       </div>
-      <div class="flex flex-col gap-3 mt-4 text-bodyM">
+      <div class="flex flex-col gap-3 mt-4 text-body-m">
         <a
           :href="`mailto:${info.email}`"
-          class="text-primary hover:text-borderHover"
+          class="text-primary hover:text-border-hover"
         >
           {{ info.email }}
         </a>
@@ -60,7 +59,7 @@ const developersInfo = [
           :href="info.linkedIn"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-primary hover:text-borderHover"
+          class="text-primary hover:text-border-hover"
         >
           LinkedIn
         </a>
@@ -68,7 +67,7 @@ const developersInfo = [
           :href="info.worksLink"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-primary hover:text-borderHover"
+          class="text-primary hover:text-border-hover"
         >
           {{ info.worksLabel }}
         </a>

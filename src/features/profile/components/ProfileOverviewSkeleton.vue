@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VSkeleton } from "@/shared/ui/index";
 </script>
 
 <template>
@@ -9,8 +9,8 @@ import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
       height="22"
     />
     <div
-      class="flex items-center gap-5 border border-borderDefault
-    bg-secondaryBg rounded-lg p-6 max-h-[5.5rem]"
+      class="flex items-center gap-5 border border-border-default
+    bg-secondary-bg rounded-lg p-6 max-h-22"
     >
       <div class="flex flex-col gap-2">
         <VSkeleton

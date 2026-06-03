@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ModalType } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 const { item } = defineProps<{
   item: {
@@ -21,16 +21,16 @@ const addWeeklyGoals = () => emit("addWeeklyGoals", "edit");
   <div class="flex flex-col gap-6">
     <div class="flex justify-between">
       <div class="flex flex-col gap-2">
-        <h3 class="text-headPrimary text-txtPrimary">
+        <h3 class="text-head-primary text-txt-primary">
           {{ item.title }}
         </h3>
-        <span class="text-bodyM text-secondary">
+        <span class="text-body-m text-secondary">
           {{ item.emptySubtitle }}
         </span>
       </div>
     </div>
     <div class="flex flex-col gap-7 self-center">
-      <p class="text-bodyIntro text-muted">
+      <p class="text-body-intro text-muted">
         {{ item.emptyText }}
       </p>
       <VButton
@@ -38,7 +38,7 @@ const addWeeklyGoals = () => emit("addWeeklyGoals", "edit");
         :text="item.addBtnText"
         variant="ghost"
         icon="plus"
-        class="m-auto px-5 py-2 text-uiBtn text-primary gap-2 hover:scale-110"
+        class="m-auto px-5 py-2 text-ui-btn text-primary gap-2 hover:scale-110"
         @click="addWeeklyGoals()"
       />
       <VButton
@@ -46,10 +46,9 @@ const addWeeklyGoals = () => emit("addWeeklyGoals", "edit");
         :text="item.addBtnText"
         variant="ghost"
         icon="plus"
-        class="m-auto px-5 py-2 text-uiBtn text-primary gap-2 hover:scale-110"
+        class="m-auto px-5 py-2 text-ui-btn text-primary gap-2 hover:scale-110"
         to="/list"
       />
     </div>
   </div>
 </template>
-

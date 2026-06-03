@@ -5,7 +5,7 @@ import VButton from "../common/VButton.vue";
 import VLoader from "../common/VLoader.vue";
 
 import { TableParams } from "@/shared/types";
-import VTableSortIcon from "@/shared/ui/common/VTableSortIcon.vue";
+import VTableSortIcon from "@/shared/ui/table/VTableSortIcon.vue";
 import { firstLetterUp } from "@/shared/utils/index";
 
 type TableHeader = {
@@ -123,10 +123,10 @@ const loadMore = () => {
     >
       <div
         v-if="searchable || showFilters"
-        class="sticky top-0 z-20 bg-primaryBg"
+        class="sticky top-0 z-20 bg-primary-bg"
       >
         <div
-          :class="['grid border-line-color bg-primaryBg pb-6', gridFrames]"
+          :class="['grid border-line-color bg-primary-bg pb-6', gridFrames]"
           :style="gridFrames.style"
         >
           <slot
@@ -137,7 +137,7 @@ const loadMore = () => {
         </div>
         <div
           v-if="isHeaderVisible"
-          :class="['grid border-line-color bg-disabledBorder',
+          :class="['grid border-line-color bg-disabled-border',
                    gridFrames
           ]"
           :style="gridFrames.style"
@@ -146,7 +146,7 @@ const loadMore = () => {
             v-for="head in header"
             :key="head.key"
             :class="[
-              'p-2 text-uiHead text-txtPrimary overflow-hidden',
+              'p-2 text-ui-head text-txt-primary overflow-hidden',
               sortAble && shouldShowFilter(head) ? 'flex': head.textAlign
             ]"
           >
@@ -157,7 +157,7 @@ const loadMore = () => {
               {{ head.label }}
               <button
                 v-if="sortAble && shouldShowFilter(head)"
-                class="ml-auto"
+                class="ml-auto cursor-pointer"
                 @click="sorted(head.key)"
               >
                 <VTableSortIcon
@@ -170,7 +170,7 @@ const loadMore = () => {
         </div>
       </div>
       <div class="relative flex flex-col flex-1">
-        <div class="relative flex flex-col flex-1 min-h-[100px]">
+        <div class="relative flex flex-col flex-1 min-h-25">
           <div
             v-if="loader && rows.length > 0"
             class="absolute inset-0 z-10 flex items-center
@@ -184,7 +184,7 @@ const loadMore = () => {
             v-for="(row, index) in rows"
             :key="index"
             :class="[
-              'relative grid border-borderDefault hover:bg-secondaryBg transition',
+              'relative grid border-border-default hover:bg-secondary-bg transition',
               gridFrames
             ]"
             :style="gridFrames.style"
@@ -200,7 +200,7 @@ const loadMore = () => {
               v-for="col in header"
               :key="col.key"
               :class="[
-                col.textAlign, 'pt-4 pb-2 px-2 border-b border-borderDefault',
+                col.textAlign, 'pt-4 pb-2 px-2 border-b border-border-default',
                 col.key === 'actions' ? 'overflow-visible' : 'truncate',
               ]"
             >

@@ -4,18 +4,12 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-import useUsersRequests from "./api/useUsersRequests";
-import UsersTableSkeleton from "./components/UsersTableSkeleton.vue";
-
+import useUsersRequests from "@/features/users/api/useUsersRequests";
+import UsersTableSkeleton from "@/features/users/components/UsersTableSkeleton.vue";
 import { useModal } from "@/shared/composables/useModal";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import type { TableParams, UserInfo } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VDropDown from "@/shared/ui/common/VDropDown.vue";
-import VModal from "@/shared/ui/common/VModal.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
-import VToolbar from "@/shared/ui/common/VToolbar.vue";
-import VTable from "@/shared/ui/table/VTable.vue";
+import { VButton, VDropDown, VModal, VToolbar, VTable, VTitle } from "@/shared/ui/index";
 import { formatDate } from "@/shared/utils/index";
 import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
 
@@ -143,19 +137,19 @@ const requestSortTable = (params: TableParams) => {
     </template>
     <template #col-member="{ row }">
       <div class="flex flex-col justify-center min-w-0">
-        <span class="truncate text-bodyM text-txtPrimary">{{ row.name }}</span>
-        <span class="truncate text-uiCaption text-secondary">{{ row.email }}</span>
+        <span class="truncate text-body-m text-txt-primary">{{ row.name }}</span>
+        <span class="truncate text-ui-caption text-secondary">{{ row.email }}</span>
       </div>
     </template>
     <template #col-role="{ row }">
       <span
-        :class="['truncate text-toggle', row.role === 'admin' ? 'text-uiLabel' : 'text-bodyM']"
+        :class="['truncate text-toggle', row.role === 'admin' ? 'text-ui-label' : 'text-body-m']"
       >
         {{ $t(`usersTable.toolbar.${row.role}`) }}
       </span>
     </template>
     <template #col-createdAt="{ row }">
-      <span class="truncate text-uiCaption text-secondary">
+      <span class="truncate text-ui-caption text-secondary">
         {{ formatDate(row.createdAt, "long", $i18n.locale) }}
       </span>
     </template>
@@ -176,12 +170,12 @@ const requestSortTable = (params: TableParams) => {
     :title="$t('usersModal.remove_user')"
   >
     <div class="flex flex-col gap-2 text-center">
-      <h4 class="text-uiHead text-txtPrimary">
+      <h4 class="text-ui-head text-txt-primary">
         {{ $t('usersModal.are_you_sure_you_want_to_remove') }}
         <span>"{{ targetUser.name }}"</span>
         {{ $t('usersModal.user?') }}
       </h4>
-      <p class="text-bodyM text-secondary">
+      <p class="text-body-m text-secondary">
         {{ $t('usersModal.this_action_can’t_be_undone') }}
       </p>
     </div>
@@ -189,7 +183,7 @@ const requestSortTable = (params: TableParams) => {
       <div class="flex justify-center gap-4">
         <VButton
           :text="$t('usersModal.btn.cancel')"
-          class="!bg-transparent text-primary"
+          class="bg-transparent! text-primary!"
           @click="modal.close()"
         />
         <VButton

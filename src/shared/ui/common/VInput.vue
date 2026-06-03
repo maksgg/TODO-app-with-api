@@ -71,30 +71,30 @@ const inputType = computed((): string => {
 const togglePasswordIcon = (): boolean => isShowingPassword.value = !isShowingPassword.value;
 
 const baseInputStyles: string = `
-  text-bodyL text-txtPrimary bg-secondaryBg border-2 hover:border-borderHover 
-   disabled:border-disabledBorder disabled:cursor-not-allowed
+  text-body-l text-txt-primary bg-secondary-bg border-2 hover:border-border-hover
+  disabled:border-disabled-border disabled:cursor-not-allowed
 `;
 const colorStylesVariant: Record<VariantStyles, string> = {
   main: `
-    focus:text-disabledBorder active:text-disabledBorder
+    focus:text-disabled-border active:text-disabled-border
   `,
   toolbar: `
-   text-borderDefault hover:text-borderHover disabled:text-disabledBorder
+   text-border-default hover:text-border-hover disabled:text-disabled-border
   `,
 };
 
 const inputStylesVariant: Record<VariantStyles, string> = {
   main: `
   ${baseInputStyles}
-    py-3 pl-4 pr-10 rounded-lg placeholder-muted 
-    placeholder:disabled:text-disabledBorder disabled:text-disabledBorder focus:shadow-innerOutline
+    py-3 pl-4 pr-10 rounded-lg placeholder-muted
+    placeholder:disabled:text-disabled-border disabled:text-disabled-border focus:shadow-inner-outline
 
   `,
   toolbar: `
   ${baseInputStyles}
-   max-w-[30rem] py-3 pl-10 pr-10 rounded-2xl placeholder-muted 
-   placeholder:text-primary hover:placeholder:text-borderHover 
-   disabled:placeholder:text-disabledBorder focus:border-primary
+   max-w-[30rem] py-3 pl-10 pr-10 rounded-2xl placeholder-muted
+   placeholder:text-primary hover:placeholder:text-border-hover
+   disabled:placeholder:text-disabled-border focus:border-primary
   `,
 };
 </script>
@@ -104,8 +104,8 @@ const inputStylesVariant: Record<VariantStyles, string> = {
     <label
       v-if="props.label"
       :for="inputId"
-      :class="['text-uiLabel disabled:text-disabledBorder',
-               props.disabled ? 'text-disabledBorder' : '',
+      :class="['text-ui-label disabled:text-disabled-border',
+               props.disabled ? 'text-disabled-border' : '',
                props.validation.$error ?
                  'text-dangerous' : 'text-secondary']"
     >
@@ -120,7 +120,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
       <div
         v-if="$slots['icon-left'] || props.icon || props.loader"
         class="absolute left-4 bottom-4 flex justify-center items-center
-        text-primary hover:text-borderHover"
+        text-primary hover:text-border-hover"
       >
         <slot name="icon-left">
           <VLoader v-if="props.loader" />
@@ -137,7 +137,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
                  inputStylesVariant[props.variant],
                  props.validation.$error ?
                    'border-dangerous focus:shadow-none' :
-                   'border-borderDefault']"
+                   'border-border-default']"
         :type="inputType"
         :disabled="props.disabled"
         :value="props.modelValue"
@@ -161,7 +161,7 @@ const inputStylesVariant: Record<VariantStyles, string> = {
         name="errorMsg"
         :message="validation?.$errors[0]?.$message"
       >
-        <span class="text-dangerousErrMsg text-uiCaption">
+        <span class="text-dangerous-err-msg text-ui-caption">
           {{ validation?.$errors[0]?.$message }}
         </span>
       </slot>

@@ -71,7 +71,7 @@ const handleKeydown = (event: KeyboardEvent) => {
         @keydown="handleKeydown"
       >
         <div
-          class="modal-container bg-secondaryBg border border-borderDefault"
+          class="modal-container bg-secondary-bg border border-border-default"
           :class="maxWidthClass"
           @click.stop
         >
@@ -83,7 +83,7 @@ const handleKeydown = (event: KeyboardEvent) => {
             <slot name="header">
               <h3
                 v-if="title"
-                class="text-modalHead text-txtPrimary"
+                class="text-modal-head text-txt-primary"
               >
                 {{ title }}
               </h3>

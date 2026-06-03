@@ -2,9 +2,7 @@
 import { ref, computed } from "vue";
 
 import type { UserInfo } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VInput from "@/shared/ui/common/VInput.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { VButton, VInput, VTitle } from "@/shared/ui/index";
 
 const { userData, loader } = defineProps<{
   userData: UserInfo | null;
@@ -25,9 +23,9 @@ const updateUser = () => emit("updateUserData", formField.value);
 
 <template>
   <VTitle :title="$t('profile.account_details')" />
-  <div class="border border-borderDefault bg-secondaryBg rounded-lg p-6">
+  <div class="border border-border-default bg-secondary-bg rounded-lg p-6">
     <form
-      class="flex flex-col gap-5 max-w-[30rem]"
+      class="flex flex-col gap-5 max-w-120"
       @submit.prevent="updateUser"
     >
       <VInput

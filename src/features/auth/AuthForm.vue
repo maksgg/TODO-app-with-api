@@ -4,14 +4,15 @@ import { computed, type Component } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
-import useAuthRequests from "./api/useAuthRequests";
-import RegularUserLogin from "./components/RegularUserLogin.vue";
-
-import LoginForm from "@/features/auth/components/LoginForm.vue";
-import RegisterForm from "@/features/auth/components/RegisterForm.vue";
-import type { AuthFormType } from "@/features/auth/types/index";
+import useAuthRequests from "@/features/auth/api/useAuthRequests";
+import {
+  RegularUserLogin,
+  LoginForm,
+  RegisterForm,
+} from "@/features/auth/components/index";
+import type { AuthFormType } from "@/features/auth/types";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VTabs from "@/shared/ui/common/VTabs.vue";
+import { VTabs } from "@/shared/ui/index";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -69,7 +70,7 @@ const submitRegularUser = async () => {
 <template>
   <div
     class="flex flex-col justify-center items-center gap-8 px-12 py-8
-    bg-authForm border border-authBorder rounded-2xl w-[27.5rem]"
+    bg-auth-form border border-auth-border rounded-2xl w-110"
   >
     <VTabs
       v-model="activeTab"

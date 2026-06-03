@@ -4,13 +4,10 @@ import { computed } from "vue";
 import VChart from "vue-echarts";
 import { useI18n } from "vue-i18n";
 
-import { useChartTheme } from "../composables/useChartTheme";
-import type { PriorityResponse } from "../types";
-import { mapPriorityColors } from "../utils/priorityDataByColor";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { useChartTheme } from "@/features/analytics/composables/useChartTheme";
+import type { PriorityResponse } from "@/features/analytics/types/index";
+import { mapPriorityColors } from "@/features/analytics/utils/priorityDataByColor";
+import { VContainer, VSkeleton, VTitle } from "@/shared/ui/index";
 
 const {
   data = [],
@@ -84,7 +81,7 @@ const priorityOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle :title="$t('analytics.title.tasks_by_priority')" />
-    <VContainer class="shadow-customShadow h-full">
+    <VContainer class="shadow-custom-shadow h-full">
       <div class="flex flex-col justify-center items-center gap-8 flex-1">
         <VSkeleton
           v-if="!data && loader"
@@ -109,7 +106,7 @@ const priorityOption = computed<EChartsOption>(() => {
         :option="priorityOption"
         :autoresize="true"
         :loading="loader"
-        class="h-[26.4rem]"
+        class="h-[26.4rem]!"
       />
     </VContainer>
   </div>

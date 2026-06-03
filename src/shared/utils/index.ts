@@ -5,4 +5,3 @@ export {
 export {
   firstLetterUp,
 } from "./textFormatters";
-

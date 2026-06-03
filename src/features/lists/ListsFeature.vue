@@ -7,10 +7,7 @@ import ListCardsWrapper from "./components/ListCardsWrapper.vue";
 import { useListsStore } from "./store/useListsStore";
 
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VEmptyState from "@/shared/ui/common/VEmptyState.vue";
-import VLoader from "@/shared/ui/common/VLoader.vue";
-import VToggleTabs from "@/shared/ui/common/VToggleTabs.vue";
-import VToolbar from "@/shared/ui/common/VToolbar.vue";
+import { VEmptyState, VLoader, VToggleTabs, VToolbar } from "@/shared/ui/index";
 import { extractFilterValues, getMappedFilters } from "@/shared/utils/toolbarHelper";
 
 const { t } = useI18n();

@@ -3,7 +3,7 @@
     width="12"
     height="12"
     viewBox="0 0 12 12"
-    class="drop-shadow-themeSvgShadow"
+    :style="{ filter: 'drop-shadow(0 0 1.26px white) drop-shadow(0 0 2.52px white)' }"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path

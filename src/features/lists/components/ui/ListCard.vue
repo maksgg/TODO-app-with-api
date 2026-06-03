@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import ListName from "./ListName.vue";
-import type { List } from "../../types";
-
+import ListName from "@/features/lists/components/ui/ListName.vue";
+import type { List } from "@/features/lists/types/index";
 import type { ModalType } from "@/shared/types";
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VDropDown from "@/shared/ui/common/VDropDown.vue";
+import { VContainer, VDropDown } from "@/shared/ui/index";
 
 const { list , listActions } = defineProps<{
   list: List;
@@ -43,11 +41,10 @@ const openModal = (modalType: ModalType) => emit("openModal", modalType, list);
       />
     </div>
     <template #footer>
-      <div class="flex items-start gap-4 text-bodyL">
+      <div class="flex items-start gap-4 text-body-l">
         <span class="text-secondary">{{ list.totalTasks }} {{ $t("lists.card.tasks") }}</span>
         <span class="text-muted">{{ list.completedTasks }} {{ $t("lists.card.completed") }}</span>
       </div>
     </template>
   </VContainer>
 </template>
-

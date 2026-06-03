@@ -4,9 +4,8 @@ import { useRoute } from "vue-router";
 
 import { routes } from "@/app/router/index";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VLoader from "@/shared/ui/common/VLoader.vue";
-import Header from "@/widgets/Header/Header.vue";
-import Sidebar from "@/widgets/Sidebar/Sidebar.vue";
+import { VLoader } from "@/shared/ui/index";
+import { Sidebar, Header } from "@/widgets/index";
 
 const authStore = useAuthStore();
 const route = useRoute();
@@ -22,7 +21,7 @@ const menuItems = computed(() => authStore.getSidebarLinks(routes));
   </div>
   <main
     v-else
-    class="relative flex flex-1 w-full h-screen bg-primaryBg"
+    class="relative flex flex-1 w-full h-screen bg-primary-bg"
   >
     <Sidebar
       v-if="route.name !== 'NotFound'"

@@ -5,7 +5,7 @@ import type {
   TagsResponse,
   PriorityResponse,
   DailyActivityResponse,
-} from "../types";
+} from "@/features/analytics/types";
 
 export default () => {
   const fetchSummaryAnalytics = (

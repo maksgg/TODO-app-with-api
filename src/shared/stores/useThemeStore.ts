@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
-import { Theme } from "@/features/theme/types/index";
+import { Theme } from "@/shared/types/index";
 
 export const useThemeStore = defineStore("theme", () => {
   const currentTheme = ref<Theme>("light");

@@ -4,12 +4,9 @@ import { computed } from "vue";
 import VChart from "vue-echarts";
 import { useI18n } from "vue-i18n";
 
-import { useChartTheme } from "../composables/useChartTheme";
-import { DailyActivityResponse } from "../types";
-
-import VContainer from "@/shared/ui/common/VContainer.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
-import VTitle from "@/shared/ui/common/VTitle.vue";
+import { useChartTheme } from "@/features/analytics/composables/useChartTheme";
+import type { DailyActivityResponse } from "@/features/analytics/types";
+import { VContainer, VSkeleton, VTitle } from "@/shared/ui/index";
 import { firstLetterUp } from "@/shared/utils";
 
 const {
@@ -90,7 +87,7 @@ const dailyOption = computed<EChartsOption>(() => {
 <template>
   <div class="flex flex-col gap-6">
     <VTitle :title="$t('analytics.title.task_completion')" />
-    <VContainer class="shadow-customShadow">
+    <VContainer class="shadow-custom-shadow">
       <div
         v-if="!data && loader"
         class="flex flex-col gap-7 w-full"
@@ -108,7 +105,7 @@ const dailyOption = computed<EChartsOption>(() => {
         :autoresize="true"
         :loading="loader"
         :loading-options="loadingOptions"
-        class="h-[20rem]"
+        class="h-80!"
       />
     </VContainer>
   </div>

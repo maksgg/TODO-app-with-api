@@ -14,13 +14,15 @@ import { THEME_KEY } from "vue-echarts";
 import { useI18n } from "vue-i18n";
 
 import useAnalyticsRequests from "@/features/analytics/api/useAnalyticsRequests";
-import DailyActivityAnalitycs from "@/features/analytics/components/DailyActivityAnalitycs.vue";
-import PriorityAnalytics from "@/features/analytics/components/PriorityAnalytics.vue";
-import SummaryAnalitycs from "@/features/analytics/components/SummaryAnalitycs.vue";
-import TagsAnalytics from "@/features/analytics/components/TagsAnalytics.vue";
+import {
+  DailyActivityAnalitycs,
+  PriorityAnalytics,
+  SummaryAnalitycs,
+  TagsAnalytics,
+} from "@/features/analytics/components/index";
 import { getDateParams } from "@/features/analytics/utils/tasksAnalitycsByPeriod";
 import { useThemeStore } from "@/shared/stores/useThemeStore";
-import VToggleTabs from "@/shared/ui/common/VToggleTabs.vue";
+import { VToggleTabs } from "@/shared/ui/index";
 
 const activeTab = ref<"week" | "month">("week");
 const tagsLimit = ref({ id: "5", label: "Top 5" });

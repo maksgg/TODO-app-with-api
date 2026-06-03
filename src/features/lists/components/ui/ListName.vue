@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 const { hexColor, title, listId } = defineProps<{
   hexColor?: string | null | undefined;
@@ -12,7 +12,7 @@ const openList = () => emit("openList", listId);
 </script>
 
 <template>
-  <h3 class="flex items-center gap-2 text-headingCard min-w-0 overflow-hidden">
+  <h3 class="flex items-center gap-2 text-heading-card min-w-0 overflow-hidden">
     <span
       class="flex rounded-full w-3 h-3"
       :style="{ backgroundColor: hexColor }"
@@ -21,15 +21,14 @@ const openList = () => emit("openList", listId);
       v-if="listId"
       :text="title"
       variant="ghost"
-      class="text-center hover:text-activePrimary text-txtPrimary"
+      class="text-center hover:text-active-primary text-txt-primary cursor-pointer"
       @click="openList"
     />
     <span
       v-else
-      class="text-uiHead capitalize text-txtPrimary"
+      class="text-ui-head capitalize text-txt-primary"
     >
       {{ title }}
     </span>
   </h3>
 </template>
-

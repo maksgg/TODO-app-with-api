@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VSkeleton } from "@/shared/ui/index";
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
         <div
           v-for="i in 5"
           :key="'pending-' + i"
-          class="flex items-center gap-4 py-4 border-b border-borderDefault"
+          class="flex items-center gap-4 py-4 border-b border-border-default"
         >
           <div
             class="flex items-center gap-3 pl-2"

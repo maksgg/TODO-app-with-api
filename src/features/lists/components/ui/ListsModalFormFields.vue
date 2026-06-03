@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import VColorPicker from "@/shared/ui/common/VColorPicker.vue";
-import VInput from "@/shared/ui/common/VInput.vue";
+import { VColorPicker, VInput } from "@/shared/ui/index";
 
 const model = defineModel<{
   title: string;

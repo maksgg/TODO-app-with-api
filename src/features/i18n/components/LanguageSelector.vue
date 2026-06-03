@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 import { useLanguages } from "@/shared/composables/useI18n";
-import VMultiselect from "@/shared/ui/common/VMultiselect.vue";
+import { VMultiselect } from "@/shared/ui/index";
 
 const { locale, languages } = useLanguages();
 const selectedLangObject = computed({
@@ -17,6 +17,6 @@ const selectedLangObject = computed({
   <VMultiselect
     v-model:model="selectedLangObject"
     :options="languages.options"
-    class="w-[5rem]"
+    class="w-20"
   />
 </template>

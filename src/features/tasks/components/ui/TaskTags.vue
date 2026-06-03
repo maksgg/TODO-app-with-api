@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 type TagsProps = {
   tags?: string[];
@@ -24,8 +24,8 @@ const emit = defineEmits<{ "removeTag": [index: number, id: string] }>();
 const removeTag = (index: number, id: string) => emit("removeTag", index, id);
 
 const styleVariant: Record<TagsProps["variant"], string> ={
-  modal: `text-uiCaption bg-borderDefault rounded-md px-2 py-1`,
-  table: `text-bodyM bg-transparent`,
+  modal: `text-ui-caption bg-border-default rounded-md px-2 py-1`,
+  table: `text-body-m bg-transparent`,
 };
 </script>
 
@@ -56,4 +56,3 @@ const styleVariant: Record<TagsProps["variant"], string> ={
     </div>
   </div>
 </template>
-

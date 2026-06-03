@@ -18,7 +18,7 @@ const selectItem = (color: string) => activeColor.value = color;
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 text-uiLabel text-secondary">
+  <div class="flex flex-col gap-2 text-ui-label text-secondary">
     <span>{{ title }}</span>
     <div class="flex gap-3">
       <button

@@ -34,7 +34,7 @@ const toggle = () => activeId.value = isExpanded.value ? null : sectionId;
         name="title"
         :is-expanded="isExpanded"
       >
-        <span class="text-bodyL text-txtPrimary">
+        <span class="text-body-l text-txt-primary">
           {{ title }}
         </span>
         <VButton

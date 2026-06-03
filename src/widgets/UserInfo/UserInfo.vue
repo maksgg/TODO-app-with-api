@@ -6,7 +6,7 @@ import ProfileOverview from "@/features/profile/components/ProfileOverview.vue";
 import useUsersRequests from "@/features/users/api/useUsersRequests";
 import UserInfoPermissionsList from "@/features/users/components/UserInfoPermissionsList.vue";
 import type {  UserPayload } from "@/shared/types";
-import VButton from "@/shared/ui/common/VButton.vue";
+import { VButton } from "@/shared/ui/index";
 
 const route = useRoute();
 
@@ -85,7 +85,7 @@ onMounted(async () => {
         to="/users"
         class="text-secondary"
       />
-      <span class="text-bodyM text-muted">{{ $t('userInfo.title.all_members') }}</span>
+      <span class="text-body-m text-muted">{{ $t('userInfo.title.all_members') }}</span>
     </div>
   </ProfileOverview>
   <UserInfoPermissionsList

@@ -3,13 +3,12 @@ import { computed, toValue } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
-import LanguageSelector from "@/features/i18n/components/LanguageSelector.vue";
+import { LanguageSelector } from "@/features/i18n/index";
 import { useListsStore } from "@/features/lists/store/useListsStore";
 import { useTasksStore } from "@/features/tasks/store/useTasksStore";
-import ThemeToggle from "@/features/theme/components/ThemeToggle.vue";
+import { ThemeToggle } from "@/features/theme/index";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
-import VButton from "@/shared/ui/common/VButton.vue";
-import VSkeleton from "@/shared/ui/common/VSkeleton.vue";
+import { VButton, VSkeleton } from "@/shared/ui/index";
 
 const authStore = useAuthStore();
 const listsStore = useListsStore();
@@ -39,8 +38,8 @@ const header = computed(() => {
 <template>
   <div
     v-show="header.title || headerLoader"
-    class="flex justify-between items-center bg-secondaryBg
-    header-container rounded-xl py-3 px-4 h-[70px]"
+    class="flex justify-between items-center bg-secondary-bg
+    header-container rounded-xl py-3 px-4 h-17.5"
   >
     <VSkeleton
       v-if="headerLoader && !tasksStore.targetTaskLoader"
@@ -59,7 +58,7 @@ const header = computed(() => {
         :to="header.path"
         class="text-secondary"
       />
-      <h2 class="text-headingCard text-txtPrimary truncate">
+      <h2 class="text-heading-card text-txt-primary truncate">
         {{ header?.title }}
       </h2>
     </div>
@@ -77,7 +76,7 @@ const header = computed(() => {
 .header-container {
   border: 2px solid transparent;
   background-image:
-    linear-gradient(var(--color-secondaryBg), var(--color-secondaryBg)),
+    linear-gradient(var(--color-secondary-bg), var(--color-secondary-bg)),
     linear-gradient(90deg, rgba(62, 13, 168, 1) 0%, rgba(95, 134, 239, 1) 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
