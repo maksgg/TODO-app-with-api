@@ -89,7 +89,10 @@ export default () => {
     taskIds?: MaybeRefOrGetter<string[]>,
     options?: UseApiOptions<ToggleWeeklyGoalResponse, Pick<Task, "id">>,
   ) => {
-    const ids = () => toValue(taskIds).map((id) => `tasks/${id}/toggle-weekly-goal`);
+    const ids = () => toValue(taskIds).map((id) => ({
+      url: `tasks/${id}/toggle-weekly-goal`,
+      method: "PATCH",
+    }));
     return useApiBatch(ids, options);
   };
 
